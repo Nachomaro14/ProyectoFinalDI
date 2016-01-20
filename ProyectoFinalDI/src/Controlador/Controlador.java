@@ -71,7 +71,6 @@ public class Controlador implements ActionListener, MouseListener{
             Image fondoInicioNewImg = fondoInicioImg.getScaledInstance(fondoInicioW, fondoInicioH, java.awt.Image.SCALE_SMOOTH);
             fondoInicioIcon = new ImageIcon(fondoInicioNewImg);
             vista.fondo.setIcon(fondoInicioIcon);
-            
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Error en el método iniciar()");
             ex.printStackTrace();

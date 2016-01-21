@@ -21,6 +21,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,6 +81,11 @@ public class Interfaz extends javax.swing.JFrame {
         fondoInicio.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, 20));
         fondoInicio.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 150, -1));
         fondoInicio.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 150, -1));
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton1.setText("INICIAR SESIÓN");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fondoInicio.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
         fondoInicio.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 290));
 
         inicio.add(fondoInicio, java.awt.BorderLayout.CENTER);
@@ -112,6 +118,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel fondoInicio;
     private javax.swing.JPanel infoInicio;
     private javax.swing.JPanel inicio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -10,6 +10,12 @@ public class Interfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cargando = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        textoCarga = new javax.swing.JLabel();
+        uni = new javax.swing.JLabel();
+        principal = new javax.swing.JFrame();
+        jPanel2 = new javax.swing.JPanel();
         inicio = new javax.swing.JPanel();
         infoInicio = new javax.swing.JPanel();
         logoInicio = new javax.swing.JLabel();
@@ -21,8 +27,53 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        btnIniciarSesion = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
+
+        cargando.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        cargando.setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        textoCarga.setText("Cargando...");
+        jPanel1.add(textoCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, -1, -1));
+        jPanel1.add(uni, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 260, 230));
+
+        javax.swing.GroupLayout cargandoLayout = new javax.swing.GroupLayout(cargando.getContentPane());
+        cargando.getContentPane().setLayout(cargandoLayout);
+        cargandoLayout.setHorizontalGroup(
+            cargandoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        cargandoLayout.setVerticalGroup(
+            cargandoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        principal.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout principalLayout = new javax.swing.GroupLayout(principal.getContentPane());
+        principal.getContentPane().setLayout(principalLayout);
+        principalLayout.setHorizontalGroup(
+            principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        principalLayout.setVerticalGroup(
+            principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -82,10 +133,10 @@ public class Interfaz extends javax.swing.JFrame {
         fondoInicio.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 150, -1));
         fondoInicio.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 150, -1));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("INICIAR SESIÓN");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        fondoInicio.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
+        btnIniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnIniciarSesion.setText("INICIAR SESIÓN");
+        btnIniciarSesion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fondoInicio.add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
         fondoInicio.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 290));
 
         inicio.add(fondoInicio, java.awt.BorderLayout.CENTER);
@@ -114,18 +165,24 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnIniciarSesion;
+    public javax.swing.JDialog cargando;
     public javax.swing.JLabel fondo;
     private javax.swing.JPanel fondoInicio;
     private javax.swing.JPanel infoInicio;
     private javax.swing.JPanel inicio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     public javax.swing.JLabel logoInicio;
+    public javax.swing.JFrame principal;
+    public javax.swing.JLabel textoCarga;
+    public javax.swing.JLabel uni;
     // End of variables declaration//GEN-END:variables
 }

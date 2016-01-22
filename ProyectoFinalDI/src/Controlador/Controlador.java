@@ -3,14 +3,7 @@ package Controlador;
 import Modelo.Modelo;
 import UpperEssential.UpperEssentialLookAndFeel;
 import Vista.Interfaz;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,11 +11,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -31,13 +21,15 @@ public class Controlador implements ActionListener, MouseListener{
     
     Interfaz vista;
     Modelo modelo = new Modelo();
+    int contadorCarga1 = 0;
+    int contadorCarga2 = 0;
 
     public Controlador(Interfaz i) {
         vista = i;
     }
 
     public enum AccionMVC {
-        
+        btnIniciarSesion
     }
     
     public void iniciar() {
@@ -53,6 +45,7 @@ public class Controlador implements ActionListener, MouseListener{
             vista.setLocationRelativeTo(null);
             vista.setVisible(true);
             vista.setTitle("International Cafe Dessernational");
+            vista.cargando.setTitle("Bienvenido a Dessernational");
             
             int logoInicioW = vista.logoInicio.getWidth();
             int logoInicioH = vista.logoInicio.getHeight();
@@ -75,10 +68,26 @@ public class Controlador implements ActionListener, MouseListener{
             JOptionPane.showMessageDialog(null, "Error en el método iniciar()");
             ex.printStackTrace();
         }
+        
+        this.vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
+        this.vista.btnIniciarSesion.addActionListener(this);
     }
     
     public void actionPerformed(ActionEvent e) {
-        
+        switch(AccionMVC.valueOf(e.getActionCommand())){
+            case btnIniciarSesion:
+                vista.setVisible(false);
+                vista.cargando.pack();
+                vista.cargando.setLocationRelativeTo(null);
+                vista.cargando.setVisible(true);
+                
+                Uni1 uni1 = new Uni1();
+                Uni2 uni2 = new Uni2();
+                Temporizador t = new Temporizador();
+                t.run(uni1, uni2);
+                t.start();
+                break;
+        }
     }
     
     @Override
@@ -128,5 +137,80 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             }
         });
+    }
+    
+    public class Uni1 extends Thread{
+
+        public void run(){
+            while(contadorCarga1 < 5){
+                vista.textoCarga.setText("Cargando");
+                
+                int uni2W = vista.uni.getWidth();
+                int uni2H = vista.uni.getHeight();
+                ImageIcon uni2 = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Uni1.png"));
+
+                Image uni2Img = uni2.getImage();
+                Image uni2NewImg = uni2Img.getScaledInstance(uni2W, uni2H, java.awt.Image.SCALE_SMOOTH);
+                uni2 = new ImageIcon(uni2NewImg);
+                vista.uni.setIcon(uni2);
+                
+                try{
+                    Thread.sleep(1000);
+                }catch(InterruptedException ie){
+                    System.out.println(ie.getMessage());
+                }
+                contadorCarga1++;
+            }
+            if(contadorCarga1 >= 5){
+                vista.cargando.setVisible(false);
+                vista.principal.pack();
+                vista.principal.setLocationRelativeTo(null);
+                vista.principal.setVisible(true);
+            }
+            contadorCarga1 = 0;
+        }
+    }
+    
+    public class Uni2 extends Thread{
+
+        public void run(){
+            while(contadorCarga2 < 5){
+                try{
+                    Thread.sleep(500);
+                    vista.textoCarga.setText("Cargando...");
+                    
+                    int uni2W = vista.uni.getWidth();
+                    int uni2H = vista.uni.getHeight();
+                    ImageIcon uni2 = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Uni2.png"));
+
+                    Image uni2Img = uni2.getImage();
+                    Image uni2NewImg = uni2Img.getScaledInstance(uni2W, uni2H, java.awt.Image.SCALE_SMOOTH);
+                    uni2 = new ImageIcon(uni2NewImg);
+                    vista.uni.setIcon(uni2);
+                    
+                    Thread.sleep(500);
+                }catch(InterruptedException ie){
+                    System.out.println(ie.getMessage());
+                }
+                contadorCarga2++;
+            }
+            if(contadorCarga2 >= 5){
+                vista.cargando.setVisible(false);
+                vista.principal.pack();
+                vista.principal.setLocationRelativeTo(null);
+                vista.principal.setVisible(true);
+            }
+            contadorCarga2 = 0;
+        }
+    }
+    
+    public class Temporizador extends Thread{
+
+        int cont = 0;
+
+        public void run(Uni1 u1, Uni2 u2){
+            u1.start();
+            u2.start();
+        }
     }
 }

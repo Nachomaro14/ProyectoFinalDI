@@ -40,6 +40,7 @@ public class Controlador implements ActionListener, MouseListener{
             
             Toolkit t = Toolkit.getDefaultToolkit();
             vista.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.principal.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
 
             vista.pack();
             vista.setLocationRelativeTo(null);
@@ -205,8 +206,6 @@ public class Controlador implements ActionListener, MouseListener{
     }
     
     public class Temporizador extends Thread{
-
-        int cont = 0;
 
         public void run(Uni1 u1, Uni2 u2){
             u1.start();

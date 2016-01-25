@@ -51,6 +51,9 @@ public class Controlador implements ActionListener, MouseListener{
             vista.setTitle("International Cafe Dessernational");
             vista.cargando.setTitle("Bienvenido a Dessernational");
             
+            
+            // Controladores de tamaño para las imágenes
+            
             int logoInicioW = vista.logoInicio.getWidth();
             int logoInicioH = vista.logoInicio.getHeight();
             ImageIcon logoInicioIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"));
@@ -67,7 +70,8 @@ public class Controlador implements ActionListener, MouseListener{
             Image fondoInicioImg = fondoInicioIcon.getImage();
             Image fondoInicioNewImg = fondoInicioImg.getScaledInstance(fondoInicioW, fondoInicioH, java.awt.Image.SCALE_SMOOTH);
             fondoInicioIcon = new ImageIcon(fondoInicioNewImg);
-            vista.fondo.setIcon(fondoInicioIcon);
+            vista.fondo.setIcon(fondoInicioIcon);           
+            
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Error en el método iniciar()");
             ex.printStackTrace();
@@ -250,11 +254,24 @@ public class Controlador implements ActionListener, MouseListener{
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
         vista.principal.setVisible(true);
+        cargarImagenesPrincipal();
     }
     
     public void inicioDeSesionDeAdministrador(){
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
         vista.principal.setVisible(true);
+        cargarImagenesPrincipal();
+    }
+    
+    public void cargarImagenesPrincipal(){
+        int volverW = vista.btnVolver.getWidth();
+        int volverH = vista.btnVolver.getHeight();
+        ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"));
+
+        Image volverImg = volverIcon.getImage();
+        Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
+        volverIcon = new ImageIcon(volverNewImg);
+        vista.btnVolver.setIcon(volverIcon);
     }
 }

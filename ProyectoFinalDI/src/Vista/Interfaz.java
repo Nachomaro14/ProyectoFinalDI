@@ -144,7 +144,7 @@ public class Interfaz extends javax.swing.JFrame {
         txtDescripción.setText("DESCRIPCION DE LOS ARTÍCULOS");
         jScrollPane1.setViewportView(txtDescripción);
 
-        PanelDescripcion.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 14, 826, -1));
+        PanelDescripcion.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 826, -1));
 
         btnEsp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bandera española.png"))); // NOI18N
         PanelDescripcion.add(btnEsp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 40, 40));

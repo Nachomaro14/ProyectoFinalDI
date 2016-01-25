@@ -15,6 +15,48 @@ public class Modelo extends Database{
         }
     }
     
+    public boolean iniciarSesion(String usuario, String pass){
+        String contraseña = "";
+        try {
+            String q = "SELECT Pass FROM Trabajador WHERE Usuario = '"+usuario+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                contraseña = res.getString("Pass");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al iniciar sesión\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        if(pass.equals(contraseña)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean esAdmin(String usuario){
+        int ad = 0;
+        try {
+            String q = "SELECT Administrador FROM Trabajdor WHERE Usuario = '"+usuario+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                ad = res.getInt("Administrador");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al iniciar sesión\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        if(ad == 1){
+            return true;
+        }else{  
+            return false;
+        }
+    }
+    
     public String[] getNIFProveedores(){
         int registros = 0;
         try {

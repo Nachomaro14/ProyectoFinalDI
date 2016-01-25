@@ -47,6 +47,8 @@ public class Interfaz extends javax.swing.JFrame {
         txtPrecioTotal = new javax.swing.JTextField();
         txtIVA = new javax.swing.JTextField();
         txtPrecioBase = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
         inicio = new javax.swing.JPanel();
         infoInicio = new javax.swing.JPanel();
         logoInicio = new javax.swing.JLabel();
@@ -110,7 +112,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAvisar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 497, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 705, Short.MAX_VALUE)
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -129,37 +131,20 @@ public class Interfaz extends javax.swing.JFrame {
         principal.getContentPane().add(PanelMenu, java.awt.BorderLayout.PAGE_START);
 
         PanelDescripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        PanelDescripcion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtDescripción.setColumns(20);
         txtDescripción.setRows(5);
         txtDescripción.setText("DESCRIPCION DE LOS ARTÍCULOS");
         jScrollPane1.setViewportView(txtDescripción);
 
-        javax.swing.GroupLayout PanelDescripcionLayout = new javax.swing.GroupLayout(PanelDescripcion);
-        PanelDescripcion.setLayout(PanelDescripcionLayout);
-        PanelDescripcionLayout.setHorizontalGroup(
-            PanelDescripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDescripcionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelDescripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEsp, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(btnIng, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        PanelDescripcionLayout.setVerticalGroup(
-            PanelDescripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDescripcionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelDescripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PanelDescripcionLayout.createSequentialGroup()
-                        .addComponent(btnEsp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIng, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        PanelDescripcion.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 14, 826, -1));
+
+        btnEsp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bandera española.png"))); // NOI18N
+        PanelDescripcion.add(btnEsp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 40, 40));
+
+        btnIng.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bandera inglesa.png"))); // NOI18N
+        PanelDescripcion.add(btnIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 60, 40, 40));
 
         principal.getContentPane().add(PanelDescripcion, java.awt.BorderLayout.PAGE_END);
 
@@ -168,52 +153,68 @@ public class Interfaz extends javax.swing.JFrame {
         panelArticulos.setBorder(new javax.swing.border.MatteBorder(null));
         panelArticulos.setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("jButton1");
-        panelArticulos.add(jButton1, new java.awt.GridBagConstraints());
-
-        jButton2.setText("jButton2");
-        panelArticulos.add(jButton2, new java.awt.GridBagConstraints());
-
-        jButton3.setText("jButton3");
-        panelArticulos.add(jButton3, new java.awt.GridBagConstraints());
-
-        jButton4.setText("jButton4");
+        jButton1.setMaximumSize(new java.awt.Dimension(200, 200));
+        jButton1.setMinimumSize(new java.awt.Dimension(200, 200));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
+        panelArticulos.add(jButton1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
+        panelArticulos.add(jButton2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
+        panelArticulos.add(jButton3, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
         panelArticulos.add(jButton4, gridBagConstraints);
-
-        jButton5.setText("jButton5");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
         panelArticulos.add(jButton5, gridBagConstraints);
-
-        jButton6.setText("jButton6");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
         panelArticulos.add(jButton6, gridBagConstraints);
-
-        jButton7.setText("jButton7");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
         panelArticulos.add(jButton7, gridBagConstraints);
-
-        jButton8.setText("jButton8");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
         panelArticulos.add(jButton8, gridBagConstraints);
-
-        jButton9.setText("jButton9");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 60.0;
+        gridBagConstraints.weighty = 60.0;
         panelArticulos.add(jButton9, gridBagConstraints);
 
         panelCesta.setBorder(new javax.swing.border.MatteBorder(null));
+        panelCesta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -228,9 +229,13 @@ public class Interfaz extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable1);
 
+        panelCesta.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 12, 236, 271));
+
         btnCancelarPed.setText("Cancelar");
+        panelCesta.add(btnCancelarPed, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 410, -1, -1));
 
         btnRealizarPed.setText("Realizar");
+        panelCesta.add(btnRealizarPed, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 410, -1, -1));
 
         comboDescuentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboDescuentos.addActionListener(new java.awt.event.ActionListener() {
@@ -238,56 +243,23 @@ public class Interfaz extends javax.swing.JFrame {
                 comboDescuentosActionPerformed(evt);
             }
         });
+        panelCesta.add(comboDescuentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 289, 142, -1));
 
         txtPrecioTotal.setText("*Precio Total");
+        panelCesta.add(txtPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 379, 122, -1));
 
         txtIVA.setText("*IVA");
+        panelCesta.add(txtIVA, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 353, 122, -1));
 
         txtPrecioBase.setText("*PrecioBase");
+        panelCesta.add(txtPrecioBase, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 327, 122, -1));
 
-        javax.swing.GroupLayout panelCestaLayout = new javax.swing.GroupLayout(panelCesta);
-        panelCesta.setLayout(panelCestaLayout);
-        panelCestaLayout.setHorizontalGroup(
-            panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCestaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCestaLayout.createSequentialGroup()
-                        .addComponent(btnRealizarPed)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelarPed))
-                    .addGroup(panelCestaLayout.createSequentialGroup()
-                        .addGroup(panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboDescuentos, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCestaLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPrecioTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                            .addComponent(txtIVA)
-                            .addComponent(txtPrecioBase))))
-                .addContainerGap())
-        );
-        panelCestaLayout.setVerticalGroup(
-            panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCestaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboDescuentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(txtPrecioBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelarPed)
-                    .addComponent(btnRealizarPed))
-                .addContainerGap())
-        );
+        jLabel6.setText("Descuento:");
+        panelCesta.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 292, -1, -1));
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/papelerita.png"))); // NOI18N
+        jButton10.setPreferredSize(new java.awt.Dimension(5, 5));
+        panelCesta.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 327, 50, 50));
 
         javax.swing.GroupLayout panelCentralLayout = new javax.swing.GroupLayout(panelCentral);
         panelCentral.setLayout(panelCentralLayout);
@@ -295,8 +267,8 @@ public class Interfaz extends javax.swing.JFrame {
             panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCentralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelCesta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -314,11 +286,11 @@ public class Interfaz extends javax.swing.JFrame {
         PanelPrincipal.setLayout(PanelPrincipalLayout);
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCentral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCentral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         principal.getContentPane().add(PanelPrincipal, java.awt.BorderLayout.CENTER);
@@ -440,6 +412,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel infoInicio;
     private javax.swing.JPanel inicio;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -453,6 +426,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;

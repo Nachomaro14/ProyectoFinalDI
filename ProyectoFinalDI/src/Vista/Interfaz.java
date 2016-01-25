@@ -20,7 +20,8 @@ public class Interfaz extends javax.swing.JFrame {
         btnNuevoPedido = new javax.swing.JButton();
         btnPedidos = new javax.swing.JButton();
         btnAvisar = new javax.swing.JButton();
-        btnAtras = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
+        usuarioConectado = new javax.swing.JLabel();
         PanelDescripcion = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripción = new javax.swing.JTextArea();
@@ -58,8 +59,8 @@ public class Interfaz extends javax.swing.JFrame {
         fondoInicio = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtUsuario = new javax.swing.JTextField();
+        txtPass = new javax.swing.JPasswordField();
         btnIniciarSesion = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
 
@@ -94,10 +95,10 @@ public class Interfaz extends javax.swing.JFrame {
 
         btnAvisar.setText("AVISAR");
 
-        btnAtras.setText("ATRAS");
-        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+        btnVolver.setText("VOLVER");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtrasActionPerformed(evt);
+                btnVolverActionPerformed(evt);
             }
         });
 
@@ -112,19 +113,24 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAvisar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 705, Short.MAX_VALUE)
-                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(701, 701, 701)
+                .addComponent(usuarioConectado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMenuLayout.createSequentialGroup()
+            .addGroup(PanelMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAtras, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                    .addComponent(btnAvisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNuevoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelMenuLayout.createSequentialGroup()
+                        .addComponent(usuarioConectado)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnVolver, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                    .addComponent(btnAvisar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPedidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNuevoPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -350,8 +356,8 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("CONTRASEÑA");
         fondoInicio.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, 20));
-        fondoInicio.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 150, -1));
-        fondoInicio.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 150, -1));
+        fondoInicio.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 150, -1));
+        fondoInicio.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 150, -1));
 
         btnIniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnIniciarSesion.setText("INICIAR SESIÓN");
@@ -375,9 +381,9 @@ public class Interfaz extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAtrasActionPerformed
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     private void comboDescuentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDescuentosActionPerformed
         // TODO add your handling code here:
@@ -396,7 +402,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel PanelDescripcion;
     private javax.swing.JPanel PanelMenu;
     private javax.swing.JPanel PanelPrincipal;
-    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnAvisar;
     private javax.swing.JButton btnCancelarPed;
     private javax.swing.JButton btnEsp;
@@ -405,6 +410,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevoPedido;
     private javax.swing.JButton btnPedidos;
     private javax.swing.JButton btnRealizarPed;
+    public javax.swing.JButton btnVolver;
     public javax.swing.JDialog cargando;
     private javax.swing.JComboBox comboDescuentos;
     public javax.swing.JLabel fondo;
@@ -428,11 +434,9 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     public javax.swing.JLabel logoInicio;
     private javax.swing.JPanel panelArticulos;
     private javax.swing.JPanel panelCentral;
@@ -441,8 +445,11 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel textoCarga;
     private javax.swing.JTextArea txtDescripción;
     private javax.swing.JTextField txtIVA;
+    public javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtPrecioBase;
     private javax.swing.JTextField txtPrecioTotal;
+    public javax.swing.JTextField txtUsuario;
     public javax.swing.JLabel uni;
+    public javax.swing.JLabel usuarioConectado;
     // End of variables declaration//GEN-END:variables
 }

@@ -39,7 +39,7 @@ public class Modelo extends Database{
     public boolean esAdmin(String usuario){
         int ad = 0;
         try {
-            String q = "SELECT Administrador FROM Trabajdor WHERE Usuario = '"+usuario+"'";
+            String q = "SELECT Administrador FROM Trabajador WHERE Usuario = '"+usuario+"'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -55,6 +55,23 @@ public class Modelo extends Database{
         }else{  
             return false;
         }
+    }
+    
+    public String getNombreTrabajadorPorUsuario(String usuario){
+        String nombre = "";
+        try {
+            String q = "SELECT Nombre, Apellidos FROM Trabajador WHERE Usuario = '"+usuario+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                nombre = nombre + res.getString("Nombre") + " " + res.getString("Apellidos");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener nombre de trabajador\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return nombre;
     }
     
     public String[] getNIFProveedores(){

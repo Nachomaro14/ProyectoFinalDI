@@ -23,13 +23,15 @@ public class Controlador implements ActionListener, MouseListener{
     Modelo modelo = new Modelo();
     int contadorCarga1 = 0;
     int contadorCarga2 = 0;
+    String usuario = "";
 
     public Controlador(Interfaz i) {
         vista = i;
     }
 
     public enum AccionMVC {
-        btnIniciarSesion
+        btnIniciarSesion,
+        btnVolver
     }
     
     public void iniciar() {
@@ -72,6 +74,9 @@ public class Controlador implements ActionListener, MouseListener{
         
         this.vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         this.vista.btnIniciarSesion.addActionListener(this);
+        
+        this.vista.btnVolver.setActionCommand("btnVolver");
+        this.vista.btnVolver.addActionListener(this);
     }
     
     public void actionPerformed(ActionEvent e) {
@@ -87,6 +92,14 @@ public class Controlador implements ActionListener, MouseListener{
                 Temporizador t = new Temporizador();
                 t.run(uni1, uni2);
                 t.start();
+                break;
+            case btnVolver:
+                vista.usuarioConectado.setText("");
+                usuario = "";
+                vista.principal.setVisible(false);
+                vista.txtUsuario.setText("");
+                vista.txtPass.setText("");
+                vista.setVisible(true);
                 break;
         }
     }
@@ -164,9 +177,6 @@ public class Controlador implements ActionListener, MouseListener{
             }
             if(contadorCarga1 >= 5){
                 vista.cargando.setVisible(false);
-                vista.principal.pack();
-                vista.principal.setLocationRelativeTo(null);
-                vista.principal.setVisible(true);
             }
             contadorCarga1 = 0;
         }
@@ -197,9 +207,31 @@ public class Controlador implements ActionListener, MouseListener{
             }
             if(contadorCarga2 >= 5){
                 vista.cargando.setVisible(false);
-                vista.principal.pack();
-                vista.principal.setLocationRelativeTo(null);
-                vista.principal.setVisible(true);
+                String u = vista.txtUsuario.getText();
+                char[] pc = vista.txtPass.getPassword();
+                int pi = pc.length;
+                String p = "";
+                for(int i = 0; i < pi; i++){
+                    p = p + pc[i];
+                }
+                if(modelo.iniciarSesion(u, p) == true){
+                    if(modelo.esAdmin(u) == false){
+                        JOptionPane.showMessageDialog(null, "Ha conectado como "+modelo.getNombreTrabajadorPorUsuario(u));
+                        usuario = u;
+                        vista.usuarioConectado.setText(u);
+                        inicioDeSesionDeTrabajador();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ha conectado como "+modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador)");
+                        usuario = u;
+                        vista.usuarioConectado.setText(u);
+                        inicioDeSesionDeAdministrador();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Credenciales inválidas");
+                    vista.setVisible(true);
+                    vista.txtUsuario.setText("");
+                    vista.txtPass.setText("");
+                }
             }
             contadorCarga2 = 0;
         }
@@ -211,5 +243,17 @@ public class Controlador implements ActionListener, MouseListener{
             u1.start();
             u2.start();
         }
+    }
+    
+    public void inicioDeSesionDeTrabajador(){
+        vista.principal.pack();
+        vista.principal.setLocationRelativeTo(null);
+        vista.principal.setVisible(true);
+    }
+    
+    public void inicioDeSesionDeAdministrador(){
+        vista.principal.pack();
+        vista.principal.setLocationRelativeTo(null);
+        vista.principal.setVisible(true);
     }
 }

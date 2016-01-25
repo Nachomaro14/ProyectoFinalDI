@@ -150,6 +150,7 @@ public class Interfaz extends javax.swing.JFrame {
         PanelDescripcion.add(btnEsp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 40, 40));
 
         btnIng.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bandera inglesa.png"))); // NOI18N
+        btnIng.setText("             ");
         PanelDescripcion.add(btnIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 60, 40, 40));
 
         principal.getContentPane().add(PanelDescripcion, java.awt.BorderLayout.PAGE_END);

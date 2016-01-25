@@ -39,6 +39,7 @@ public class Controlador implements ActionListener, MouseListener{
         try {
             UIManager.setLookAndFeel(new UpperEssentialLookAndFeel("ColoresPastel.theme"));
             SwingUtilities.updateComponentTreeUI(vista);
+            SwingUtilities.updateComponentTreeUI(vista.principal);
             
             Toolkit t = Toolkit.getDefaultToolkit();
             vista.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));

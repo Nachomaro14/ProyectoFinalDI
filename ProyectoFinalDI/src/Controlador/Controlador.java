@@ -268,10 +268,41 @@ public class Controlador implements ActionListener, MouseListener{
         int volverW = vista.btnVolver.getWidth();
         int volverH = vista.btnVolver.getHeight();
         ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"));
-
         Image volverImg = volverIcon.getImage();
         Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
         volverIcon = new ImageIcon(volverNewImg);
         vista.btnVolver.setIcon(volverIcon);
+        
+        int salirW = vista.labelSalir.getWidth();
+        int salirH = vista.labelSalir.getHeight();
+        ImageIcon salirIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"));
+        Image salirImg = salirIcon.getImage();
+        Image salirNewImg = salirImg.getScaledInstance(salirW, salirH, java.awt.Image.SCALE_SMOOTH);
+        salirIcon = new ImageIcon(salirNewImg);
+        vista.labelSalir.setIcon(salirIcon);
+        
+        int nuevoPedidoW = vista.labelNuevoPedido.getWidth();
+        int nuevoPedidoH = vista.labelNuevoPedido.getHeight();
+        ImageIcon nuevoPedidoIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevoPedido.png"));
+        Image nuevoPedidoImg = nuevoPedidoIcon.getImage();
+        Image nuevoPedidoNewImg = nuevoPedidoImg.getScaledInstance(nuevoPedidoW, nuevoPedidoH, java.awt.Image.SCALE_SMOOTH);
+        nuevoPedidoIcon = new ImageIcon(nuevoPedidoNewImg);
+        vista.labelNuevoPedido.setIcon(nuevoPedidoIcon);
+        
+        int pedidosW = vista.labelPedidos.getWidth();
+        int pedidosH = vista.labelPedidos.getHeight();
+        ImageIcon pedidosIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pedidos.png"));
+        Image pedidosImg = pedidosIcon.getImage();
+        Image pedidosNewImg = pedidosImg.getScaledInstance(salirW, salirH, java.awt.Image.SCALE_SMOOTH);
+        pedidosIcon = new ImageIcon(pedidosNewImg);
+        vista.labelPedidos.setIcon(pedidosIcon);
+        
+        int avisarW = vista.labelAvisar.getWidth();
+        int avisarH = vista.labelAvisar.getHeight();
+        ImageIcon avisarIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/warning.png"));
+        Image avisarImg = avisarIcon.getImage();
+        Image avisarNewImg = avisarImg.getScaledInstance(avisarW, avisarH, java.awt.Image.SCALE_SMOOTH);
+        avisarIcon = new ImageIcon(avisarNewImg);
+        vista.labelAvisar.setIcon(avisarIcon);
     }
 }

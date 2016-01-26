@@ -31,7 +31,15 @@ public class Controlador implements ActionListener, MouseListener{
 
     public enum AccionMVC {
         btnIniciarSesion,
-        btnVolver
+        btnVolver,
+        labelSalir
+    }
+    
+    public void presionarLabels(){
+        this.vista.labelNuevoPedido.addMouseListener(this);
+        this.vista.labelPedidos.addMouseListener(this);
+        this.vista.labelAvisar.addMouseListener(this);
+        this.vista.labelSalir.addMouseListener(this);
     }
     
     public void iniciar() {
@@ -80,7 +88,7 @@ public class Controlador implements ActionListener, MouseListener{
         this.vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         this.vista.btnIniciarSesion.addActionListener(this);
         
-        this.vista.btnVolver.setActionCommand("btnVolver");
+        this.vista.btnVolver.setActionCommand("labelSalir");
         this.vista.btnVolver.addActionListener(this);
     }
     
@@ -98,7 +106,7 @@ public class Controlador implements ActionListener, MouseListener{
                 t.run(uni1, uni2);
                 t.start();
                 break;
-            case btnVolver:
+            case labelSalir:
                 vista.usuarioConectado.setText("");
                 usuario = "";
                 vista.principal.setVisible(false);
@@ -305,4 +313,6 @@ public class Controlador implements ActionListener, MouseListener{
         avisarIcon = new ImageIcon(avisarNewImg);
         vista.labelAvisar.setIcon(avisarIcon);
     }
+    
+    
 }

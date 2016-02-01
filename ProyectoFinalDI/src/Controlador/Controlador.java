@@ -343,5 +343,13 @@ public class Controlador implements ActionListener, MouseListener{
         Image avisarNewImg = avisarImg.getScaledInstance(avisarW, avisarH, java.awt.Image.SCALE_SMOOTH);
         avisarIcon = new ImageIcon(avisarNewImg);
         vista.labelAvisar.setIcon(avisarIcon);
+        
+        int perfilW = vista.labelPerfil.getWidth();
+        int perfilH = vista.labelPerfil.getHeight();
+        ImageIcon perfilIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/perfil.png"));
+        Image perfilImg = perfilIcon.getImage();
+        Image perfilNewImg = perfilImg.getScaledInstance(perfilW, perfilH, java.awt.Image.SCALE_SMOOTH);
+        perfilIcon = new ImageIcon(perfilNewImg);
+        vista.labelPerfil.setIcon(perfilIcon);
     } 
 }

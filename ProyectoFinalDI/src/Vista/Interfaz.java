@@ -68,6 +68,7 @@ public class Interfaz extends javax.swing.JFrame {
         fondo = new javax.swing.JLabel();
 
         cargando.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        cargando.setUndecorated(true);
         cargando.setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
@@ -89,6 +90,7 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         principal.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        principal.setUndecorated(true);
 
         PanelMenu.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -106,6 +108,14 @@ public class Interfaz extends javax.swing.JFrame {
         });
 
         btnIng.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bandera inglesa.png"))); // NOI18N
+
+        labelSalir.setToolTipText("Cerrar sesión");
+
+        labelAvisar.setToolTipText("Avisar al administrador");
+
+        labelPedidos.setToolTipText("Historial de pedidos");
+
+        labelNuevoPedido.setToolTipText("Productos");
 
         javax.swing.GroupLayout PanelMenuLayout = new javax.swing.GroupLayout(PanelMenu);
         PanelMenu.setLayout(PanelMenuLayout);

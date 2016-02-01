@@ -3,15 +3,20 @@ package Controlador;
 import Modelo.Modelo;
 import UpperEssential.UpperEssentialLookAndFeel;
 import Vista.Interfaz;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -45,14 +50,22 @@ public class Controlador implements ActionListener, MouseListener{
     public void iniciar() {
 
         try {
+            //MODIFICAMOS EL LOOKANDFEEL DE LAS VENTANAS DE LA APLICACIÓN
             UIManager.setLookAndFeel(new UpperEssentialLookAndFeel("ColoresPastel.theme"));
             SwingUtilities.updateComponentTreeUI(vista);
             SwingUtilities.updateComponentTreeUI(vista.principal);
+            SwingUtilities.updateComponentTreeUI(vista.cargando);         
             
+            //MODIFICAMOS LAS OPCIONES DEL PANEL PRINCIPAL
+            vista.principal.setResizable(false);
+            vista.principal.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            
+            //MODIFICAMOS EL LOGO DE LAS VENTANAS DE LA APLICACIÓN
             Toolkit t = Toolkit.getDefaultToolkit();
             vista.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
             vista.principal.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
 
+            //MODIFICAMOS EL TÍTULO DE LAS VENTANAS DE LA APLICACIÓN
             vista.pack();
             vista.setLocationRelativeTo(null);
             vista.setVisible(true);
@@ -60,8 +73,7 @@ public class Controlador implements ActionListener, MouseListener{
             vista.cargando.setTitle("Bienvenido a Dessernational");
             
             
-            // Controladores de tamaño para las imágenes
-            
+            //AJUSTAMOS EL TAMAÑO DE LAS IMÁGENES A SUS CONTENEDORES            
             int logoInicioW = vista.logoInicio.getWidth();
             int logoInicioH = vista.logoInicio.getHeight();
             ImageIcon logoInicioIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"));
@@ -78,13 +90,32 @@ public class Controlador implements ActionListener, MouseListener{
             Image fondoInicioImg = fondoInicioIcon.getImage();
             Image fondoInicioNewImg = fondoInicioImg.getScaledInstance(fondoInicioW, fondoInicioH, java.awt.Image.SCALE_SMOOTH);
             fondoInicioIcon = new ImageIcon(fondoInicioNewImg);
-            vista.fondo.setIcon(fondoInicioIcon);           
+            vista.fondo.setIcon(fondoInicioIcon);
+            
+            //CONTROLAMOS OTRAS NECESIDADES COMO LOS MOUSELISTENER O LA VISIBILIDAD DE ALGUNOS PANELES            
+            vista.labelNuevoPedido.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    vista.panelCentral.setVisible(true);
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelNuevoPedido.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelNuevoPedido.setBorder(null);
+                }
+            }); 
+            vista.labelPedidos.addMouseListener(this);
+            vista.labelAvisar.addMouseListener(this);
+            vista.labelSalir.addMouseListener(this);
+            vista.panelCentral.setVisible(false);
+            vista.PanelDescripcion.setVisible(false);
             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Error en el método iniciar()");
             ex.printStackTrace();
         }
         
+        //ASIGNAMOS LAS ACCIONES A LOS BOTONES DE LA APLICACIÓN
         this.vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         this.vista.btnIniciarSesion.addActionListener(this);
         
@@ -92,6 +123,7 @@ public class Controlador implements ActionListener, MouseListener{
         this.vista.btnVolver.addActionListener(this);
     }
     
+    //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
     public void actionPerformed(ActionEvent e) {
         switch(AccionMVC.valueOf(e.getActionCommand())){
             case btnIniciarSesion:
@@ -117,29 +149,27 @@ public class Controlador implements ActionListener, MouseListener{
         }
     }
     
-    @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
-    @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
     
     public static void SCifras(JTextField a) {
@@ -261,6 +291,7 @@ public class Controlador implements ActionListener, MouseListener{
     public void inicioDeSesionDeTrabajador(){
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
+        vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vista.principal.setVisible(true);
         cargarImagenesPrincipal();
     }
@@ -268,6 +299,7 @@ public class Controlador implements ActionListener, MouseListener{
     public void inicioDeSesionDeAdministrador(){
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
+        vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vista.principal.setVisible(true);
         cargarImagenesPrincipal();
     }
@@ -312,7 +344,5 @@ public class Controlador implements ActionListener, MouseListener{
         Image avisarNewImg = avisarImg.getScaledInstance(avisarW, avisarH, java.awt.Image.SCALE_SMOOTH);
         avisarIcon = new ImageIcon(avisarNewImg);
         vista.labelAvisar.setIcon(avisarIcon);
-    }
-    
-    
+    } 
 }

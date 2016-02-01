@@ -115,6 +115,8 @@ public class Interfaz extends javax.swing.JFrame {
 
         labelNuevoPedido.setToolTipText("Productos");
 
+        labelPerfil.setToolTipText("Perfil");
+
         javax.swing.GroupLayout PanelMenuLayout = new javax.swing.GroupLayout(PanelMenu);
         PanelMenu.setLayout(PanelMenuLayout);
         PanelMenuLayout.setHorizontalGroup(

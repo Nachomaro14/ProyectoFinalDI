@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -28,6 +30,12 @@ public class Controlador implements ActionListener, MouseListener{
     int contadorCarga1 = 0;
     int contadorCarga2 = 0;
     String usuario = "";
+    int botonesPrincipales = 0;
+    int botonesBebidas = 0;
+    int botonesMenus = 0;
+    int botonesPasteleria = 0;
+    int botonesOfertas = 0;
+    String botonesPais = "";
 
     public Controlador(Interfaz i) {
         vista = i;
@@ -35,8 +43,7 @@ public class Controlador implements ActionListener, MouseListener{
 
     public enum AccionMVC {
         btnIniciarSesion,
-        btnVolver,
-        labelSalir
+        btnVolver
     }
     
     public void presionarLabels(){
@@ -102,10 +109,42 @@ public class Controlador implements ActionListener, MouseListener{
                 public void mouseReleased(MouseEvent e){
                     vista.labelNuevoPedido.setBorder(null);
                 }
-            }); 
+            });
+            vista.labelSalir.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    vista.usuarioConectado.setText("");
+                    usuario = "";
+                    vista.principal.setVisible(false);
+                    vista.txtUsuario.setText("");
+                    vista.txtPass.setText("");
+                    vista.setVisible(true);
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelSalir.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelSalir.setBorder(null);
+                }
+            });
+            vista.labelAvisar.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    if(modelo.esAdmin(usuario) == true){
+                        JOptionPane.showMessageDialog(null, "No disponible.");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Administrador avisado.");
+                        modelo.avisar();
+                    }
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelAvisar.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelAvisar.setBorder(null);
+                }
+            });
+            
             vista.labelPedidos.addMouseListener(this);
             vista.labelAvisar.addMouseListener(this);
-            vista.labelSalir.addMouseListener(this);
             vista.panelCentral.setVisible(false);
             vista.PanelDescripcion.setVisible(false);
             
@@ -118,7 +157,7 @@ public class Controlador implements ActionListener, MouseListener{
         this.vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         this.vista.btnIniciarSesion.addActionListener(this);
         
-        this.vista.btnVolver.setActionCommand("labelSalir");
+        this.vista.btnVolver.setActionCommand("btnVolver");
         this.vista.btnVolver.addActionListener(this);
     }
     
@@ -136,39 +175,26 @@ public class Controlador implements ActionListener, MouseListener{
                 Temporizador t = new Temporizador();
                 t.run(uni1, uni2);
                 t.start();
-                break;
-            case labelSalir:
-                vista.usuarioConectado.setText("");
-                usuario = "";
-                vista.principal.setVisible(false);
-                vista.txtUsuario.setText("");
-                vista.txtPass.setText("");
-                vista.setVisible(true);
+                Comprobacion c = new Comprobacion();
+                c.run();
+                c.start();
                 break;
         }
     }
     
     public void mouseClicked(MouseEvent e) {
-        
     }
 
     public void mousePressed(MouseEvent e) {
-
     }
 
-    @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
-    @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
-    @Override
     public void mouseExited(MouseEvent e) {
-
     }
     
     public static void SCifras(JTextField a) {
@@ -280,7 +306,6 @@ public class Controlador implements ActionListener, MouseListener{
     }
     
     public class Temporizador extends Thread{
-
         public void run(Uni1 u1, Uni2 u2){
             u1.start();
             u2.start();
@@ -332,7 +357,7 @@ public class Controlador implements ActionListener, MouseListener{
         int pedidosH = vista.labelPedidos.getHeight();
         ImageIcon pedidosIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pedidos.png"));
         Image pedidosImg = pedidosIcon.getImage();
-        Image pedidosNewImg = pedidosImg.getScaledInstance(salirW, salirH, java.awt.Image.SCALE_SMOOTH);
+        Image pedidosNewImg = pedidosImg.getScaledInstance(pedidosW, pedidosH, java.awt.Image.SCALE_SMOOTH);
         pedidosIcon = new ImageIcon(pedidosNewImg);
         vista.labelPedidos.setIcon(pedidosIcon);
         
@@ -351,5 +376,16 @@ public class Controlador implements ActionListener, MouseListener{
         Image perfilNewImg = perfilImg.getScaledInstance(perfilW, perfilH, java.awt.Image.SCALE_SMOOTH);
         perfilIcon = new ImageIcon(perfilNewImg);
         vista.labelPerfil.setIcon(perfilIcon);
-    } 
+    }
+    
+    public class Comprobacion extends Thread{
+        public void run(){
+            if(modelo.esAdmin(usuario) == true){
+                if(modelo.comprobarAviso() == true){
+                    JOptionPane.showMessageDialog(null, "¡AVISO!");
+                    modelo.quitarAviso();
+                }
+            }
+        }
+    }
 }

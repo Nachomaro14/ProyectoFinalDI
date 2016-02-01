@@ -236,6 +236,9 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelPerfil">
+              <Properties>
+                <Property name="toolTipText" type="java.lang.String" value="Perfil"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>

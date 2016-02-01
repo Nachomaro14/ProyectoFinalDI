@@ -288,4 +288,48 @@ public class Modelo extends Database{
         }
         return info;
     }
+    
+    public void avisar(){
+        try {
+            String q = "UPDATE Aviso SET Aviso = 1";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al realizar aviso\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public boolean comprobarAviso(){
+        int aviso = 0;
+        boolean avisado = false;
+        try {
+            String q = "SELECT Aviso FROM Aviso";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            aviso = res.getInt("Aviso");
+            if(aviso == 0){
+                avisado = false;
+            }else{
+                avisado = true;
+            }
+            res.close();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al comprobar aviso\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return avisado;
+    }
+    
+    public void quitarAviso(){
+        try {
+            String q = "UPDATE Aviso SET Aviso = 0";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al realizar aviso\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

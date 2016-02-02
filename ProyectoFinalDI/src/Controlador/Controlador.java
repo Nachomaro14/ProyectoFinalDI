@@ -375,7 +375,7 @@ public class Controlador implements ActionListener, MouseListener{
     public class Comprobacion extends Thread{
         boolean infinito = true;
         public void run(){
-            while(true){
+            while(infinito == true){
                 if(modelo.esAdmin(usuario) == true){
                     if(modelo.comprobarAviso() == true){
                         modelo.quitarAviso();

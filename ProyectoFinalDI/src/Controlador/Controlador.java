@@ -23,19 +23,20 @@ import javax.swing.UIManager;
 
 public class Controlador implements ActionListener, MouseListener{
     
-    Interfaz vista;
-    Modelo modelo = new Modelo();
-    int contadorCarga1 = 0;
-    int contadorCarga2 = 0;
-    String usuario = "";
-    int botonesPrincipales = 0;
-    int botonesBebidas = 0;
-    int botonesMenus = 0;
-    int botonesPasteleria = 0;
-    int botonesOfertas = 0;
-    String botonesPais = "";
-    int aviso = 0;
-    Comprobacion c = new Comprobacion();
+    //INICIALIZAMOS UNA SERIE DE VARIABLES PARA CONTROLAR ALGUNAS OPERACIONES INTERNAS DE LA APLICACIÓN
+    Interfaz vista; //PARA PODER ACCEDER A LA INTERFAZ DE LA APLICACIÓN
+    Modelo modelo = new Modelo(); //PARA PODER ACCEDER AL MODELO Y A LOS DATOS DE LA BD
+    int contadorCarga1 = 0; //PARA CONTROLAR EL TIEMPO DEL HILO UNI1
+    int contadorCarga2 = 0; //PARA CONTROLAR EL TIEMPO DEL HILO UNI2
+    String usuario = ""; //PARA SABER SIEMPRE CUÁL ES EL USUARIO CONECTADO
+    int botonesPrincipales = 0; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES PRINCIPALES
+    int botonesBebidas = 0; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES DE BEBIDAS
+    int botonesMenus = 0; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES DE MENÚS
+    int botonesPasteleria = 0; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES DE PASTELERÍA
+    int botonesOfertas = 0; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES DE OFERTAS
+    String botonesPais = ""; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES DE UN PAÍS Y CUÁL
+    int aviso = 0; //PARA CONTROLAR EL AVISO DE ASISTENCIA AL ADMINISTRADOR
+    Comprobacion c = new Comprobacion(); //PARA PODER UTILIZAR EL HILO COMPROBACIÓN EN DIFERENTES SITUACIONES
 
     public Controlador(Interfaz i) {
         vista = i;
@@ -68,9 +69,7 @@ public class Controlador implements ActionListener, MouseListener{
             vista.pack();
             vista.setLocationRelativeTo(null);
             vista.setVisible(true);
-            vista.setTitle("International Cafe Dessernational");
-            vista.cargando.setTitle("Bienvenido a Dessernational");
-            
+            vista.setTitle("International Cafe Dessernational");          
             
             //AJUSTAMOS EL TAMAÑO DE LAS IMÁGENES A SUS CONTENEDORES            
             int logoInicioW = vista.logoInicio.getWidth();
@@ -95,6 +94,12 @@ public class Controlador implements ActionListener, MouseListener{
             vista.labelNuevoPedido.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
                     vista.panelCentral.setVisible(true);
+                    botonesPrincipales = 1;
+                    botonesBebidas = 0;
+                    botonesMenus = 0;
+                    botonesPasteleria = 0;
+                    botonesOfertas = 0;
+                    botonesPais = "";
                 }
                 public void mousePressed(MouseEvent e){
                     vista.labelNuevoPedido.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -105,7 +110,6 @@ public class Controlador implements ActionListener, MouseListener{
             });
             vista.labelSalir.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
-                    
                     vista.usuarioConectado.setText("");
                     usuario = "";
                     vista.principal.setVisible(false);
@@ -113,6 +117,13 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.txtPass.setText("");
                     vista.setVisible(true);
                     c.close();
+                    
+                    botonesPrincipales = 0;
+                    botonesBebidas = 0;
+                    botonesMenus = 0;
+                    botonesPasteleria = 0;
+                    botonesOfertas = 0;
+                    botonesPais = "";
                 }
                 public void mousePressed(MouseEvent e){
                     vista.labelSalir.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -139,7 +150,6 @@ public class Controlador implements ActionListener, MouseListener{
             });
             
             vista.labelPedidos.addMouseListener(this);
-            vista.labelAvisar.addMouseListener(this);
             vista.panelCentral.setVisible(false);
             vista.PanelDescripcion.setVisible(false);
             
@@ -276,18 +286,18 @@ public class Controlador implements ActionListener, MouseListener{
                 }
                 if(modelo.iniciarSesion(u, p) == true){
                     if(modelo.esAdmin(u) == false){
-                        JOptionPane.showMessageDialog(null, "Ha conectado como "+modelo.getNombreTrabajadorPorUsuario(u));
+                        JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + ".");
                         usuario = u;
                         vista.usuarioConectado.setText(u);
                         inicioDeSesionDeTrabajador();
                     }else{
-                        JOptionPane.showMessageDialog(null, "Ha conectado como "+modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador)");
+                        JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador).");
                         usuario = u;
                         vista.usuarioConectado.setText(u);
                         inicioDeSesionDeAdministrador();
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Credenciales inválidas");
+                    JOptionPane.showMessageDialog(null, "Credenciales inválidas.");
                     vista.setVisible(true);
                     vista.txtUsuario.setText("");
                     vista.txtPass.setText("");
@@ -379,7 +389,7 @@ public class Controlador implements ActionListener, MouseListener{
                 if(modelo.esAdmin(usuario) == true){
                     if(modelo.comprobarAviso() == true){
                         modelo.quitarAviso();
-                        JOptionPane.showMessageDialog(null, "¡AVISO!");
+                        JOptionPane.showMessageDialog(null, "AVISO: Un trabajador necesita asistencia.");
                     }
                 }
             }

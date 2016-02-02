@@ -387,7 +387,7 @@ public class Controlador implements ActionListener, MouseListener{
         
         int perfilW = vista.labelPerfil.getWidth();
         int perfilH = vista.labelPerfil.getHeight();
-        ImageIcon perfilIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/perfil.png"));
+        ImageIcon perfilIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/perfil2.png"));
         Image perfilImg = perfilIcon.getImage();
         Image perfilNewImg = perfilImg.getScaledInstance(perfilW, perfilH, java.awt.Image.SCALE_SMOOTH);
         perfilIcon = new ImageIcon(perfilNewImg);
@@ -395,7 +395,7 @@ public class Controlador implements ActionListener, MouseListener{
         
         int volverW = vista.labelVolver.getWidth();
         int volverH = vista.labelVolver.getHeight();
-        ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"));
+        ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver2.png"));
         Image volverImg = volverIcon.getImage();
         Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
         volverIcon = new ImageIcon(volverNewImg);

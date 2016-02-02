@@ -149,6 +149,18 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             });
             
+            vista.labelVolver.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelVolver.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelVolver.setBorder(null);
+                }
+            });
+            
             vista.labelPedidos.addMouseListener(this);
             vista.panelCentral.setVisible(false);
             vista.PanelDescripcion.setVisible(false);
@@ -162,8 +174,8 @@ public class Controlador implements ActionListener, MouseListener{
         this.vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         this.vista.btnIniciarSesion.addActionListener(this);
         
-        this.vista.btnVolver.setActionCommand("btnVolver");
-        this.vista.btnVolver.addActionListener(this);
+//        this.vista.btnVolver.setActionCommand("btnVolver");
+//        this.vista.btnVolver.addActionListener(this);
     }
     
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
@@ -333,17 +345,17 @@ public class Controlador implements ActionListener, MouseListener{
     }
     
     public void cargarImagenesPrincipal(){
-        int volverW = vista.btnVolver.getWidth();
-        int volverH = vista.btnVolver.getHeight();
-        ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"));
-        Image volverImg = volverIcon.getImage();
-        Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
-        volverIcon = new ImageIcon(volverNewImg);
-        vista.btnVolver.setIcon(volverIcon);
+//        int volverW = vista.btnVolver.getWidth();
+//        int volverH = vista.btnVolver.getHeight();
+//        ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"));
+//        Image volverImg = volverIcon.getImage();
+//        Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
+//        volverIcon = new ImageIcon(volverNewImg);
+//        vista.btnVolver.setIcon(volverIcon);
         
         int salirW = vista.labelSalir.getWidth();
         int salirH = vista.labelSalir.getHeight();
-        ImageIcon salirIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"));
+        ImageIcon salirIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir2.png"));
         Image salirImg = salirIcon.getImage();
         Image salirNewImg = salirImg.getScaledInstance(salirW, salirH, java.awt.Image.SCALE_SMOOTH);
         salirIcon = new ImageIcon(salirNewImg);
@@ -380,6 +392,14 @@ public class Controlador implements ActionListener, MouseListener{
         Image perfilNewImg = perfilImg.getScaledInstance(perfilW, perfilH, java.awt.Image.SCALE_SMOOTH);
         perfilIcon = new ImageIcon(perfilNewImg);
         vista.labelPerfil.setIcon(perfilIcon);
+        
+        int volverW = vista.labelVolver.getWidth();
+        int volverH = vista.labelVolver.getHeight();
+        ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"));
+        Image volverImg = volverIcon.getImage();
+        Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
+        volverIcon = new ImageIcon(volverNewImg);
+        vista.labelVolver.setIcon(volverIcon);
     }
     
     public class Comprobacion extends Thread{

@@ -211,6 +211,7 @@ public class Controlador implements ActionListener, MouseListener{
     public void mouseExited(MouseEvent e) {
     }
     
+    //ESTE MÉTODO SERVIRÁ PARA LIMITAR LA ESCRITURA DE CIFRAS EN UN JTEXTFIELD
     public static void SCifras(JTextField a) {
         a.addKeyListener(new KeyAdapter() {
             @Override
@@ -222,7 +223,8 @@ public class Controlador implements ActionListener, MouseListener{
             }
         });
     }
-
+    
+    //ESTE MÉTODO SERVIRÁ PARA LIMITAR LA ESCRITURA DE LETRAS EN UN JTEXTFIELD
     public static void SLetras(JTextField a) {
         a.addKeyListener(new KeyAdapter() {
             @Override
@@ -235,12 +237,15 @@ public class Controlador implements ActionListener, MouseListener{
         });
     }
     
+    //DEFINIMOS EL PRIMER HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
     public class Uni1 extends Thread{
 
         public void run(){
+            //CONTROLAMOS EL CONTADOR 1
             while(contadorCarga1 < 5){
                 vista.textoCarga.setText("Cargando");
                 
+                //MODIFICAMOS LA IMAGEN DE LA PANTALLA DE CARGA
                 int uni2W = vista.uni.getWidth();
                 int uni2H = vista.uni.getHeight();
                 ImageIcon uni2 = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Uni1.png"));
@@ -251,27 +256,35 @@ public class Controlador implements ActionListener, MouseListener{
                 vista.uni.setIcon(uni2);
                 
                 try{
+                    //PONEMOS EL HILO A DORMIR DURANTE 1 SEGUNDO
                     Thread.sleep(1000);
                 }catch(InterruptedException ie){
                     System.out.println(ie.getMessage());
                 }
+                //AUMENTAMOS EL CONTADOR 1
                 contadorCarga1++;
             }
+            //CONTROLAMOS SI EL CONTADOR 1 HA SUPERADO EL MÁXIMO DEFINIDO
             if(contadorCarga1 >= 5){
                 vista.cargando.setVisible(false);
             }
+            //REINICIAMOS EL CONTADOR 1
             contadorCarga1 = 0;
         }
     }
     
+    //DEFINIMOS EL SEGUNDO HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
     public class Uni2 extends Thread{
 
         public void run(){
+            //CONTROLAMOS EL CONTADOR 2
             while(contadorCarga2 < 5){
                 try{
+                    //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS MEDIOS SEGUNDOS
                     Thread.sleep(500);
                     vista.textoCarga.setText("Cargando...");
                     
+                    //MODIFICAMOS LA IMAGEN DE LA PANTALLA DE CARGA
                     int uni2W = vista.uni.getWidth();
                     int uni2H = vista.uni.getHeight();
                     ImageIcon uni2 = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Uni2.png"));
@@ -281,13 +294,17 @@ public class Controlador implements ActionListener, MouseListener{
                     uni2 = new ImageIcon(uni2NewImg);
                     vista.uni.setIcon(uni2);
                     
+                    //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS MEDIOS SEGUNDOS
                     Thread.sleep(500);
                 }catch(InterruptedException ie){
                     System.out.println(ie.getMessage());
                 }
+                //AUMENTAMOS EL CONTADOR 2
                 contadorCarga2++;
             }
+            //CONTROLAMOS SI EL CONTADOR 2 HA AUMENTADO EL MÁXIMO DEFINIDO
             if(contadorCarga2 >= 5){
+                //EN CASO DE QUE OCURRA, FINALIZAMOS LA PANTALLA DE CARGA, INCIAMOS SESIÓN Y ABRIMOS EL PANEL PRINCIPAL
                 vista.cargando.setVisible(false);
                 String u = vista.txtUsuario.getText();
                 char[] pc = vista.txtPass.getPassword();
@@ -296,6 +313,7 @@ public class Controlador implements ActionListener, MouseListener{
                 for(int i = 0; i < pi; i++){
                     p = p + pc[i];
                 }
+                //CONTROLAMOS EL INICIO DE SESIÓN
                 if(modelo.iniciarSesion(u, p) == true){
                     if(modelo.esAdmin(u) == false){
                         JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + ".");
@@ -315,10 +333,12 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.txtPass.setText("");
                 }
             }
+            //REINICIAMOS EL CONTADOR 2
             contadorCarga2 = 0;
         }
     }
     
+    //DEFINIMOS EL HILO TEMPORIZADOR QUE INICIARÁ LOS DOS HILOS PARA LA ANIMACIÓN DE LA PANTALLA DE CARGA
     public class Temporizador extends Thread{
         public void run(Uni1 u1, Uni2 u2){
             u1.start();
@@ -326,6 +346,7 @@ public class Controlador implements ActionListener, MouseListener{
         }
     }
     
+    //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
     public void inicioDeSesionDeTrabajador(){
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
@@ -334,6 +355,7 @@ public class Controlador implements ActionListener, MouseListener{
         cargarImagenesPrincipal();
     }
     
+    //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INCIAR SESIÓN COMO ADMINISTRADOR
     public void inicioDeSesionDeAdministrador(){
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
@@ -344,14 +366,17 @@ public class Controlador implements ActionListener, MouseListener{
         c.start();
     }
     
+    //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN
     public void cargarImagenesPrincipal(){
-//        int volverW = vista.btnVolver.getWidth();
-//        int volverH = vista.btnVolver.getHeight();
-//        ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"));
-//        Image volverImg = volverIcon.getImage();
-//        Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
-//        volverIcon = new ImageIcon(volverNewImg);
-//        vista.btnVolver.setIcon(volverIcon);
+        //CÓDIGO PARA REDIMENSIONAR UNA IMAGEN SEGÚN SU CONTENEDOR
+        /*int width = vista.btnVolver.getWidth();
+        int height = vista.btnVolver.getHeight();
+        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/image.png"));
+        Image img = icon.getImage();
+        Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newImg);
+        vista.btn.setIcon(icon);
+        */
         
         int salirW = vista.labelSalir.getWidth();
         int salirH = vista.labelSalir.getHeight();
@@ -402,6 +427,7 @@ public class Controlador implements ActionListener, MouseListener{
         vista.labelVolver.setIcon(volverIcon);
     }
     
+    //DEFINIMOS EL HILO COMPROBACIÓN PARA MANEJAR EL AVISO DE ASISTENCIA DE UN TRABAJADOR A UN ADMINISTRADOR
     public class Comprobacion extends Thread{
         boolean infinito = true;
         public void run(){

@@ -13,8 +13,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -36,6 +34,8 @@ public class Controlador implements ActionListener, MouseListener{
     int botonesPasteleria = 0;
     int botonesOfertas = 0;
     String botonesPais = "";
+    int aviso = 0;
+    Comprobacion c = new Comprobacion();
 
     public Controlador(Interfaz i) {
         vista = i;
@@ -44,13 +44,6 @@ public class Controlador implements ActionListener, MouseListener{
     public enum AccionMVC {
         btnIniciarSesion,
         btnVolver
-    }
-    
-    public void presionarLabels(){
-        this.vista.labelNuevoPedido.addMouseListener(this);
-        this.vista.labelPedidos.addMouseListener(this);
-        this.vista.labelAvisar.addMouseListener(this);
-        this.vista.labelSalir.addMouseListener(this);
     }
     
     public void iniciar() {
@@ -112,12 +105,14 @@ public class Controlador implements ActionListener, MouseListener{
             });
             vista.labelSalir.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
+                    
                     vista.usuarioConectado.setText("");
                     usuario = "";
                     vista.principal.setVisible(false);
                     vista.txtUsuario.setText("");
                     vista.txtPass.setText("");
                     vista.setVisible(true);
+                    c.close();
                 }
                 public void mousePressed(MouseEvent e){
                     vista.labelSalir.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -175,9 +170,6 @@ public class Controlador implements ActionListener, MouseListener{
                 Temporizador t = new Temporizador();
                 t.run(uni1, uni2);
                 t.start();
-                Comprobacion c = new Comprobacion();
-                c.run();
-                c.start();
                 break;
         }
     }
@@ -326,6 +318,8 @@ public class Controlador implements ActionListener, MouseListener{
         vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vista.principal.setVisible(true);
         cargarImagenesPrincipal();
+        c.run();
+        c.start();
     }
     
     public void cargarImagenesPrincipal(){
@@ -379,13 +373,20 @@ public class Controlador implements ActionListener, MouseListener{
     }
     
     public class Comprobacion extends Thread{
+        boolean infinito = true;
         public void run(){
-            if(modelo.esAdmin(usuario) == true){
-                if(modelo.comprobarAviso() == true){
-                    JOptionPane.showMessageDialog(null, "¡AVISO!");
-                    modelo.quitarAviso();
+            while(true){
+                if(modelo.esAdmin(usuario) == true){
+                    if(modelo.comprobarAviso() == true){
+                        modelo.quitarAviso();
+                        JOptionPane.showMessageDialog(null, "¡AVISO!");
+                    }
                 }
             }
+        }
+        
+        public void close(){
+            infinito = false;
         }
     }
 }

@@ -339,7 +339,7 @@
                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="panelPedidos" alignment="1" max="32767" attributes="0"/>
+                      <Component id="panelPedidos" alignment="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -691,8 +691,16 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                  <Component id="labelTrabajadorPed" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="jLabel12" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                  <Component id="labelClientePed" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="jLabel14" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel7" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="comboFechaPed" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -700,24 +708,16 @@
                                   <Component id="labelHoraPed" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="labelCodPed" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="jLabel11" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                      <Component id="labelTrabajadorPed" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="jLabel12" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                      <Component id="labelClientePed" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="jLabel14" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                                  </Group>
                               </Group>
                               <Component id="labelPrecioPed" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="jLabel17" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jScrollPane4" pref="484" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane3" max="32767" attributes="0"/>
+                              <Component id="jScrollPane4" pref="539" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

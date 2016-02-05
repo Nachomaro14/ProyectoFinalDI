@@ -265,7 +265,7 @@ public class Controlador implements ActionListener, MouseListener{
 
         public void run(){
             //CONTROLAMOS EL CONTADOR 1
-            while(contadorCarga1 < 5){
+            while(contadorCarga1 < 10){
                 vista.textoCarga.setText("Cargando");
                 
                 //MODIFICAMOS LA IMAGEN DE LA PANTALLA DE CARGA
@@ -280,7 +280,7 @@ public class Controlador implements ActionListener, MouseListener{
                 
                 try{
                     //PONEMOS EL HILO A DORMIR DURANTE 1 SEGUNDO
-                    Thread.sleep(1000);
+                    Thread.sleep(200);
                 }catch(InterruptedException ie){
                     System.out.println(ie.getMessage());
                 }
@@ -288,7 +288,7 @@ public class Controlador implements ActionListener, MouseListener{
                 contadorCarga1++;
             }
             //CONTROLAMOS SI EL CONTADOR 1 HA SUPERADO EL MÁXIMO DEFINIDO
-            if(contadorCarga1 >= 5){
+            if(contadorCarga1 >= 10){
                 vista.cargando.setVisible(false);
             }
             //REINICIAMOS EL CONTADOR 1
@@ -301,10 +301,10 @@ public class Controlador implements ActionListener, MouseListener{
 
         public void run(){
             //CONTROLAMOS EL CONTADOR 2
-            while(contadorCarga2 < 5){
+            while(contadorCarga2 < 10){
                 try{
                     //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS MEDIOS SEGUNDOS
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                     vista.textoCarga.setText("Cargando...");
                     
                     //MODIFICAMOS LA IMAGEN DE LA PANTALLA DE CARGA
@@ -318,7 +318,7 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.uni.setIcon(uni2);
                     
                     //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS MEDIOS SEGUNDOS
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                 }catch(InterruptedException ie){
                     System.out.println(ie.getMessage());
                 }
@@ -326,7 +326,7 @@ public class Controlador implements ActionListener, MouseListener{
                 contadorCarga2++;
             }
             //CONTROLAMOS SI EL CONTADOR 2 HA AUMENTADO EL MÁXIMO DEFINIDO
-            if(contadorCarga2 >= 5){
+            if(contadorCarga2 >= 10){
                 //EN CASO DE QUE OCURRA, FINALIZAMOS LA PANTALLA DE CARGA, INCIAMOS SESIÓN Y ABRIMOS EL PANEL PRINCIPAL
                 vista.cargando.setVisible(false);
                 String u = vista.txtUsuario.getText();
@@ -358,6 +358,9 @@ public class Controlador implements ActionListener, MouseListener{
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Credenciales inválidas. Campos vacíos.");
+                    vista.setVisible(true);
+                    vista.txtUsuario.setText("");
+                    vista.txtPass.setText("");
                 }
             }
             //REINICIAMOS EL CONTADOR 2

@@ -328,10 +328,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="panelCentral" alignment="0" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="panelPedidos" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="panelPedidos" alignment="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -342,11 +339,7 @@
                       <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="panelPedidos" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="panelPedidos" alignment="1" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -526,7 +519,7 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="txtPrecioTotal" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="99" max="32767" attributes="0"/>
+                              <EmptySpace pref="114" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnRealizarPed" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnCancelarPed" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -664,11 +657,6 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="comboFechaPed" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="labelTrabajadorPed" max="32767" attributes="0"/>
-                              </Group>
                               <Component id="jScrollPane3" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -676,22 +664,25 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="labelHoraPed" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="labelHoraPed" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="labelTrabajadorPed" pref="101" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="labelClientePed" min="-2" pref="140" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="labelPrecioPed" min="-2" pref="67" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="labelCodPed" min="-2" pref="94" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane4" pref="989" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="labelClientePed" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="labelPrecioPed" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jScrollPane4" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -701,28 +692,32 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel7" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="comboFechaPed" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel8" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="labelHoraPed" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="labelCodPed" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="jLabel11" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel7" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="comboFechaPed" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="labelHoraPed" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="labelCodPed" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="jLabel11" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                      <Component id="labelTrabajadorPed" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Component id="jLabel12" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                      <Component id="labelClientePed" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Component id="jLabel14" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="labelPrecioPed" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jLabel17" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jScrollPane4" pref="484" max="32767" attributes="0"/>
                               <Component id="jScrollPane3" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel12" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="labelTrabajadorPed" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="jLabel14" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="labelClientePed" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelPrecioPed" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -754,14 +749,8 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelHoraPed">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel9"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelCodPed">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel10"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
@@ -799,9 +788,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelTrabajadorPed">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel13"/>
-                  </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane4">
                   <AuxValues>
@@ -830,9 +816,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelClientePed">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel15"/>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel17">
                   <Properties>
@@ -840,9 +823,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelPrecioPed">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel16"/>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

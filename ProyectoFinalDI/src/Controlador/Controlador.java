@@ -94,6 +94,7 @@ public class Controlador implements ActionListener, MouseListener{
             vista.labelNuevoPedido.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
                     vista.panelCentral.setVisible(true);
+                    vista.panelPedidos.setVisible(false);
                     botonesPrincipales = 1;
                     botonesBebidas = 0;
                     botonesMenus = 0;
@@ -110,8 +111,9 @@ public class Controlador implements ActionListener, MouseListener{
             });
             vista.labelPedidos.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
-                    vista.panelCentral.setVisible(true);
-                    botonesPrincipales = 1;
+                    vista.panelCentral.setVisible(false);
+                    vista.panelPedidos.setVisible(true);
+                    botonesPrincipales = 0;
                     botonesBebidas = 0;
                     botonesMenus = 0;
                     botonesPasteleria = 0;
@@ -119,10 +121,10 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesPais = "";
                 }
                 public void mousePressed(MouseEvent e){
-                    vista.labelNuevoPedido.setBorder(BorderFactory.createLineBorder(Color.black));
+                    vista.labelPedidos.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
                 public void mouseReleased(MouseEvent e){
-                    vista.labelNuevoPedido.setBorder(null);
+                    vista.labelPedidos.setBorder(null);
                 }
             });
             vista.labelSalir.addMouseListener(new MouseAdapter(){

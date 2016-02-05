@@ -160,6 +160,29 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.labelVolver.setBorder(null);
                 }
             });
+            vista.txtUsuario.addKeyListener(new KeyAdapter(){
+                public void keyPressed(KeyEvent evt){
+                    if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                        vista.txtPass.requestFocus();
+                    }
+                }
+            });
+            vista.txtPass.addKeyListener(new KeyAdapter(){
+                public void keyPressed(KeyEvent evt){
+                    if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                    vista.setVisible(false);
+                    vista.cargando.pack();
+                    vista.cargando.setLocationRelativeTo(null);
+                    vista.cargando.setVisible(true);
+
+                    Uni1 uni1 = new Uni1();
+                    Uni2 uni2 = new Uni2();
+                    Temporizador t = new Temporizador();
+                    t.run(uni1, uni2);
+                    t.start();
+                    }
+                }
+            });
             
             vista.labelPedidos.addMouseListener(this);
             vista.panelCentral.setVisible(false);
@@ -313,24 +336,28 @@ public class Controlador implements ActionListener, MouseListener{
                 for(int i = 0; i < pi; i++){
                     p = p + pc[i];
                 }
-                //CONTROLAMOS EL INICIO DE SESIÓN
-                if(modelo.iniciarSesion(u, p) == true){
-                    if(modelo.esAdmin(u) == false){
-                        JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + ".");
-                        usuario = u;
-                        vista.usuarioConectado.setText(u);
-                        inicioDeSesionDeTrabajador();
+                if(!vista.txtUsuario.getText().equals("") && !p.equals("")){
+                    //CONTROLAMOS EL INICIO DE SESIÓN
+                    if(modelo.iniciarSesion(u, p) == true){
+                        if(modelo.esAdmin(u) == false){
+                            JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + ".");
+                            usuario = u;
+                            vista.usuarioConectado.setText(u);
+                            inicioDeSesionDeTrabajador();
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador).");
+                            usuario = u;
+                            vista.usuarioConectado.setText(u);
+                            inicioDeSesionDeAdministrador();
+                        }
                     }else{
-                        JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador).");
-                        usuario = u;
-                        vista.usuarioConectado.setText(u);
-                        inicioDeSesionDeAdministrador();
+                        JOptionPane.showMessageDialog(null, "Credenciales inválidas.");
+                        vista.setVisible(true);
+                        vista.txtUsuario.setText("");
+                        vista.txtPass.setText("");
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Credenciales inválidas.");
-                    vista.setVisible(true);
-                    vista.txtUsuario.setText("");
-                    vista.txtPass.setText("");
+                    JOptionPane.showMessageDialog(null, "Credenciales inválidas. Campos vacíos.");
                 }
             }
             //REINICIAMOS EL CONTADOR 2

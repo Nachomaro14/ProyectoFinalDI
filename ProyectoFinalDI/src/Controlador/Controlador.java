@@ -108,6 +108,23 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.labelNuevoPedido.setBorder(null);
                 }
             });
+            vista.labelPedidos.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    vista.panelCentral.setVisible(true);
+                    botonesPrincipales = 1;
+                    botonesBebidas = 0;
+                    botonesMenus = 0;
+                    botonesPasteleria = 0;
+                    botonesOfertas = 0;
+                    botonesPais = "";
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelNuevoPedido.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelNuevoPedido.setBorder(null);
+                }
+            });
             vista.labelSalir.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
                     vista.usuarioConectado.setText("");
@@ -186,7 +203,8 @@ public class Controlador implements ActionListener, MouseListener{
             
             vista.labelPedidos.addMouseListener(this);
             vista.panelCentral.setVisible(false);
-            vista.PanelDescripcion.setVisible(false);
+            vista.panelDescripcion.setVisible(false);
+            vista.panelPedidos.setVisible(false);
             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Error en el método iniciar()");

@@ -49,6 +49,23 @@ public class Interfaz extends javax.swing.JFrame {
         txtPrecioBase = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
+        PanelPedidos = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        comboFechaPed = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        labelHoraPed = new javax.swing.JLabel();
+        labelCodPed = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaPedidos = new javax.swing.JList<>();
+        jLabel12 = new javax.swing.JLabel();
+        labelTrabajadorPed = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaPedidos = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
+        labelClientePed = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        labelPrecioPed = new javax.swing.JLabel();
         inicio = new javax.swing.JPanel();
         infoInicio = new javax.swing.JPanel();
         logoInicio = new javax.swing.JLabel();
@@ -322,7 +339,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addGroup(panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRealizarPed)
                     .addComponent(btnCancelarPed))
@@ -350,17 +367,132 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel7.setText("Fecha:");
+
+        comboFechaPed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel8.setText("Hora:");
+
+        labelHoraPed.setText("jLabel9");
+
+        labelCodPed.setText("jLabel10");
+
+        jLabel11.setText("Código de pedido:");
+
+        listaPedidos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(listaPedidos);
+
+        jLabel12.setText("Trabajador:");
+
+        labelTrabajadorPed.setText("jLabel13");
+
+        tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tablaPedidos);
+
+        jLabel14.setText("Cliente:");
+
+        labelClientePed.setText("jLabel15");
+
+        jLabel17.setText("Precio:");
+
+        labelPrecioPed.setText("jLabel16");
+
+        javax.swing.GroupLayout PanelPedidosLayout = new javax.swing.GroupLayout(PanelPedidos);
+        PanelPedidos.setLayout(PanelPedidosLayout);
+        PanelPedidosLayout.setHorizontalGroup(
+            PanelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPedidosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PanelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(PanelPedidosLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboFechaPed, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPedidosLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelTrabajadorPed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelPedidosLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelHoraPed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelCodPed, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
+                    .addGroup(PanelPedidosLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelClientePed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel17)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelPrecioPed)))
+                .addContainerGap())
+        );
+        PanelPedidosLayout.setVerticalGroup(
+            PanelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPedidosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboFechaPed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelHoraPed, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCodPed, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addGap(18, 18, 18)
+                .addGroup(PanelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTrabajadorPed, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelClientePed)
+                    .addComponent(labelPrecioPed)
+                    .addComponent(jLabel17)))
+        );
+
         javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
         PanelPrincipal.setLayout(PanelPrincipalLayout);
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(PanelPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
                 .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
+            .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelPrincipalLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(PanelPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         principal.getContentPane().add(PanelPrincipal, java.awt.BorderLayout.CENTER);
@@ -469,6 +601,7 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel PanelDescripcion;
     public javax.swing.JPanel PanelMenu;
+    private javax.swing.JPanel PanelPedidos;
     public javax.swing.JPanel PanelPrincipal;
     public javax.swing.JButton btnCancelarPed;
     public javax.swing.JButton btnEsp;
@@ -477,6 +610,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnRealizarPed;
     public javax.swing.JDialog cargando;
     public javax.swing.JComboBox comboDescuentos;
+    private javax.swing.JComboBox<String> comboFechaPed;
     public javax.swing.JLabel fondo;
     public javax.swing.JPanel fondoInicio;
     public javax.swing.JPanel infoInicio;
@@ -487,28 +621,43 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton jButton3;
     public javax.swing.JButton jButton4;
     public javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel17;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel4;
     public javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JLabel labelAvisar;
+    private javax.swing.JLabel labelClientePed;
+    private javax.swing.JLabel labelCodPed;
+    private javax.swing.JLabel labelHoraPed;
     public javax.swing.JLabel labelNombreArticulo;
     public javax.swing.JLabel labelNuevoPedido;
     public javax.swing.JLabel labelPedidos;
     public javax.swing.JLabel labelPerfil;
     public javax.swing.JLabel labelPrecioArticulo;
+    private javax.swing.JLabel labelPrecioPed;
     public javax.swing.JLabel labelSalir;
+    private javax.swing.JLabel labelTrabajadorPed;
     public javax.swing.JLabel labelVolver;
+    private javax.swing.JList<String> listaPedidos;
     public javax.swing.JLabel logoInicio;
     public javax.swing.JPanel panelArticulos;
     public javax.swing.JPanel panelCentral;
     public javax.swing.JPanel panelCesta;
     public javax.swing.JFrame principal;
     public javax.swing.JTable tablaCesta;
+    private javax.swing.JTable tablaPedidos;
     public javax.swing.JLabel textoCarga;
     public javax.swing.JTextArea txtDescripción;
     public javax.swing.JTextField txtIVA;

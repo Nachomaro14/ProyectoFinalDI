@@ -132,6 +132,8 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.usuarioConectado.setText("");
                     usuario = "";
                     vista.principal.setVisible(false);
+                    vista.panelPedidos.setVisible(false);
+                    vista.panelCentral.setVisible(false);
                     vista.txtUsuario.setText("");
                     vista.txtPass.setText("");
                     vista.setVisible(true);

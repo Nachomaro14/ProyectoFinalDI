@@ -40,7 +40,7 @@ public class Interfaz extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         panelCesta = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaCesta = new javax.swing.JTable();
         btnCancelarPed = new javax.swing.JButton();
         btnRealizarPed = new javax.swing.JButton();
         comboDescuentos = new javax.swing.JComboBox();
@@ -233,7 +233,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         panelCesta.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCesta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -244,7 +244,7 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tablaCesta);
 
         btnCancelarPed.setText("Cancelar");
 
@@ -495,7 +495,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JTable jTable1;
     public javax.swing.JLabel labelAvisar;
     public javax.swing.JLabel labelNombreArticulo;
     public javax.swing.JLabel labelNuevoPedido;
@@ -509,6 +508,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JPanel panelCentral;
     public javax.swing.JPanel panelCesta;
     public javax.swing.JFrame principal;
+    public javax.swing.JTable tablaCesta;
     public javax.swing.JLabel textoCarga;
     public javax.swing.JTextArea txtDescripción;
     public javax.swing.JTextField txtIVA;

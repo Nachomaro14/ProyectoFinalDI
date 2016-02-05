@@ -194,11 +194,15 @@ public class Controlador implements ActionListener, MouseListener{
         }
         
         //ASIGNAMOS LAS ACCIONES A LOS BOTONES DE LA APLICACIÓN
-        this.vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
-        this.vista.btnIniciarSesion.addActionListener(this);
+        vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
+        vista.btnIniciarSesion.addActionListener(this);
         
-//        this.vista.btnVolver.setActionCommand("btnVolver");
-//        this.vista.btnVolver.addActionListener(this);
+        //this.vista.btnVolver.setActionCommand("btnVolver");
+        //this.vista.btnVolver.addActionListener(this);
+        
+        vista.tablaCesta.addMouseListener(this);
+        vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
+        vista.tablaCesta.getTableHeader().setResizingAllowed(false);
     }
     
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
@@ -355,12 +359,14 @@ public class Controlador implements ActionListener, MouseListener{
                         vista.setVisible(true);
                         vista.txtUsuario.setText("");
                         vista.txtPass.setText("");
+                        vista.txtUsuario.requestFocus();
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Credenciales inválidas. Campos vacíos.");
                     vista.setVisible(true);
                     vista.txtUsuario.setText("");
                     vista.txtPass.setText("");
+                    vista.txtUsuario.requestFocus();
                 }
             }
             //REINICIAMOS EL CONTADOR 2

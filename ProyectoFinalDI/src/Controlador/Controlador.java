@@ -44,7 +44,7 @@ public class Controlador implements ActionListener, MouseListener{
 
     public enum AccionMVC {
         btnIniciarSesion,
-        btnVolver
+        btnSalirAdmin
     }
     
     public void iniciar() {
@@ -54,11 +54,14 @@ public class Controlador implements ActionListener, MouseListener{
             UIManager.setLookAndFeel(new UpperEssentialLookAndFeel("ColoresPastel.theme"));
             SwingUtilities.updateComponentTreeUI(vista);
             SwingUtilities.updateComponentTreeUI(vista.principal);
-            SwingUtilities.updateComponentTreeUI(vista.cargando);         
+            SwingUtilities.updateComponentTreeUI(vista.cargando);
+            SwingUtilities.updateComponentTreeUI(vista.principalAdmin);
             
-            //MODIFICAMOS LAS OPCIONES DEL PANEL PRINCIPAL
+            //MODIFICAMOS LAS OPCIONES DE LOS PANELES PRINCIPALES
             vista.principal.setResizable(false);
             vista.principal.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            vista.principalAdmin.setResizable(false);
+            vista.principalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
             
             //MODIFICAMOS EL LOGO DE LAS VENTANAS DE LA APLICACIÓN
             Toolkit t = Toolkit.getDefaultToolkit();
@@ -158,8 +161,8 @@ public class Controlador implements ActionListener, MouseListener{
                     if(modelo.esAdmin(usuario) == true){
                         JOptionPane.showMessageDialog(null, "No disponible.");
                     }else{
-                        JOptionPane.showMessageDialog(null, "Administrador avisado.");
                         modelo.avisar();
+                        JOptionPane.showMessageDialog(null, "Administrador avisado.");
                     }
                 }
                 public void mousePressed(MouseEvent e){
@@ -205,6 +208,73 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             });
             
+            vista.labelAdminProveedores.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelAdminProveedores.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelAdminProveedores.setBorder(null);
+                }
+            });
+            vista.labelAdminPedidos.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelAdminPedidos.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelAdminPedidos.setBorder(null);
+                }
+            });
+            vista.labelAdminStock.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelAdminStock.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelAdminStock.setBorder(null);
+                }
+            });
+            vista.labelAdminTrabajadores.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelAdminTrabajadores.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelAdminTrabajadores.setBorder(null);
+                }
+            });
+            vista.labelAdminVentas.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelAdminVentas.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelAdminVentas.setBorder(null);
+                }
+            });
+            vista.labelAdminConfiguracion.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelAdminConfiguracion.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelAdminConfiguracion.setBorder(null);
+                }
+            });
+            
             vista.labelPedidos.addMouseListener(this);
             vista.panelCentral.setVisible(false);
             vista.panelDescripcion.setVisible(false);
@@ -219,8 +289,8 @@ public class Controlador implements ActionListener, MouseListener{
         vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         vista.btnIniciarSesion.addActionListener(this);
         
-        //this.vista.btnVolver.setActionCommand("btnVolver");
-        //this.vista.btnVolver.addActionListener(this);
+        vista.btnSalirAdmin.setActionCommand("btnSalirAdmin");
+        vista.btnSalirAdmin.addActionListener(this);
         
         vista.tablaCesta.addMouseListener(this);
         vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
@@ -242,6 +312,14 @@ public class Controlador implements ActionListener, MouseListener{
                 t.run(uni1, uni2);
                 t.start();
                 break;
+            case btnSalirAdmin:
+                vista.usuarioConectado.setText("");
+                usuario = "";
+                vista.principalAdmin.setVisible(false);
+                vista.txtUsuario.setText("");
+                vista.txtPass.setText("");
+                vista.setVisible(true);
+                c.close();
         }
     }
     
@@ -373,7 +451,7 @@ public class Controlador implements ActionListener, MouseListener{
                         }else{
                             JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador).");
                             usuario = u;
-                            vista.usuarioConectado.setText(u);
+                            vista.usuarioAdminConectado.setText(u);
                             inicioDeSesionDeAdministrador();
                         }
                     }else{
@@ -415,18 +493,18 @@ public class Controlador implements ActionListener, MouseListener{
     
     //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INCIAR SESIÓN COMO ADMINISTRADOR
     public void inicioDeSesionDeAdministrador(){
-        vista.principal.pack();
-        vista.principal.setLocationRelativeTo(null);
-        vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        vista.principal.setVisible(true);
-        cargarImagenesPrincipal();
+        vista.principalAdmin.pack();
+        vista.principalAdmin.setLocationRelativeTo(null);
+        vista.principalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        vista.principalAdmin.setVisible(true);
+        cargarImagenesPrincipalAdmin();
         c.run();
         c.start();
     }
     
     //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN
     public void cargarImagenesPrincipal(){
-        //CÓDIGO PARA REDIMENSIONAR UNA IMAGEN SEGÚN SU CONTENEDOR
+        //CÓDIGO PARA REDIMENSIONAR UNA IMAGEN SEGÚN SU CONTENEDOR:
         /*int width = vista.btnVolver.getWidth();
         int height = vista.btnVolver.getHeight();
         ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/image.png"));
@@ -470,7 +548,7 @@ public class Controlador implements ActionListener, MouseListener{
         
         int perfilW = vista.labelPerfil.getWidth();
         int perfilH = vista.labelPerfil.getHeight();
-        ImageIcon perfilIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/perfil2.png"));
+        ImageIcon perfilIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/perfil.png"));
         Image perfilImg = perfilIcon.getImage();
         Image perfilNewImg = perfilImg.getScaledInstance(perfilW, perfilH, java.awt.Image.SCALE_SMOOTH);
         perfilIcon = new ImageIcon(perfilNewImg);
@@ -502,5 +580,55 @@ public class Controlador implements ActionListener, MouseListener{
         public void close(){
             infinito = false;
         }
+    }
+    
+    public void cargarImagenesPrincipalAdmin(){
+        int adPW = vista.labelAdminProveedores.getWidth() - 50;
+        int adPH = vista.labelAdminProveedores.getHeight();
+        ImageIcon adPIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminProveedores.png"));
+        Image adPImg = adPIcon.getImage();
+        Image adPNewImg = adPImg.getScaledInstance(adPW, adPH, java.awt.Image.SCALE_SMOOTH);
+        adPIcon = new ImageIcon(adPNewImg);
+        vista.labelAdminProveedores.setIcon(adPIcon);
+        
+        int adPeW = vista.labelAdminPedidos.getWidth() - 200;
+        int adPeH = vista.labelAdminPedidos.getHeight() - 100;
+        ImageIcon adPeIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminPedidos.png"));
+        Image adPeImg = adPeIcon.getImage();
+        Image adPeNewImg = adPeImg.getScaledInstance(adPeW, adPeH, java.awt.Image.SCALE_SMOOTH);
+        adPeIcon = new ImageIcon(adPeNewImg);
+        vista.labelAdminPedidos.setIcon(adPeIcon);
+        
+        int adSW = vista.labelAdminStock.getWidth() - 200;
+        int adSH = vista.labelAdminStock.getHeight() - 100;
+        ImageIcon adSIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminStock.png"));
+        Image adSImg = adSIcon.getImage();
+        Image adSNewImg = adSImg.getScaledInstance(adSW, adSH, java.awt.Image.SCALE_SMOOTH);
+        adSIcon = new ImageIcon(adSNewImg);
+        vista.labelAdminStock.setIcon(adSIcon);
+        
+        int adTW = vista.labelAdminTrabajadores.getWidth() - 200;
+        int adTH = vista.labelAdminTrabajadores.getHeight() - 100;
+        ImageIcon adTIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminTrabajadores.png"));
+        Image adTImg = adTIcon.getImage();
+        Image adTNewImg = adTImg.getScaledInstance(adTW, adTH, java.awt.Image.SCALE_SMOOTH);
+        adTIcon = new ImageIcon(adTNewImg);
+        vista.labelAdminTrabajadores.setIcon(adTIcon);
+        
+        int adVW = vista.labelAdminVentas.getWidth() - 200;
+        int adVH = vista.labelAdminVentas.getHeight() - 100;
+        ImageIcon adVIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminVentas.png"));
+        Image adVImg = adVIcon.getImage();
+        Image adVNewImg = adVImg.getScaledInstance(adVW, adVH, java.awt.Image.SCALE_SMOOTH);
+        adVIcon = new ImageIcon(adVNewImg);
+        vista.labelAdminVentas.setIcon(adVIcon);
+        
+        int adCW = vista.labelAdminConfiguracion.getWidth() - 200;
+        int adCH = vista.labelAdminConfiguracion.getHeight() - 100;
+        ImageIcon adCIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminConfig.png"));
+        Image adCImg = adCIcon.getImage();
+        Image adCNewImg = adCImg.getScaledInstance(adCW, adCH, java.awt.Image.SCALE_SMOOTH);
+        adCIcon = new ImageIcon(adCNewImg);
+        vista.labelAdminConfiguracion.setIcon(adCIcon);
     }
 }

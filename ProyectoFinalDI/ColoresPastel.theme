@@ -1,9 +1,9 @@
-upper.p1=#CCCCFF
-upper.p2=#FFCCFF
-upper.p3=#99CCFF
-upper.s1=#6666FF
-upper.s2=#000000
-upper.s3=#9999FF
+upper.p1=#006E73
+upper.p2=#F5CFF1
+upper.p3=#CACBF5
+upper.s1=#53B5EB
+upper.s2=#5DBFF5
+upper.s3=#67C9FF
 upper.w=#EBECEC
 upper.b=#5B5B5B
 upper.menuOpacity=200

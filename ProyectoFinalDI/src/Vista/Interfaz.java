@@ -51,13 +51,13 @@ public class Interfaz extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         panelPedidos = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        comboFechaPed = new javax.swing.JComboBox<>();
+        comboFechaPed = new javax.swing.JComboBox<String>();
         jLabel8 = new javax.swing.JLabel();
         labelHoraPed = new javax.swing.JLabel();
         labelCodPed = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listaPedidos = new javax.swing.JList<>();
+        listaPedidos = new javax.swing.JList<String>();
         jLabel12 = new javax.swing.JLabel();
         labelTrabajadorPed = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -66,6 +66,19 @@ public class Interfaz extends javax.swing.JFrame {
         labelClientePed = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         labelPrecioPed = new javax.swing.JLabel();
+        principalAdmin = new javax.swing.JFrame();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        labelAdminProveedores = new javax.swing.JLabel();
+        labelAdminPedidos = new javax.swing.JLabel();
+        labelAdminStock = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        labelAdminTrabajadores = new javax.swing.JLabel();
+        labelAdminVentas = new javax.swing.JLabel();
+        labelAdminConfiguracion = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        usuarioAdminConectado = new javax.swing.JLabel();
+        btnSalirAdmin = new javax.swing.JButton();
         inicio = new javax.swing.JPanel();
         infoInicio = new javax.swing.JPanel();
         logoInicio = new javax.swing.JLabel();
@@ -369,16 +382,16 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel7.setText("Fecha:");
 
-        comboFechaPed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboFechaPed.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setText("Hora:");
 
         jLabel11.setText("Código de pedido:");
 
-        listaPedidos.setModel(new javax.swing.AbstractListModel<String>() {
+        listaPedidos.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane3.setViewportView(listaPedidos);
 
@@ -483,6 +496,68 @@ public class Interfaz extends javax.swing.JFrame {
         );
 
         principal.getContentPane().add(panelPrincipal, java.awt.BorderLayout.CENTER);
+
+        principalAdmin.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        principalAdmin.setUndecorated(true);
+
+        jPanel2.setLayout(new java.awt.GridLayout(0, 1));
+
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
+
+        labelAdminProveedores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAdminProveedores.setToolTipText("Proveedores");
+        jPanel3.add(labelAdminProveedores);
+
+        labelAdminPedidos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAdminPedidos.setToolTipText("Pedidos");
+        jPanel3.add(labelAdminPedidos);
+
+        labelAdminStock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAdminStock.setToolTipText("Stock");
+        jPanel3.add(labelAdminStock);
+
+        jPanel2.add(jPanel3);
+
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
+
+        labelAdminTrabajadores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAdminTrabajadores.setToolTipText("Trabajadores");
+        jPanel4.add(labelAdminTrabajadores);
+
+        labelAdminVentas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAdminVentas.setToolTipText("Ventas");
+        jPanel4.add(labelAdminVentas);
+
+        labelAdminConfiguracion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAdminConfiguracion.setToolTipText("Configuración");
+        jPanel4.add(labelAdminConfiguracion);
+
+        jPanel2.add(jPanel4);
+
+        jPanel6.setLayout(new java.awt.GridLayout(0, 1));
+
+        usuarioAdminConectado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        usuarioAdminConectado.setToolTipText("");
+        jPanel6.add(usuarioAdminConectado);
+
+        btnSalirAdmin.setBackground(new java.awt.Color(255, 255, 255));
+        btnSalirAdmin.setText("S                    A                    L                    I                    R");
+        jPanel6.add(btnSalirAdmin);
+
+        javax.swing.GroupLayout principalAdminLayout = new javax.swing.GroupLayout(principalAdmin.getContentPane());
+        principalAdmin.getContentPane().setLayout(principalAdminLayout);
+        principalAdminLayout.setHorizontalGroup(
+            principalAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        principalAdminLayout.setVerticalGroup(
+            principalAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(principalAdminLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -591,6 +666,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnIng;
     public javax.swing.JButton btnIniciarSesion;
     public javax.swing.JButton btnRealizarPed;
+    public javax.swing.JButton btnSalirAdmin;
     public javax.swing.JDialog cargando;
     public javax.swing.JComboBox comboDescuentos;
     private javax.swing.JComboBox<String> comboFechaPed;
@@ -616,10 +692,20 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    public javax.swing.JLabel labelAdminConfiguracion;
+    public javax.swing.JLabel labelAdminPedidos;
+    public javax.swing.JLabel labelAdminProveedores;
+    public javax.swing.JLabel labelAdminStock;
+    public javax.swing.JLabel labelAdminTrabajadores;
+    public javax.swing.JLabel labelAdminVentas;
     public javax.swing.JLabel labelAvisar;
     private javax.swing.JLabel labelClientePed;
     private javax.swing.JLabel labelCodPed;
@@ -643,6 +729,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JPanel panelPedidos;
     public javax.swing.JPanel panelPrincipal;
     public javax.swing.JFrame principal;
+    public javax.swing.JFrame principalAdmin;
     public javax.swing.JTable tablaCesta;
     private javax.swing.JTable tablaPedidos;
     public javax.swing.JLabel textoCarga;
@@ -653,6 +740,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JTextField txtPrecioTotal;
     public javax.swing.JTextField txtUsuario;
     public javax.swing.JLabel uni;
+    public javax.swing.JLabel usuarioAdminConectado;
     public javax.swing.JLabel usuarioConectado;
     // End of variables declaration//GEN-END:variables
 }

@@ -42,11 +42,13 @@ public class Controlador implements ActionListener, MouseListener{
         vista = i;
     }
 
+    //DEFINIMOS EN UN ENUM LOS VALORES DE LOS BOTONES A USAR
     public enum AccionMVC {
         btnIniciarSesion,
         btnSalirAdmin
     }
     
+    //ESTE GRAN MÉTODO INICIARÁ E INICIALIZARÁ TODO LO NECESARIO PARA COMENZAR EL FUNCIONAMIENTO DE LA APLICACIÓN
     public void iniciar() {
 
         try {
@@ -140,7 +142,6 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.txtUsuario.setText("");
                     vista.txtPass.setText("");
                     vista.setVisible(true);
-                    c.close();
                     
                     botonesPrincipales = 0;
                     botonesBebidas = 0;
@@ -275,7 +276,6 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             });
             
-            vista.labelPedidos.addMouseListener(this);
             vista.panelCentral.setVisible(false);
             vista.panelDescripcion.setVisible(false);
             vista.panelPedidos.setVisible(false);
@@ -499,7 +499,6 @@ public class Controlador implements ActionListener, MouseListener{
         vista.principalAdmin.setVisible(true);
         cargarImagenesPrincipalAdmin();
         c.run();
-        c.start();
     }
     
     //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN
@@ -582,6 +581,7 @@ public class Controlador implements ActionListener, MouseListener{
         }
     }
     
+    //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
     public void cargarImagenesPrincipalAdmin(){
         int adPW = vista.labelAdminProveedores.getWidth() - 50;
         int adPH = vista.labelAdminProveedores.getHeight();

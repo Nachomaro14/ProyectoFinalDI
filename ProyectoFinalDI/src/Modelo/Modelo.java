@@ -1,10 +1,9 @@
 package Modelo;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.sql.*;
+import javax.swing.*;
+import javax.swing.table.*;
 
 public class Modelo extends Database{
     
@@ -331,5 +330,17 @@ public class Modelo extends Database{
             JOptionPane.showMessageDialog(null, "Error al realizar aviso\n\n" + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    public DefaultTableModel tablaProductosRegistroVentasVacia() {        
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        try{            
+            tablemodel.addColumn("Producto");
+            tablemodel.addColumn("Cantidad");
+            tablemodel.addColumn("Precio/U");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return tablemodel;
     }
 }

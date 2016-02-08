@@ -3,6 +3,7 @@ package Controlador;
 import Modelo.Modelo;
 import UpperEssential.UpperEssentialLookAndFeel;
 import Vista.Interfaz;
+import Clases.TablaRenderizador;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -37,6 +38,7 @@ public class Controlador implements ActionListener, MouseListener{
     String botonesPais = ""; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES DE UN PAÍS Y CUÁL
     int aviso = 0; //PARA CONTROLAR EL AVISO DE ASISTENCIA AL ADMINISTRADOR
     Comprobacion c = new Comprobacion(); //PARA PODER UTILIZAR EL HILO COMPROBACIÓN EN DIFERENTES SITUACIONES
+    TablaRenderizador render;
 
     public Controlador(Interfaz i) {
         vista = i;
@@ -59,7 +61,7 @@ public class Controlador implements ActionListener, MouseListener{
             SwingUtilities.updateComponentTreeUI(vista.cargando);
             SwingUtilities.updateComponentTreeUI(vista.principalAdmin);
             
-            //MODIFICAMOS LAS OPCIONES DE LOS PANELES PRINCIPALES
+            //MODIFICAMOS LAS PROPIEDADES DE LOS PANELES PRINCIPALES
             vista.principal.setResizable(false);
             vista.principal.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             vista.principalAdmin.setResizable(false);
@@ -295,6 +297,12 @@ public class Controlador implements ActionListener, MouseListener{
         vista.tablaCesta.addMouseListener(this);
         vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
         vista.tablaCesta.getTableHeader().setResizingAllowed(false);
+        
+        render = new TablaRenderizador();
+        vista.tablaPedidos.setDefaultRenderer(String.class, render);
+        vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
+        vista.tablaPedidos.getTableHeader().setReorderingAllowed(false);
+        vista.tablaPedidos.getTableHeader().setResizingAllowed(false);
     }
     
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN

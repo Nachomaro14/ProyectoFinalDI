@@ -120,6 +120,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         panelMenu.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        usuarioConectado.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         usuarioConectado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         btnEsp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bandera española.png"))); // NOI18N
@@ -192,12 +193,15 @@ public class Interfaz extends javax.swing.JFrame {
         panelDescripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         txtDescripción.setColumns(20);
+        txtDescripción.setFont(new java.awt.Font("Malgun Gothic", 1, 10)); // NOI18N
         txtDescripción.setRows(5);
         txtDescripción.setText("DESCRIPCION DE LOS ARTÍCULOS");
         jScrollPane1.setViewportView(txtDescripción);
 
+        labelNombreArticulo.setFont(new java.awt.Font("Malgun Gothic", 1, 10)); // NOI18N
         labelNombreArticulo.setText("Nombre del artículo seleccionado");
 
+        labelPrecioArticulo.setFont(new java.awt.Font("Malgun Gothic", 1, 10)); // NOI18N
         labelPrecioArticulo.setText("Precio del artículo seleccionado");
 
         javax.swing.GroupLayout panelDescripcionLayout = new javax.swing.GroupLayout(panelDescripcion);
@@ -211,7 +215,7 @@ public class Interfaz extends javax.swing.JFrame {
                         .addComponent(labelNombreArticulo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelPrecioArticulo)
-                        .addGap(0, 866, Short.MAX_VALUE))
+                        .addGap(0, 851, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -263,6 +267,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         panelCesta.setBorder(new javax.swing.border.MatteBorder(null));
 
+        tablaCesta.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         tablaCesta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -276,10 +281,13 @@ public class Interfaz extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tablaCesta);
 
+        btnCancelarPed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         btnCancelarPed.setText("Cancelar");
 
+        btnRealizarPed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         btnRealizarPed.setText("Realizar");
 
+        comboDescuentos.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         comboDescuentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboDescuentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,6 +295,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        txtPrecioTotal.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         txtPrecioTotal.setText("*Precio Total");
         txtPrecioTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,10 +303,13 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        txtIVA.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         txtIVA.setText("*IVA");
 
+        txtPrecioBase.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         txtPrecioBase.setText("*PrecioBase");
 
+        jLabel6.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel6.setText("Descuento:");
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/papelerita.png"))); // NOI18N
@@ -380,14 +392,23 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel7.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel7.setText("Fecha:");
 
+        comboFechaPed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         comboFechaPed.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel8.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel8.setText("Hora:");
 
+        labelHoraPed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
+
+        labelCodPed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
+
+        jLabel11.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel11.setText("Código de pedido:");
 
+        listaPedidos.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         listaPedidos.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -395,8 +416,12 @@ public class Interfaz extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listaPedidos);
 
+        jLabel12.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel12.setText("Trabajador:");
 
+        labelTrabajadorPed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
+
+        tablaPedidos.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -410,9 +435,15 @@ public class Interfaz extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tablaPedidos);
 
+        jLabel14.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel14.setText("Cliente:");
 
+        labelClientePed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
+
+        jLabel17.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel17.setText("Precio:");
+
+        labelPrecioPed.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
 
         javax.swing.GroupLayout panelPedidosLayout = new javax.swing.GroupLayout(panelPedidos);
         panelPedidos.setLayout(panelPedidosLayout);
@@ -435,7 +466,7 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
-                        .addComponent(labelTrabajadorPed, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                        .addComponent(labelTrabajadorPed, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel14)
                         .addGap(18, 18, 18)
@@ -474,7 +505,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -535,9 +566,6 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel2.add(jPanel4);
 
         jPanel6.setLayout(new java.awt.GridLayout(0, 1));
-
-        usuarioAdminConectado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        usuarioAdminConectado.setToolTipText("");
         jPanel6.add(usuarioAdminConectado);
 
         btnSalirAdmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -548,13 +576,13 @@ public class Interfaz extends javax.swing.JFrame {
         principalAdmin.getContentPane().setLayout(principalAdminLayout);
         principalAdminLayout.setHorizontalGroup(
             principalAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         principalAdminLayout.setVerticalGroup(
             principalAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(principalAdminLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                 .addGap(5, 5, 5)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -569,10 +597,13 @@ public class Interfaz extends javax.swing.JFrame {
 
         logoInicio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jLabel1.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel1.setText("Dessernational©");
 
+        jLabel2.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel2.setText("Ignacio Mazuecos Roldán & Alberto M. Moreno López");
 
+        jLabel3.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel3.setText("Escuela Salesianas Mª Auxiliadora - Nervión");
 
         javax.swing.GroupLayout infoInicioLayout = new javax.swing.GroupLayout(infoInicio);
@@ -606,18 +637,18 @@ public class Interfaz extends javax.swing.JFrame {
         fondoInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Malgun Gothic", 1, 18)); // NOI18N
         jLabel4.setText("USUARIO");
         fondoInicio.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, 20));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Malgun Gothic", 1, 18)); // NOI18N
         jLabel5.setText("CONTRASEÑA");
         fondoInicio.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, 20));
         fondoInicio.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 150, -1));
         fondoInicio.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 150, -1));
 
-        btnIniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnIniciarSesion.setFont(new java.awt.Font("Malgun Gothic", 1, 18)); // NOI18N
         btnIniciarSesion.setText("INICIAR SESIÓN");
         btnIniciarSesion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         fondoInicio.add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
@@ -731,7 +762,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JFrame principal;
     public javax.swing.JFrame principalAdmin;
     public javax.swing.JTable tablaCesta;
-    private javax.swing.JTable tablaPedidos;
+    public javax.swing.JTable tablaPedidos;
     public javax.swing.JLabel textoCarga;
     public javax.swing.JTextArea txtDescripción;
     public javax.swing.JTextField txtIVA;

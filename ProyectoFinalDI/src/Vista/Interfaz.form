@@ -148,6 +148,9 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="usuarioConectado">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Malgun Gothic" size="11" style="1"/>
+                </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
               </Properties>
               <AuxValues>
@@ -251,7 +254,7 @@
                               <Component id="labelNombreArticulo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="labelPrecioArticulo" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="866" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="851" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                       </Group>
@@ -286,6 +289,9 @@
                 <Component class="javax.swing.JTextArea" name="txtDescripci&#xf3;n">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="10" style="1"/>
+                    </Property>
                     <Property name="rows" type="int" value="5"/>
                     <Property name="text" type="java.lang.String" value="DESCRIPCION DE LOS ART&#xcd;CULOS"/>
                   </Properties>
@@ -297,6 +303,9 @@
             </Container>
             <Component class="javax.swing.JLabel" name="labelNombreArticulo">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Malgun Gothic" size="10" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Nombre del art&#xed;culo seleccionado"/>
               </Properties>
               <AuxValues>
@@ -305,6 +314,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="labelPrecioArticulo">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Malgun Gothic" size="10" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Precio del art&#xed;culo seleccionado"/>
               </Properties>
               <AuxValues>
@@ -540,6 +552,9 @@
                       <SubComponents>
                         <Component class="javax.swing.JTable" name="tablaCesta">
                           <Properties>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Malgun Gothic" size="11" style="1"/>
+                            </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="4" rowCount="4">
                                 <Column editable="true" title="Title 1" type="java.lang.Object"/>
@@ -557,6 +572,9 @@
                     </Container>
                     <Component class="javax.swing.JButton" name="btnCancelarPed">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Cancelar"/>
                       </Properties>
                       <AuxValues>
@@ -565,6 +583,9 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRealizarPed">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Realizar"/>
                       </Properties>
                       <AuxValues>
@@ -573,6 +594,9 @@
                     </Component>
                     <Component class="javax.swing.JComboBox" name="comboDescuentos">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="4">
                             <StringItem index="0" value="Item 1"/>
@@ -591,6 +615,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtPrecioTotal">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="*Precio Total"/>
                       </Properties>
                       <Events>
@@ -602,6 +629,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtIVA">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="*IVA"/>
                       </Properties>
                       <AuxValues>
@@ -610,6 +640,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtPrecioBase">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="*PrecioBase"/>
                       </Properties>
                       <AuxValues>
@@ -618,6 +651,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel6">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Descuento:"/>
                       </Properties>
                       <AuxValues>
@@ -668,7 +704,7 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="labelTrabajadorPed" pref="101" max="32767" attributes="0"/>
+                                  <Component id="labelTrabajadorPed" pref="82" max="32767" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -715,7 +751,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane3" max="32767" attributes="0"/>
-                              <Component id="jScrollPane4" pref="539" max="32767" attributes="0"/>
+                              <Component id="jScrollPane4" pref="538" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -725,11 +761,17 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel7">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Fecha:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="comboFechaPed">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="4">
                         <StringItem index="0" value="Item 1"/>
@@ -745,15 +787,31 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Hora:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelHoraPed">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelCodPed">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="C&#xf3;digo de pedido:"/>
                   </Properties>
                 </Component>
@@ -766,6 +824,9 @@
                   <SubComponents>
                     <Component class="javax.swing.JList" name="listaPedidos">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                           <StringArray count="5">
                             <StringItem index="0" value="Item 1"/>
@@ -784,10 +845,18 @@
                 </Container>
                 <Component class="javax.swing.JLabel" name="jLabel12">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Trabajador:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelTrabajadorPed">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
+                  </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane4">
                   <AuxValues>
@@ -798,6 +867,9 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tablaPedidos">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Malgun Gothic" size="11" style="1"/>
+                        </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="4">
                             <Column editable="true" title="Title 1" type="java.lang.Object"/>
@@ -807,22 +879,41 @@
                           </Table>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JLabel" name="jLabel14">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cliente:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelClientePed">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel17">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Precio:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelPrecioPed">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Malgun Gothic" size="11" style="1"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -842,14 +933,14 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jPanel6" alignment="0" pref="759" max="32767" attributes="0"/>
+              <Component id="jPanel6" alignment="0" pref="803" max="32767" attributes="0"/>
               <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jPanel2" pref="374" max="32767" attributes="0"/>
+                  <Component id="jPanel2" pref="420" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -946,10 +1037,6 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="usuarioAdminConectado">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="toolTipText" type="java.lang.String" value=""/>
-              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
@@ -1079,6 +1166,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Malgun Gothic" size="11" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Dessernational&#xa9;"/>
               </Properties>
               <AuxValues>
@@ -1087,6 +1177,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Malgun Gothic" size="11" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ignacio Mazuecos Rold&#xe1;n &amp; Alberto M. Moreno L&#xf3;pez"/>
               </Properties>
               <AuxValues>
@@ -1095,6 +1188,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Malgun Gothic" size="11" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Escuela Salesianas M&#xaa; Auxiliadora - Nervi&#xf3;n"/>
               </Properties>
               <AuxValues>
@@ -1123,7 +1219,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="18" style="1"/>
+                  <Font name="Malgun Gothic" size="18" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="USUARIO"/>
               </Properties>
@@ -1142,7 +1238,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="18" style="1"/>
+                  <Font name="Malgun Gothic" size="18" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="CONTRASE&#xd1;A"/>
               </Properties>
@@ -1178,7 +1274,7 @@
             <Component class="javax.swing.JButton" name="btnIniciarSesion">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="18" style="1"/>
+                  <Font name="Malgun Gothic" size="18" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="INICIAR SESI&#xd3;N"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

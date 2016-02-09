@@ -343,4 +343,61 @@ public class Modelo extends Database{
         }
         return tablemodel;
     }
+    
+    public String[] getFechas() {
+        int registros = 1;
+        try {
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT COUNT(Fecha) as total FROM RegVentas GROUP BY Fecha");
+            ResultSet res = pstm.executeQuery();
+            if(res.next()){
+                res.next();
+                if(res != null){
+                    registros = res.getInt("total");
+                }
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al contar tuplas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        String[] fechas = new String[registros];
+        try {
+            String q = "SELECT Fecha FROM RegVentas GROUP BY Fecha";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                fechas[i] = res.getString("Fecha");
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return fechas;
+    }
+    
+    public DefaultListModel listaPedidos(String fecha){
+        DefaultListModel listmodel = new DefaultListModel();
+        try {
+            String q = "SELECT Codigo, Hora, Cliente FROM RegVentas WHERE Fecha = '"+fecha+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                String cod = String.valueOf(res.getInt("Codigo"));
+                String h = res.getString("Hora");
+                String c = res.getString("Cliente");
+                String t = cod + "-" + h + "-" + c;
+                listmodel.addElement(t);
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return listmodel;
+    }
 }

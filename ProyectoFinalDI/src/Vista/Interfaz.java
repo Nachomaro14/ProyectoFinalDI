@@ -66,6 +66,7 @@ public class Interfaz extends javax.swing.JFrame {
         labelClientePed = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         labelPrecioPed = new javax.swing.JLabel();
+        panelPerfil = new javax.swing.JPanel();
         principalAdmin = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -509,6 +510,17 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        javax.swing.GroupLayout panelPerfilLayout = new javax.swing.GroupLayout(panelPerfil);
+        panelPerfil.setLayout(panelPerfilLayout);
+        panelPerfilLayout.setHorizontalGroup(
+            panelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelPerfilLayout.setVerticalGroup(
+            panelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
@@ -516,6 +528,11 @@ public class Interfaz extends javax.swing.JFrame {
             .addComponent(panelCentral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panelPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelPrincipalLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -524,6 +541,11 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
             .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panelPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelPrincipalLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         principal.getContentPane().add(panelPrincipal, java.awt.BorderLayout.CENTER);
@@ -566,6 +588,8 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel2.add(jPanel4);
 
         jPanel6.setLayout(new java.awt.GridLayout(0, 1));
+
+        usuarioAdminConectado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel6.add(usuarioAdminConectado);
 
         btnSalirAdmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -700,7 +724,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnSalirAdmin;
     public javax.swing.JDialog cargando;
     public javax.swing.JComboBox comboDescuentos;
-    private javax.swing.JComboBox<String> comboFechaPed;
+    public javax.swing.JComboBox<String> comboFechaPed;
     public javax.swing.JLabel fondo;
     public javax.swing.JPanel fondoInicio;
     public javax.swing.JPanel infoInicio;
@@ -738,19 +762,19 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel labelAdminTrabajadores;
     public javax.swing.JLabel labelAdminVentas;
     public javax.swing.JLabel labelAvisar;
-    private javax.swing.JLabel labelClientePed;
-    private javax.swing.JLabel labelCodPed;
-    private javax.swing.JLabel labelHoraPed;
+    public javax.swing.JLabel labelClientePed;
+    public javax.swing.JLabel labelCodPed;
+    public javax.swing.JLabel labelHoraPed;
     public javax.swing.JLabel labelNombreArticulo;
     public javax.swing.JLabel labelNuevoPedido;
     public javax.swing.JLabel labelPedidos;
     public javax.swing.JLabel labelPerfil;
     public javax.swing.JLabel labelPrecioArticulo;
-    private javax.swing.JLabel labelPrecioPed;
+    public javax.swing.JLabel labelPrecioPed;
     public javax.swing.JLabel labelSalir;
-    private javax.swing.JLabel labelTrabajadorPed;
+    public javax.swing.JLabel labelTrabajadorPed;
     public javax.swing.JLabel labelVolver;
-    private javax.swing.JList<String> listaPedidos;
+    public javax.swing.JList<String> listaPedidos;
     public javax.swing.JLabel logoInicio;
     public javax.swing.JPanel panelArticulos;
     public javax.swing.JPanel panelCentral;
@@ -758,6 +782,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JPanel panelDescripcion;
     public javax.swing.JPanel panelMenu;
     public javax.swing.JPanel panelPedidos;
+    private javax.swing.JPanel panelPerfil;
     public javax.swing.JPanel panelPrincipal;
     public javax.swing.JFrame principal;
     public javax.swing.JFrame principalAdmin;

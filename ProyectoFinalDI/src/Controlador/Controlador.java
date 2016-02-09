@@ -15,6 +15,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -126,6 +129,11 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesPasteleria = 0;
                     botonesOfertas = 0;
                     botonesPais = "";
+                    
+                    vista.comboFechaPed.setModel(new DefaultComboBoxModel(modelo.getFechas()));
+                    String fp = "";
+                    DefaultListModel lm = modelo.listaPedidos(fp);
+                    vista.listaPedidos.setModel(lm);
                 }
                 public void mousePressed(MouseEvent e){
                     vista.labelPedidos.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -175,7 +183,6 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.labelAvisar.setBorder(null);
                 }
             });
-            
             vista.labelVolver.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
                     
@@ -186,6 +193,17 @@ public class Controlador implements ActionListener, MouseListener{
                 public void mouseReleased(MouseEvent e){
                     vista.labelVolver.setBorder(null);
                 }
+            });
+            vista.labelPerfil.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e){
+                    
+                }
+                public void mousePressed(MouseEvent e){
+                    vista.labelPerfil.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                public void mouseReleased(MouseEvent e){
+                    vista.labelPerfil.setBorder(null);
+                }            
             });
             vista.txtUsuario.addKeyListener(new KeyAdapter(){
                 public void keyPressed(KeyEvent evt){

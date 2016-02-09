@@ -208,6 +208,20 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesOfertas = 0;
                     botonesPais = "";
                     
+                    Object[] info = modelo.infoTrabajador(usuario);
+                    vista.dniPerfil.setText(info[0].toString());
+                    String nombre = info[1].toString();
+                    String apellidos = info[2].toString();
+                    vista.nombrePerfil.setText(nombre + " " + apellidos);
+                    vista.telefonoPerfil.setText(info[3].toString());
+                    vista.correoPerfil.setText(info[4].toString());
+                    vista.direccionPerfil.setText(info[5].toString());
+                    
+                    int tiempo = (int) info[6];
+                    vista.tiempoTrabajadoPerfil.setText(calculaTiempo(tiempo));
+                    vista.recaudacionPerfil.setText(info[7].toString() + "€");
+                    int valoracion = (int) info[8];
+                    imagenValoracion(valoracion);
                 }
                 public void mousePressed(MouseEvent e){
                     vista.labelPerfil.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -667,5 +681,32 @@ public class Controlador implements ActionListener, MouseListener{
         Image adCNewImg = adCImg.getScaledInstance(adCW, adCH, java.awt.Image.SCALE_SMOOTH);
         adCIcon = new ImageIcon(adCNewImg);
         vista.labelAdminConfiguracion.setIcon(adCIcon);
+    }
+    
+    public String calculaTiempo(int t){
+        int h = 0;
+        int m = 0;
+        int s = 0;
+        while(t > 3600){
+            t = t - 3600;
+            h++;
+        }
+        while(t > 60){
+            m = m - 60;
+            m++;
+        }
+        s = t;
+        String tiempo = h + " horas, " + m + " minutos, " + s + " segundos";
+        return tiempo;
+    }
+    
+    public void imagenValoracion(int v){
+        int vW = vista.valoracionPerfil.getWidth();
+        int vH = vista.valoracionPerfil.getHeight();
+        ImageIcon vIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/" + v + ".png"));
+        Image vImg = vIcon.getImage();
+        Image vNewImg = vImg.getScaledInstance(vW, vH, java.awt.Image.SCALE_SMOOTH);
+        vIcon = new ImageIcon(vNewImg);
+        vista.valoracionPerfil.setIcon(vIcon);
     }
 }

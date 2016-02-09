@@ -70,14 +70,14 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         nombrePerfil = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        apellidosPerfil = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         telefonoPerfil = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         correoPerfil = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         direccionPerfil = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        dniPerfil = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         tiempoTrabajadoPerfil = new javax.swing.JLabel();
@@ -528,15 +528,40 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Nombre:");
 
-        jLabel20.setText("Apellidos:");
+        nombrePerfil.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        nombrePerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Teléfono:");
 
+        telefonoPerfil.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        telefonoPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("Correo:");
 
+        correoPerfil.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        correoPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("Dirección:");
+
+        direccionPerfil.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        direccionPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("DNI:");
+
+        dniPerfil.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        dniPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -545,32 +570,29 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dniPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nombrePerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(apellidosPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(telefonoPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(correoPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(direccionPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel26))
-                        .addGap(0, 701, Short.MAX_VALUE)))
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel19)
+                .addGap(18, 18, 18)
+                .addComponent(dniPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel18)
                 .addGap(18, 18, 18)
                 .addComponent(nombrePerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel20)
-                .addGap(18, 18, 18)
-                .addComponent(apellidosPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel22)
                 .addGap(18, 18, 18)
@@ -583,14 +605,28 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jLabel26)
                 .addGap(18, 18, 18)
                 .addComponent(direccionPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Tiempo de trabajo:");
 
+        tiempoTrabajadoPerfil.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        tiempoTrabajadoPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Recaudación:");
 
+        recaudacionPerfil.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        recaudacionPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Valoración:");
+
+        valoracionPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -601,13 +637,10 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tiempoTrabajadoPerfil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(recaudacionPerfil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel16))
-                        .addGap(0, 331, Short.MAX_VALUE))
-                    .addComponent(valoracionPerfil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(valoracionPerfil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -633,8 +666,8 @@ public class Interfaz extends javax.swing.JFrame {
         panelPerfilLayout.setHorizontalGroup(
             panelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPerfilLayout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panelPerfilLayout.setVerticalGroup(
@@ -832,7 +865,6 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel apellidosPerfil;
     public javax.swing.JButton btnCancelarPed;
     public javax.swing.JButton btnEsp;
     public javax.swing.JButton btnIng;
@@ -842,8 +874,9 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JDialog cargando;
     public javax.swing.JComboBox comboDescuentos;
     public javax.swing.JComboBox<String> comboFechaPed;
-    private javax.swing.JLabel correoPerfil;
-    private javax.swing.JLabel direccionPerfil;
+    public javax.swing.JLabel correoPerfil;
+    public javax.swing.JLabel direccionPerfil;
+    public javax.swing.JLabel dniPerfil;
     public javax.swing.JLabel fondo;
     public javax.swing.JPanel fondoInicio;
     public javax.swing.JPanel infoInicio;
@@ -861,8 +894,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     public javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
@@ -905,7 +938,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel labelVolver;
     public javax.swing.JList<String> listaPedidos;
     public javax.swing.JLabel logoInicio;
-    private javax.swing.JLabel nombrePerfil;
+    public javax.swing.JLabel nombrePerfil;
     public javax.swing.JPanel panelArticulos;
     public javax.swing.JPanel panelCentral;
     public javax.swing.JPanel panelCesta;
@@ -916,12 +949,12 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JPanel panelPrincipal;
     public javax.swing.JFrame principal;
     public javax.swing.JFrame principalAdmin;
-    private javax.swing.JLabel recaudacionPerfil;
+    public javax.swing.JLabel recaudacionPerfil;
     public javax.swing.JTable tablaCesta;
     public javax.swing.JTable tablaPedidos;
-    private javax.swing.JLabel telefonoPerfil;
+    public javax.swing.JLabel telefonoPerfil;
     public javax.swing.JLabel textoCarga;
-    private javax.swing.JLabel tiempoTrabajadoPerfil;
+    public javax.swing.JLabel tiempoTrabajadoPerfil;
     public javax.swing.JTextArea txtDescripción;
     public javax.swing.JTextField txtIVA;
     public javax.swing.JPasswordField txtPass;
@@ -931,6 +964,6 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel uni;
     public javax.swing.JLabel usuarioAdminConectado;
     public javax.swing.JLabel usuarioConectado;
-    private javax.swing.JLabel valoracionPerfil;
+    public javax.swing.JLabel valoracionPerfil;
     // End of variables declaration//GEN-END:variables
 }

@@ -400,4 +400,29 @@ public class Modelo extends Database{
         }
         return listmodel;
     }
+    
+    public Object[] infoTrabajador(String usuario){
+        Object[] info = new Object[9];
+        try {
+            String q = "SELECT DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Tiempo, Recaudacion, Valoracion FROM Trabajador WHERE Usuario = '" + usuario + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                info[0] = res.getString("DNI");
+                info[1] = res.getString("Nombre");
+                info[2] = res.getString("Apellidos");
+                info[3] = res.getString("Telefono");
+                info[4] = res.getString("Correo");
+                info[5] = res.getString("Direccion");
+                info[6] = res.getInt("Tiempo");
+                info[7] = res.getDouble("Recaudacion");
+                info[8] = res.getInt("Valoracion");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return info;
+    }
 }

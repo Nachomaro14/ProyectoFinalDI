@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -40,6 +42,7 @@ public class Controlador implements ActionListener, MouseListener{
     String botonesPais = ""; //PARA SABER SI ESTAMOS OBSERVANDO LOS BOTONES DE UN PAÍS Y CUÁL
     int aviso = 0; //PARA CONTROLAR EL AVISO DE ASISTENCIA AL ADMINISTRADOR
     Comprobacion c = new Comprobacion(); //PARA PODER UTILIZAR EL HILO COMPROBACIÓN EN DIFERENTES SITUACIONES
+    Acumulador a = new Acumulador(); //PARA PODER UTILIZAR EL HILO ACUMULADOR EN DIFERENTES SITUACIONES
     TablaRenderizador render;
 
     public Controlador(Interfaz i) {
@@ -145,6 +148,7 @@ public class Controlador implements ActionListener, MouseListener{
             });
             vista.labelSalir.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
+                    a.close();
                     vista.usuarioConectado.setText("");
                     usuario = "";
                     vista.principal.setVisible(false);
@@ -540,6 +544,9 @@ public class Controlador implements ActionListener, MouseListener{
         vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vista.principal.setVisible(true);
         cargarImagenesPrincipal();
+        int tiempo = modelo.getTiempo(usuario);
+        a.resumir();
+        a.run(tiempo);
     }
     
     //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INCIAR SESIÓN COMO ADMINISTRADOR
@@ -687,13 +694,14 @@ public class Controlador implements ActionListener, MouseListener{
         int h = 0;
         int m = 0;
         int s = 0;
-        while(t >= 3600){
-            t = t - 3600;
-            h++;
-        }
-        while(t >= 60){
-            m = m - 60;
-            m++;
+        while(t > 60){
+            if(t >= 3600){
+                t = t - 3600;
+                h++;
+            }else{
+                t = t - 60;
+                m++;
+            }
         }
         s = t;
         String tiempo = h + " horas, " + m + " minutos, " + s + " segundos";
@@ -708,5 +716,34 @@ public class Controlador implements ActionListener, MouseListener{
         Image vNewImg = vImg.getScaledInstance(vW, vH, java.awt.Image.SCALE_SMOOTH);
         vIcon = new ImageIcon(vNewImg);
         vista.valoracionPerfil.setIcon(vIcon);
+    }
+    
+    public class Acumulador extends Thread{
+        boolean infinito = true;
+        int t;
+        public void run(int c){
+            t = c;
+            while(infinito == true){
+                try {
+                    sleep(1000);
+                    t++;
+                    String s = calculaTiempo(t);
+                    vista.tiempoTrabajadoPerfil.setText(s);
+                    System.out.println(t);
+                } catch (InterruptedException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+        
+        public void resumir(){
+            infinito = true;
+        }
+        
+        public void close(){
+            modelo.actualizarTiempo(usuario, t);
+            infinito = false;
+            System.out.println("Tiempo actualizado: " + t + " " + usuario);
+        }
     }
 }

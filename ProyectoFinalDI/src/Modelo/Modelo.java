@@ -425,4 +425,33 @@ public class Modelo extends Database{
         }
         return info;
     }
+    
+    public int getTiempo(String usuario){
+        int tiempo = 0;
+        try {
+            String q = "SELECT Tiempo FROM Trabajador WHERE Usuario = '" + usuario + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                tiempo = res.getInt("Tiempo");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return tiempo;
+    }
+    
+    public void actualizarTiempo(String usuario, int tiempo){
+        try {
+            String q = "UPDATE Trabajador SET Tiempo = " + tiempo + " WHERE Usuario = '" + usuario + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

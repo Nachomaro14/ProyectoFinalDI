@@ -687,11 +687,11 @@ public class Controlador implements ActionListener, MouseListener{
         int h = 0;
         int m = 0;
         int s = 0;
-        while(t > 3600){
+        while(t >= 3600){
             t = t - 3600;
             h++;
         }
-        while(t > 60){
+        while(t >= 60){
             m = m - 60;
             m++;
         }

@@ -15,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -105,6 +104,7 @@ public class Controlador implements ActionListener, MouseListener{
                 public void mouseClicked(MouseEvent e){
                     vista.panelCentral.setVisible(true);
                     vista.panelPedidos.setVisible(false);
+                    vista.panelPerfil.setVisible(false);
                     botonesPrincipales = 1;
                     botonesBebidas = 0;
                     botonesMenus = 0;
@@ -123,6 +123,7 @@ public class Controlador implements ActionListener, MouseListener{
                 public void mouseClicked(MouseEvent e){
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(true);
+                    vista.panelPerfil.setVisible(false);
                     botonesPrincipales = 0;
                     botonesBebidas = 0;
                     botonesMenus = 0;
@@ -149,6 +150,7 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.principal.setVisible(false);
                     vista.panelPedidos.setVisible(false);
                     vista.panelCentral.setVisible(false);
+                    vista.panelPerfil.setVisible(false);
                     vista.txtUsuario.setText("");
                     vista.txtPass.setText("");
                     vista.setVisible(true);
@@ -195,7 +197,16 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             });
             vista.labelPerfil.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e){
+                public void mouseClicked(MouseEvent e){                    
+                    vista.panelCentral.setVisible(false);
+                    vista.panelPedidos.setVisible(false);
+                    vista.panelPerfil.setVisible(true);
+                    botonesPrincipales = 0;
+                    botonesBebidas = 0;
+                    botonesMenus = 0;
+                    botonesPasteleria = 0;
+                    botonesOfertas = 0;
+                    botonesPais = "";
                     
                 }
                 public void mousePressed(MouseEvent e){
@@ -299,7 +310,7 @@ public class Controlador implements ActionListener, MouseListener{
             vista.panelCentral.setVisible(false);
             vista.panelDescripcion.setVisible(false);
             vista.panelPedidos.setVisible(false);
-            
+            vista.panelPerfil.setVisible(false);
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Error en el método iniciar()");
             ex.printStackTrace();

@@ -221,8 +221,6 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.correoPerfil.setText(info[4].toString());
                     vista.direccionPerfil.setText(info[5].toString());
                     
-                    int tiempo = (int) info[6];
-                    vista.tiempoTrabajadoPerfil.setText(calculaTiempo(tiempo));
                     vista.recaudacionPerfil.setText(info[7].toString() + "€");
                     int valoracion = (int) info[8];
                     imagenValoracion(valoracion);

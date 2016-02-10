@@ -1,6 +1,5 @@
 package Modelo;
 
-import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.*;

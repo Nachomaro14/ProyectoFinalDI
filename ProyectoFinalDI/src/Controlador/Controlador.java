@@ -41,7 +41,7 @@ public class Controlador implements ActionListener, MouseListener{
     int aviso = 0; //PARA CONTROLAR EL AVISO DE ASISTENCIA AL ADMINISTRADOR
     Comprobacion c = new Comprobacion(); //PARA PODER UTILIZAR EL HILO COMPROBACIÓN EN DIFERENTES SITUACIONES
     Acumulador a = new Acumulador(); //PARA PODER UTILIZAR EL HILO ACUMULADOR EN DIFERENTES SITUACIONES
-    TablaRenderizador render;
+    TablaRenderizador render; //PARA CONFIGURAR LA TABLA DE LOS PEDIDOS
 
     public Controlador(Interfaz i) {
         vista = i;
@@ -106,6 +106,8 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.panelCentral.setVisible(true);
                     vista.panelPedidos.setVisible(false);
                     vista.panelPerfil.setVisible(false);
+                    //DEBEMOS CONTROLAR QUÉ BOTONES SE MOSTRARÁN EN EL PANEL DE PEDIDO EN TODO MOMENTO
+                    //ESTO SERÁ IMPORTANTE A LA HORA DE PULSAR EL BOTÓN "ATRÁS"
                     botonesPrincipales = 1;
                     botonesBebidas = 0;
                     botonesMenus = 0;
@@ -113,6 +115,7 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesOfertas = 0;
                     botonesPais = "";
                 }
+                //REDEFINIMOS EL MÉTODO MOUSEPRESSED PARA QUE EL LABEL PAREZCA UN BOTÓN PULSADO
                 public void mousePressed(MouseEvent e){
                     vista.labelNuevoPedido.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
@@ -132,6 +135,7 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesOfertas = 0;
                     botonesPais = "";
                     
+                    //CONFIGURAMOS EL COMBOBOX PARA QUE MUESTRE LAS FECHAS DE PEDIDOS REGISTRADOS HASTA ESE MOMENTO
                     vista.comboFechaPed.setModel(new DefaultComboBoxModel(modelo.getFechas()));
                     String fp = "";
                     DefaultListModel lm = modelo.listaPedidos(fp);
@@ -146,6 +150,7 @@ public class Controlador implements ActionListener, MouseListener{
             });
             vista.labelSalir.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
+                    //CERRAMOS EL HILO QUE ACUMULA TIEMPO DE TRABAJO DEL TRABAJADOR
                     a.close();
                     vista.usuarioConectado.setText("");
                     usuario = "";
@@ -173,9 +178,11 @@ public class Controlador implements ActionListener, MouseListener{
             });
             vista.labelAvisar.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
+                    //COMPROBAMOS SI EL USUATIO ES UN TRABAJADOR PARA PODER REALIZAR UN AVISO
                     if(modelo.esAdmin(usuario) == true){
                         JOptionPane.showMessageDialog(null, "No disponible.");
                     }else{
+                        //EJECUTAMOS EL MÉTODO AVISAR, QUE SERÁ RECOGIDO POR EL HILO "COMPROBACIÓN"
                         modelo.avisar();
                         JOptionPane.showMessageDialog(null, "Administrador avisado.");
                     }
@@ -187,6 +194,8 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.labelAvisar.setBorder(null);
                 }
             });
+            //EN ESTE LABEL SERÁ NECESARIO CONOCER LA VISIBLIDAD DE LOS BOTONES ACTUAL, PARA SABER
+            //CUÁLES ESTÁN SIENDO MOSTRADOS Y A CUÁLES HAY QUE RETROCEDER
             vista.labelVolver.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
                     
@@ -210,6 +219,8 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesOfertas = 0;
                     botonesPais = "";
                     
+                    //AL PULSAR EL LABEL SE OBTENDRÁ TODA LA INFORMACIÓN REFERENTE AL TRABAJADOR
+                    //Y SE ACTUALIZARÁN LOS LABELS DEL PANEL DE PERFIL DE TRABAJADOR
                     Object[] info = modelo.infoTrabajador(usuario);
                     vista.dniPerfil.setText(info[0].toString());
                     String nombre = info[1].toString();
@@ -220,6 +231,8 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.direccionPerfil.setText(info[5].toString());
                     
                     vista.recaudacionPerfil.setText(info[7].toString() + "€");
+                    //LA IMAGEN MOSTRADA EN EL PANEL SERÁ UN NÚMERO DE ESTRELLAS SEGÚN LA VALORACIÓN
+                    //DEL ADMINISTRADOR SOBRE ESE TRABAJADOR
                     int valoracion = (int) info[8];
                     imagenValoracion(valoracion);
                 }
@@ -230,6 +243,7 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.labelPerfil.setBorder(null);
                 }            
             });
+            //AL PULSAR "ENTER" TENIENDO SELECCIONADO EL TEXTFIELD DE USUARIO, PASARÁ A SELECCIONAR EL DE CONTRASEÑA
             vista.txtUsuario.addKeyListener(new KeyAdapter(){
                 public void keyPressed(KeyEvent evt){
                     if(evt.getKeyCode() == KeyEvent.VK_ENTER){
@@ -237,6 +251,7 @@ public class Controlador implements ActionListener, MouseListener{
                     }
                 }
             });
+            //AL PULSAR "ENTER" TENIENDO SELECCIONADO EL TEXTFIELD DE CONTRASEÑA INICIARÁ SESIÓN DIRECTAMENTE
             vista.txtPass.addKeyListener(new KeyAdapter(){
                 public void keyPressed(KeyEvent evt){
                     if(evt.getKeyCode() == KeyEvent.VK_ENTER){
@@ -245,6 +260,8 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.cargando.setLocationRelativeTo(null);
                     vista.cargando.setVisible(true);
 
+                    //MEDIANTE ESTE CÓDIGO INICIAREMOS LA ANIMACIÓN DEL SPLASH, MOVIÉNDONOS DE UNA IMAGEN A OTRA
+                    //MEDIANTE UN HILO TEMPORIZADOR QUE CONTROLE A LOS OTROS DOS
                     Uni1 uni1 = new Uni1();
                     Uni2 uni2 = new Uni2();
                     Temporizador t = new Temporizador();
@@ -254,6 +271,7 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             });
             
+            //A PARTIR DE AQUÍ DEFINIMOS LAS ACCIONES AL CLICKAR SOBRE LOS LABELS DEL PANEL PRINCIPAL DEL ADMINISTRADOR
             vista.labelAdminProveedores.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
                     
@@ -321,6 +339,8 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             });
             
+            //ANTES DE TERMINAR EL MÉTODO "INICIAR" OCULTAMOS LOS PANELES DEL PANEL PRINCIPAL
+            //PARA QUE NO SE MUESTRE UNO INICIALMENTE
             vista.panelCentral.setVisible(false);
             vista.panelDescripcion.setVisible(false);
             vista.panelPedidos.setVisible(false);
@@ -337,10 +357,13 @@ public class Controlador implements ActionListener, MouseListener{
         vista.btnSalirAdmin.setActionCommand("btnSalirAdmin");
         vista.btnSalirAdmin.addActionListener(this);
         
+        //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
         vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
         vista.tablaCesta.getTableHeader().setResizingAllowed(false);
         
+        //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
+        //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
         render = new TablaRenderizador();
         vista.tablaPedidos.setDefaultRenderer(String.class, render);
         vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
@@ -351,6 +374,7 @@ public class Controlador implements ActionListener, MouseListener{
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
     public void actionPerformed(ActionEvent e) {
         switch(AccionMVC.valueOf(e.getActionCommand())){
+            //REALIZAMOS LAS MISMAS ACCIONES QUE SE REALIZARÍAN AL PULSAR "ENTER" DESDE EL TEXTFIELD DE LA CONTRASEÑA
             case btnIniciarSesion:
                 vista.setVisible(false);
                 vista.cargando.pack();
@@ -370,6 +394,8 @@ public class Controlador implements ActionListener, MouseListener{
                 vista.txtUsuario.setText("");
                 vista.txtPass.setText("");
                 vista.setVisible(true);
+                //AL SALIR DE LA SESIÓN DE ADMINISTRADOR, CERRAMOS EL HILO QUE MANTIENE ACTIVA LA COMPROBACIÓN
+                //DE LOS POSIBLES AVISOS DE LOS TRABAJADORES
                 c.close();
         }
     }
@@ -434,7 +460,7 @@ public class Controlador implements ActionListener, MouseListener{
                 vista.uni.setIcon(uni2);
                 
                 try{
-                    //PONEMOS EL HILO A DORMIR DURANTE 1 SEGUNDO
+                    //PONEMOS EL HILO A DORMIR DURANTE 0'2 SEGUNDOS
                     Thread.sleep(200);
                 }catch(InterruptedException ie){
                     System.out.println(ie.getMessage());
@@ -458,7 +484,7 @@ public class Controlador implements ActionListener, MouseListener{
             //CONTROLAMOS EL CONTADOR 2
             while(contadorCarga2 < 10){
                 try{
-                    //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS MEDIOS SEGUNDOS
+                    //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS DÉCIMAS DE SEGUNDO DIFERENTES
                     Thread.sleep(100);
                     vista.textoCarga.setText("Cargando...");
                     
@@ -472,7 +498,7 @@ public class Controlador implements ActionListener, MouseListener{
                     uni2 = new ImageIcon(uni2NewImg);
                     vista.uni.setIcon(uni2);
                     
-                    //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS MEDIOS SEGUNDOS
+                    //AHORA LA SEGUNDA DÉCIMA DE SEGUNDO
                     Thread.sleep(100);
                 }catch(InterruptedException ie){
                     System.out.println(ie.getMessage());
@@ -488,23 +514,28 @@ public class Controlador implements ActionListener, MouseListener{
                 char[] pc = vista.txtPass.getPassword();
                 int pi = pc.length;
                 String p = "";
+                //REESCRIBE LA CONTRASEÑA CHAR A CHAR EN UN STRING
                 for(int i = 0; i < pi; i++){
                     p = p + pc[i];
                 }
+                //COMPROBAMOS QUE HA SIDO ESCRITO TANTO EL USUARIO COMO LA CONTRASEÑA
                 if(!vista.txtUsuario.getText().equals("") && !p.equals("")){
                     //CONTROLAMOS EL INICIO DE SESIÓN
                     if(modelo.iniciarSesion(u, p) == true){
+                        //SI EL USUARIO CONECTADO ES UN TRABAJADOR, CONECTAMOS COMO TRABAJADOR NORMAL
                         if(modelo.esAdmin(u) == false){
                             JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + ".");
                             usuario = u;
                             vista.usuarioConectado.setText(u);
                             inicioDeSesionDeTrabajador();
+                        //SI EL USUARIO CONECTADO ES UN ADMINISTRADOR, CONECTAMOS COMO ADMINISTRADOR
                         }else{
                             JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador).");
                             usuario = u;
                             vista.usuarioAdminConectado.setText(u);
                             inicioDeSesionDeAdministrador();
                         }
+                    //EN CASO DE QUE FALLE EL INICIO DE SESIÓN
                     }else{
                         JOptionPane.showMessageDialog(null, "Credenciales inválidas.");
                         vista.setVisible(true);
@@ -512,6 +543,7 @@ public class Controlador implements ActionListener, MouseListener{
                         vista.txtPass.setText("");
                         vista.txtUsuario.requestFocus();
                     }
+                //EN CASO DE QUE UNO DE LOS CAMPOS ESTÉ VACÍO
                 }else{
                     JOptionPane.showMessageDialog(null, "Credenciales inválidas. Campos vacíos.");
                     vista.setVisible(true);
@@ -541,7 +573,9 @@ public class Controlador implements ActionListener, MouseListener{
         vista.principal.setVisible(true);
         cargarImagenesPrincipal();
         int tiempo = modelo.getTiempo(usuario);
+        //RESUMIMOS EL HILO EN CASO DE HABER DESLOGEADO PARA QUE SIGA CONTANDO EL TIEMPO DE TRABAJO
         a.resumir();
+        //EJECUTAMOS EL HILO PARA ACUMULAR EL TIEMPO DE TRABAJO DEL TRABAJADOR
         a.run(tiempo);
     }
     
@@ -552,6 +586,7 @@ public class Controlador implements ActionListener, MouseListener{
         vista.principalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vista.principalAdmin.setVisible(true);
         cargarImagenesPrincipalAdmin();
+        //SOLO EN CASO DE QUE EL USUARIO SEA UN ADMINISTRADOR, EJECUTAMOS EL HILO QUE COMPRUEBE LOS AVISOS
         c.run();
     }
     
@@ -686,6 +721,7 @@ public class Controlador implements ActionListener, MouseListener{
         vista.labelAdminConfiguracion.setIcon(adCIcon);
     }
     
+    //ESTE MÉTODO DEVOLVERÁ UNA CADENA MOSTRANDO LAS HORAS, MINUTOS Y SEGUNDOS DEL TIEMPO DE TRABAJO
     public String calculaTiempo(int t){
         int h = 0;
         int m = 0;
@@ -704,6 +740,7 @@ public class Controlador implements ActionListener, MouseListener{
         return tiempo;
     }
     
+    //ESTE MÉTODO MODIFICARÁ LA IMAGEN DE LA VALORACIÓN DEL USUARIO SEGÚN LA CIFRA OBTENIDA DESDE LA BASE DE DATOS
     public void imagenValoracion(int v){
         int vW = vista.valoracionPerfil.getWidth();
         int vH = vista.valoracionPerfil.getHeight();
@@ -714,13 +751,16 @@ public class Controlador implements ActionListener, MouseListener{
         vista.valoracionPerfil.setIcon(vIcon);
     }
     
+    //DEFINIMOS EL HILO ACUMULADOR, EL CUAL AUMENTARÁ GRADUALMENTE EL TIEMPO DE TRABAJO DEL TRABAJADOR CONECTADO
     public class Acumulador extends Thread{
         boolean infinito = true;
         int t;
+        //RECIBIRÁ COMO PARÁMETRO EL TIEMPO OBTENIDO PREVIAMENTE DE LA BASE DE DATOS
         public void run(int c){
             t = c;
             while(infinito == true){
                 try {
+                    //POR CADA SEGUNDO, AUMENTA EL TIEMPO Y REESCRIBE LA INFORMACIÓN EN EL PERFIL DEL TRABAJADOR
                     sleep(1000);
                     t++;
                     String s = calculaTiempo(t);
@@ -736,6 +776,8 @@ public class Controlador implements ActionListener, MouseListener{
             infinito = true;
         }
         
+        //EN CASO DE CORTAR EL HILO, ACTUALIZA EL TIEMPO EN LA BASE DE DATOS PARA QUE LA PRÓXIMA VEZ QUE EL
+        //TRABAJADOR SE CONECTE, MANTENGA EL TIEMPO PRÁCTICAMENTE INTACTO
         public void close(){
             modelo.actualizarTiempo(usuario, t);
             infinito = false;

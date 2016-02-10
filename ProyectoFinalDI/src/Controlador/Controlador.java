@@ -41,7 +41,7 @@ public class Controlador implements ActionListener, MouseListener{
     int aviso = 0; //PARA CONTROLAR EL AVISO DE ASISTENCIA AL ADMINISTRADOR
     Comprobacion c = new Comprobacion(); //PARA PODER UTILIZAR EL HILO COMPROBACIÓN EN DIFERENTES SITUACIONES
     Acumulador a = new Acumulador(); //PARA PODER UTILIZAR EL HILO ACUMULADOR EN DIFERENTES SITUACIONES
-    TablaRenderizador render; //PARA CONFIGURAR LA TABLA DE LOS PEDIDOS
+    TablaRenderizador render; //PARA CONFIGURAR LA APARIENCIA DE UNA TABLA
 
     public Controlador(Interfaz i) {
         vista = i;

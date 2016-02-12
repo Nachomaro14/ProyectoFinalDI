@@ -5,25 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-    private  String db = "";
+    private String db = "";
     private String user = "";
     private String password = "";
-    private String url = ""+db;
+    private String url = "";
     private Connection conn = null;
-
-
-    public Database(){
-        this.url = url + "/" + this.db;
+    
+    public void conectar(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection( this.url, this.user , this.password );    
+            conn = DriverManager.getConnection(this.url, this.user , this.password );    
             System.out.println("Conexion MySQL realizada con exito.");
         }catch(SQLException e){
             System.out.println("Conexion NO realizada con exito por error de SQL.");
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }catch(ClassNotFoundException e){
             System.out.println("Conexion NO realizada con exito por error de Class.");
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -44,6 +42,6 @@ public class Database {
     }
     
     public void setURL(String ip, String puerto){
-        this.url = "jdbc:mysql://" + url + ":" + puerto + db;
+        this.url = "jdbc:mysql://" + ip + ":" + puerto + "/" + db;
     }
 }

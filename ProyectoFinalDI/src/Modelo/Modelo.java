@@ -6,6 +6,14 @@ import javax.swing.table.*;
 
 public class Modelo extends Database{
     
+    public Modelo(String db, String user, String pass, String ip, String port){
+        super.setDatabase(db);
+        super.setUser(user);
+        super.setPassword(pass);
+        super.setURL(ip, port);
+        super.conectar();
+    }
+    
     public class ModeloTablaNoEditable extends DefaultTableModel {
 
         public boolean isCellEditable(int row, int column) {

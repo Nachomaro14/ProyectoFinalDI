@@ -259,18 +259,9 @@ public class Controlador implements ActionListener, MouseListener{
             vista.txtPass.addKeyListener(new KeyAdapter(){
                 public void keyPressed(KeyEvent evt){
                     if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-                    vista.setVisible(false);
-                    vista.cargando.pack();
-                    vista.cargando.setLocationRelativeTo(null);
-                    vista.cargando.setVisible(true);
-
-                    //MEDIANTE ESTE CÓDIGO INICIAREMOS LA ANIMACIÓN DEL SPLASH, MOVIÉNDONOS DE UNA IMAGEN A OTRA
-                    //MEDIANTE UN HILO TEMPORIZADOR QUE CONTROLE A LOS OTROS DOS
-                    Uni1 uni1 = new Uni1();
-                    Uni2 uni2 = new Uni2();
-                    Temporizador t = new Temporizador();
-                    t.run(uni1, uni2);
-                    t.start();
+                        vista.configuracionDB.pack();
+                        vista.configuracionDB.setLocationRelativeTo(null);
+                        vista.configuracionDB.setVisible(true);
                     }
                 }
             });
@@ -359,23 +350,13 @@ public class Controlador implements ActionListener, MouseListener{
         vista.tablaCesta.addMouseListener(this);
         vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
         vista.tablaCesta.getTableHeader().setResizingAllowed(false);
-        
-        //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
-        //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
-        render = new TablaRenderizador();
-        vista.tablaPedidos.setDefaultRenderer(String.class, render);
-        vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
-        vista.tablaPedidos.getTableHeader().setReorderingAllowed(false);
-        vista.tablaPedidos.getTableHeader().setResizingAllowed(false);
     }
     
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
     public void actionPerformed(ActionEvent e) {
         switch(AccionMVC.valueOf(e.getActionCommand())){
             //REALIZAMOS LAS MISMAS ACCIONES QUE SE REALIZARÍAN AL PULSAR "ENTER" DESDE EL TEXTFIELD DE LA CONTRASEÑA
-            case btnIniciarSesion:
-                vista.setVisible(false);
-                
+            case btnIniciarSesion:                
                 vista.configuracionDB.pack();
                 vista.configuracionDB.setLocationRelativeTo(null);
                 vista.configuracionDB.setVisible(true);
@@ -387,28 +368,24 @@ public class Controlador implements ActionListener, MouseListener{
                 String pass = vista.txtPassBD.getText();
                 String ip = vista.txtIPBD.getText();
                 String port = vista.txtPortBD.getText();
+                                
+                vista.configuracionDB.setVisible(false);
+                vista.cargando.pack();
+                vista.cargando.setLocationRelativeTo(null);
+                vista.cargando.setVisible(true);
+ 
+                modelo = new Modelo(bd, usu, pass, ip, port);
+                iniciarModelo();
                 
-                if(!bd.equals("") && !usu.equals("") && !pass.equals("") && !ip.equals("") && port.equals("")){
-                    modelo.setDatabase(bd);
-                    modelo.setUser(usu);
-                    modelo.setPassword(pass);
-                    modelo.setURL(ip, port);
-                    
-                    modelo = new Modelo();
-                    
-                    vista.cargando.pack();
-                    vista.cargando.setLocationRelativeTo(null);
-                    vista.cargando.setVisible(true);
-
-                    Uni1 uni1 = new Uni1();
-                    Uni2 uni2 = new Uni2();
-                    Temporizador t = new Temporizador();
-                    t.run(uni1, uni2);
-                    t.start();
-                }
+                Uni1 uni1 = new Uni1();
+                Uni2 uni2 = new Uni2();
+                Temporizador t = new Temporizador();
+                t.run(uni1, uni2);
+                t.start();
                 break;
             case btnCancelarConfig:
-                
+                vista.configuracionDB.setVisible(false);
+                vista.setVisible(true);
                 break;
                 
             case btnSalirAdmin:
@@ -804,5 +781,15 @@ public class Controlador implements ActionListener, MouseListener{
             infinito = false;
             System.out.println("Tiempo actualizado: " + t + " " + usuario);
         }
+    }
+    
+    public void iniciarModelo(){
+        //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
+        //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
+        render = new TablaRenderizador();
+        vista.tablaPedidos.setDefaultRenderer(String.class, render);
+        vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
+        vista.tablaPedidos.getTableHeader().setReorderingAllowed(false);
+        vista.tablaPedidos.getTableHeader().setResizingAllowed(false);
     }
 }

@@ -774,7 +774,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel1.setText("Dessernational©");
 
         jLabel2.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
-        jLabel2.setText("Ignacio Mazuecos Roldán & Alberto M. Moreno López");
+        jLabel2.setText("Ignacio Mazuecos Roldán, Jairo Gallardo Zorrilla & Alberto M. Moreno López");
 
         jLabel3.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
         jLabel3.setText("Escuela Salesianas Mª Auxiliadora - Nervión");

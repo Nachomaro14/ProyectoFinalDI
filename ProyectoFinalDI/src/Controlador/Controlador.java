@@ -587,6 +587,7 @@ public class Controlador implements ActionListener, MouseListener{
         vista.principalAdmin.setVisible(true);
         cargarImagenesPrincipalAdmin();
         //SOLO EN CASO DE QUE EL USUARIO SEA UN ADMINISTRADOR, EJECUTAMOS EL HILO QUE COMPRUEBE LOS AVISOS
+        c.resumir();
         c.run();
     }
     
@@ -663,6 +664,10 @@ public class Controlador implements ActionListener, MouseListener{
                     }
                 }
             }
+        }
+        
+        public void resumir(){
+            infinito = true;
         }
         
         public void close(){

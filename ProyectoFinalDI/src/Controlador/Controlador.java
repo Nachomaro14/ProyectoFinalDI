@@ -28,7 +28,7 @@ public class Controlador implements ActionListener, MouseListener{
     
     //INICIALIZAMOS UNA SERIE DE VARIABLES PARA CONTROLAR ALGUNAS OPERACIONES INTERNAS DE LA APLICACIÓN
     Interfaz vista; //PARA PODER ACCEDER A LA INTERFAZ DE LA APLICACIÓN
-    Modelo modelo = new Modelo(); //PARA PODER ACCEDER AL MODELO Y A LOS DATOS DE LA BD
+    Modelo modelo; //PARA PODER ACCEDER AL MODELO Y A LOS DATOS DE LA BD
     int contadorCarga1 = 0; //PARA CONTROLAR EL TIEMPO DEL HILO UNI1
     int contadorCarga2 = 0; //PARA CONTROLAR EL TIEMPO DEL HILO UNI2
     String usuario = ""; //PARA SABER SIEMPRE CUÁL ES EL USUARIO CONECTADO
@@ -50,6 +50,10 @@ public class Controlador implements ActionListener, MouseListener{
     //DEFINIMOS EN UN ENUM LOS VALORES DE LOS BOTONES A USAR
     public enum AccionMVC {
         btnIniciarSesion,
+        
+        btnAceptarConfig,
+        btnCancelarConfig,
+        
         btnSalirAdmin
     }
     
@@ -327,17 +331,6 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.labelAdminVentas.setBorder(null);
                 }
             });
-            vista.labelAdminConfiguracion.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
-                    
-                }
-                public void mousePressed(MouseEvent e){
-                    vista.labelAdminConfiguracion.setBorder(BorderFactory.createLineBorder(Color.black));
-                }
-                public void mouseReleased(MouseEvent e){
-                    vista.labelAdminConfiguracion.setBorder(null);
-                }
-            });
             
             //ANTES DE TERMINAR EL MÉTODO "INICIAR" OCULTAMOS LOS PANELES DEL PANEL PRINCIPAL
             //PARA QUE NO SE MUESTRE UNO INICIALMENTE
@@ -353,6 +346,11 @@ public class Controlador implements ActionListener, MouseListener{
         //ASIGNAMOS LAS ACCIONES A LOS BOTONES DE LA APLICACIÓN
         vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         vista.btnIniciarSesion.addActionListener(this);
+        
+        vista.btnAceptarConfig.setActionCommand("btnAceptarConfig");
+        vista.btnAceptarConfig.addActionListener(this);
+        vista.btnCancelarConfig.setActionCommand("btnCancelarConfig");
+        vista.btnCancelarConfig.addActionListener(this);
         
         vista.btnSalirAdmin.setActionCommand("btnSalirAdmin");
         vista.btnSalirAdmin.addActionListener(this);
@@ -377,16 +375,42 @@ public class Controlador implements ActionListener, MouseListener{
             //REALIZAMOS LAS MISMAS ACCIONES QUE SE REALIZARÍAN AL PULSAR "ENTER" DESDE EL TEXTFIELD DE LA CONTRASEÑA
             case btnIniciarSesion:
                 vista.setVisible(false);
-                vista.cargando.pack();
-                vista.cargando.setLocationRelativeTo(null);
-                vista.cargando.setVisible(true);
                 
-                Uni1 uni1 = new Uni1();
-                Uni2 uni2 = new Uni2();
-                Temporizador t = new Temporizador();
-                t.run(uni1, uni2);
-                t.start();
+                vista.configuracionDB.pack();
+                vista.configuracionDB.setLocationRelativeTo(null);
+                vista.configuracionDB.setVisible(true);
                 break;
+                
+            case btnAceptarConfig:
+                String bd = vista.txtNombreBD.getText();
+                String usu = vista.txtUsuBD.getText();
+                String pass = vista.txtPassBD.getText();
+                String ip = vista.txtIPBD.getText();
+                String port = vista.txtPortBD.getText();
+                
+                if(!bd.equals("") && !usu.equals("") && !pass.equals("") && !ip.equals("") && port.equals("")){
+                    modelo.setDatabase(bd);
+                    modelo.setUser(usu);
+                    modelo.setPassword(pass);
+                    modelo.setURL(ip, port);
+                    
+                    modelo = new Modelo();
+                    
+                    vista.cargando.pack();
+                    vista.cargando.setLocationRelativeTo(null);
+                    vista.cargando.setVisible(true);
+
+                    Uni1 uni1 = new Uni1();
+                    Uni2 uni2 = new Uni2();
+                    Temporizador t = new Temporizador();
+                    t.run(uni1, uni2);
+                    t.start();
+                }
+                break;
+            case btnCancelarConfig:
+                
+                break;
+                
             case btnSalirAdmin:
                 vista.usuarioConectado.setText("");
                 usuario = "";
@@ -716,14 +740,6 @@ public class Controlador implements ActionListener, MouseListener{
         Image adVNewImg = adVImg.getScaledInstance(adVW, adVH, java.awt.Image.SCALE_SMOOTH);
         adVIcon = new ImageIcon(adVNewImg);
         vista.labelAdminVentas.setIcon(adVIcon);
-        
-        int adCW = vista.labelAdminConfiguracion.getWidth() - 200;
-        int adCH = vista.labelAdminConfiguracion.getHeight() - 100;
-        ImageIcon adCIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminConfig.png"));
-        Image adCImg = adCIcon.getImage();
-        Image adCNewImg = adCImg.getScaledInstance(adCW, adCH, java.awt.Image.SCALE_SMOOTH);
-        adCIcon = new ImageIcon(adCNewImg);
-        vista.labelAdminConfiguracion.setIcon(adCIcon);
     }
     
     //ESTE MÉTODO DEVOLVERÁ UNA CADENA MOSTRANDO LAS HORAS, MINUTOS Y SEGUNDOS DEL TIEMPO DE TRABAJO

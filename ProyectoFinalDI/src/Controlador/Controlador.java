@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -24,8 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-public class Controlador implements ActionListener, MouseListener{
-    
+public class Controlador implements ActionListener, MouseListener {
+
     //INICIALIZAMOS UNA SERIE DE VARIABLES PARA CONTROLAR ALGUNAS OPERACIONES INTERNAS DE LA APLICACIÓN
     Interfaz vista; //PARA PODER ACCEDER A LA INTERFAZ DE LA APLICACIÓN
     Modelo modelo; //PARA PODER ACCEDER AL MODELO Y A LOS DATOS DE LA BD
@@ -43,20 +45,30 @@ public class Controlador implements ActionListener, MouseListener{
     Acumulador a = new Acumulador(); //PARA PODER UTILIZAR EL HILO ACUMULADOR EN DIFERENTES SITUACIONES
     TablaRenderizador render; //PARA CONFIGURAR LA APARIENCIA DE UNA TABLA
 
+    private static final char[] CONSTS_HEX = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};//Array para encriptar en MD5
+
     public Controlador(Interfaz i) {
         vista = i;
     }
 
     //DEFINIMOS EN UN ENUM LOS VALORES DE LOS BOTONES A USAR
     public enum AccionMVC {
+
+        //***********BOTONES LOGIN*******************
+//***********BOTONES LOGIN*******************
         btnIniciarSesion,
-        
         btnAceptarConfig,
         btnCancelarConfig,
-        
+        //*************BOTONES ADMIN*****************
+        //botones empleados
+        btnNuevoEmpleado,
+        btnModificaEmpleado,
+        btnDespideEmpleado,
+        btnAceptarContrato,
+        btnCancelarContrato,
         btnSalirAdmin
     }
-    
+
     //ESTE GRAN MÉTODO INICIARÁ E INICIALIZARÁ TODO LO NECESARIO PARA COMENZAR EL FUNCIONAMIENTO DE LA APLICACIÓN
     public void iniciar() {
 
@@ -67,13 +79,13 @@ public class Controlador implements ActionListener, MouseListener{
             SwingUtilities.updateComponentTreeUI(vista.principal);
             SwingUtilities.updateComponentTreeUI(vista.cargando);
             SwingUtilities.updateComponentTreeUI(vista.principalAdmin);
-            
+
             //MODIFICAMOS LAS PROPIEDADES DE LOS PANELES PRINCIPALES
             vista.principal.setResizable(false);
             vista.principal.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             vista.principalAdmin.setResizable(false);
             vista.principalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            
+
             //MODIFICAMOS EL LOGO DE LAS VENTANAS DE LA APLICACIÓN
             Toolkit t = Toolkit.getDefaultToolkit();
             vista.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
@@ -83,8 +95,8 @@ public class Controlador implements ActionListener, MouseListener{
             vista.pack();
             vista.setLocationRelativeTo(null);
             vista.setVisible(true);
-            vista.setTitle("International Cafe Dessernational");          
-            
+            vista.setTitle("International Cafe Dessernational");
+
             //AJUSTAMOS EL TAMAÑO DE LAS IMÁGENES A SUS CONTENEDORES            
             int logoInicioW = vista.logoInicio.getWidth();
             int logoInicioH = vista.logoInicio.getHeight();
@@ -94,7 +106,7 @@ public class Controlador implements ActionListener, MouseListener{
             Image logoInicioNewImg = logoInicioImg.getScaledInstance(logoInicioW, logoInicioH, java.awt.Image.SCALE_SMOOTH);
             logoInicioIcon = new ImageIcon(logoInicioNewImg);
             vista.logoInicio.setIcon(logoInicioIcon);
-            
+
             int fondoInicioW = vista.fondo.getWidth();
             int fondoInicioH = vista.fondo.getHeight();
             ImageIcon fondoInicioIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoInicio.png"));
@@ -103,10 +115,11 @@ public class Controlador implements ActionListener, MouseListener{
             Image fondoInicioNewImg = fondoInicioImg.getScaledInstance(fondoInicioW, fondoInicioH, java.awt.Image.SCALE_SMOOTH);
             fondoInicioIcon = new ImageIcon(fondoInicioNewImg);
             vista.fondo.setIcon(fondoInicioIcon);
-            
+
             //CONTROLAMOS OTRAS NECESIDADES COMO LOS MOUSELISTENER O LA VISIBILIDAD DE ALGUNOS PANELES            
-            vista.labelNuevoPedido.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
+            vista.labelNuevoPedido.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
                     vista.panelCentral.setVisible(true);
                     vista.panelPedidos.setVisible(false);
                     vista.panelPerfil.setVisible(false);
@@ -119,16 +132,21 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesOfertas = 0;
                     botonesPais = "";
                 }
+
                 //REDEFINIMOS EL MÉTODO MOUSEPRESSED PARA QUE EL LABEL PAREZCA UN BOTÓN PULSADO
-                public void mousePressed(MouseEvent e){
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelNuevoPedido.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelNuevoPedido.setBorder(null);
                 }
             });
-            vista.labelPedidos.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
+            vista.labelPedidos.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(true);
                     vista.panelPerfil.setVisible(false);
@@ -138,22 +156,27 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesPasteleria = 0;
                     botonesOfertas = 0;
                     botonesPais = "";
-                    
+
                     //CONFIGURAMOS EL COMBOBOX PARA QUE MUESTRE LAS FECHAS DE PEDIDOS REGISTRADOS HASTA ESE MOMENTO
                     vista.comboFechaPed.setModel(new DefaultComboBoxModel(modelo.getFechas()));
                     String fp = "";
                     DefaultListModel lm = modelo.listaPedidos(fp);
                     vista.listaPedidos.setModel(lm);
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelPedidos.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelPedidos.setBorder(null);
                 }
             });
-            vista.labelSalir.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
+            vista.labelSalir.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
                     //CERRAMOS EL HILO QUE ACUMULA TIEMPO DE TRABAJO DEL TRABAJADOR
                     a.close();
                     vista.usuarioConectado.setText("");
@@ -165,7 +188,7 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.txtUsuario.setText("");
                     vista.txtPass.setText("");
                     vista.setVisible(true);
-                    
+
                     botonesPrincipales = 0;
                     botonesBebidas = 0;
                     botonesMenus = 0;
@@ -173,46 +196,61 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesOfertas = 0;
                     botonesPais = "";
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelSalir.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelSalir.setBorder(null);
                 }
             });
-            vista.labelAvisar.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
+            vista.labelAvisar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
                     //COMPROBAMOS SI EL USUATIO ES UN TRABAJADOR PARA PODER REALIZAR UN AVISO
-                    if(modelo.esAdmin(usuario) == true){
+                    if (modelo.esAdmin(usuario) == true) {
                         JOptionPane.showMessageDialog(null, "No disponible.");
-                    }else{
+                    } else {
                         //EJECUTAMOS EL MÉTODO AVISAR, QUE SERÁ RECOGIDO POR EL HILO "COMPROBACIÓN"
                         modelo.avisar();
                         JOptionPane.showMessageDialog(null, "Administrador avisado.");
                     }
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelAvisar.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelAvisar.setBorder(null);
                 }
             });
             //EN ESTE LABEL SERÁ NECESARIO CONOCER LA VISIBLIDAD DE LOS BOTONES ACTUAL, PARA SABER
             //CUÁLES ESTÁN SIENDO MOSTRADOS Y A CUÁLES HAY QUE RETROCEDER
-            vista.labelVolver.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
-                    
+            vista.labelVolver.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelVolver.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelVolver.setBorder(null);
                 }
             });
             vista.labelPerfil.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e){                    
+                @Override
+                public void mouseClicked(MouseEvent e) {
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(false);
                     vista.panelPerfil.setVisible(true);
@@ -222,7 +260,7 @@ public class Controlador implements ActionListener, MouseListener{
                     botonesPasteleria = 0;
                     botonesOfertas = 0;
                     botonesPais = "";
-                    
+
                     //AL PULSAR EL LABEL SE OBTENDRÁ TODA LA INFORMACIÓN REFERENTE AL TRABAJADOR
                     //Y SE ACTUALIZARÁN LOS LABELS DEL PANEL DE PERFIL DE TRABAJADOR
                     Object[] info = modelo.infoTrabajador(usuario);
@@ -233,161 +271,249 @@ public class Controlador implements ActionListener, MouseListener{
                     vista.telefonoPerfil.setText(info[3].toString());
                     vista.correoPerfil.setText(info[4].toString());
                     vista.direccionPerfil.setText(info[5].toString());
-                    
+
                     vista.recaudacionPerfil.setText(info[7].toString() + "€");
                     //LA IMAGEN MOSTRADA EN EL PANEL SERÁ UN NÚMERO DE ESTRELLAS SEGÚN LA VALORACIÓN
                     //DEL ADMINISTRADOR SOBRE ESE TRABAJADOR
                     int valoracion = (int) info[8];
                     imagenValoracion(valoracion);
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelPerfil.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelPerfil.setBorder(null);
-                }            
+                }
             });
             //AL PULSAR "ENTER" TENIENDO SELECCIONADO EL TEXTFIELD DE USUARIO, PASARÁ A SELECCIONAR EL DE CONTRASEÑA
-            vista.txtUsuario.addKeyListener(new KeyAdapter(){
-                public void keyPressed(KeyEvent evt){
-                    if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            vista.txtUsuario.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent evt) {
+                    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                         vista.txtPass.requestFocus();
                     }
                 }
             });
             //AL PULSAR "ENTER" TENIENDO SELECCIONADO EL TEXTFIELD DE CONTRASEÑA INICIARÁ SESIÓN DIRECTAMENTE
-            vista.txtPass.addKeyListener(new KeyAdapter(){
-                public void keyPressed(KeyEvent evt){
-                    if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            vista.txtPass.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent evt) {
+                    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                         vista.configuracionDB.pack();
                         vista.configuracionDB.setLocationRelativeTo(null);
                         vista.configuracionDB.setVisible(true);
                     }
                 }
             });
-            
+
             //A PARTIR DE AQUÍ DEFINIMOS LAS ACCIONES AL CLICKAR SOBRE LOS LABELS DEL PANEL PRINCIPAL DEL ADMINISTRADOR
-            vista.labelAdminProveedores.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
-                    
+            vista.labelAdminProveedores.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                    vista.proveedores1.pack();
+                    vista.proveedores1.setLocationRelativeTo(null);
+                    vista.proveedores1.setTitle("Proveedores");
+                    vista.proveedores1.setVisible(true);
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelAdminProveedores.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelAdminProveedores.setBorder(null);
                 }
             });
-            vista.labelAdminPedidos.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
-                    
+            vista.labelAdminPedidos.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelAdminPedidos.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelAdminPedidos.setBorder(null);
                 }
             });
-            vista.labelAdminStock.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
-                    
+            vista.labelAdminStock.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    vista.stock3.pack();
+                    vista.stock3.setLocationRelativeTo(null);
+                    vista.stock3.setTitle("Stock Tienda");
+                    vista.stock3.setVisible(true);
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelAdminStock.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelAdminStock.setBorder(null);
                 }
             });
-            vista.labelAdminTrabajadores.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
-                    
+            vista.labelAdminTrabajadores.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    vista.trabajadores4.pack();
+                    vista.trabajadores4.setLocationRelativeTo(null);
+                    vista.trabajadores4.setTitle("Trabajadores");
+                    vista.trabajadores4.setVisible(true);
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelAdminTrabajadores.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelAdminTrabajadores.setBorder(null);
                 }
             });
-            vista.labelAdminVentas.addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent e){
-                    
+            vista.labelAdminVentas.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
                 }
-                public void mousePressed(MouseEvent e){
+
+                @Override
+                public void mousePressed(MouseEvent e) {
                     vista.labelAdminVentas.setBorder(BorderFactory.createLineBorder(Color.black));
                 }
-                public void mouseReleased(MouseEvent e){
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
                     vista.labelAdminVentas.setBorder(null);
                 }
             });
-            
+
             //ANTES DE TERMINAR EL MÉTODO "INICIAR" OCULTAMOS LOS PANELES DEL PANEL PRINCIPAL
             //PARA QUE NO SE MUESTRE UNO INICIALMENTE
             vista.panelCentral.setVisible(false);
             vista.panelDescripcion.setVisible(false);
             vista.panelPedidos.setVisible(false);
             vista.panelPerfil.setVisible(false);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en el método iniciar()");
             ex.printStackTrace();
         }
-        
+
         //ASIGNAMOS LAS ACCIONES A LOS BOTONES DE LA APLICACIÓN
         vista.btnIniciarSesion.setActionCommand("btnIniciarSesion");
         vista.btnIniciarSesion.addActionListener(this);
-        
+
         vista.btnAceptarConfig.setActionCommand("btnAceptarConfig");
         vista.btnAceptarConfig.addActionListener(this);
         vista.btnCancelarConfig.setActionCommand("btnCancelarConfig");
         vista.btnCancelarConfig.addActionListener(this);
-        
+
         vista.btnSalirAdmin.setActionCommand("btnSalirAdmin");
         vista.btnSalirAdmin.addActionListener(this);
-        
+
+        vista.btnNuevoEmpleado.setActionCommand("btnNuevoEmpleado");
+        vista.btnNuevoEmpleado.addActionListener(this);
+        vista.btnModificaEmpleado.setActionCommand("btnModificaEmpleado");
+        vista.btnModificaEmpleado.addActionListener(this);
+        vista.btnDespideEmpleado.setActionCommand("btnDespideEmpleado");
+        vista.btnDespideEmpleado.addActionListener(this);
+        vista.btnAceptarContrato.setActionCommand("btnContrata");
+        vista.btnAceptarContrato.addActionListener(this);
+        vista.btnCancelarContrato.setActionCommand("btnCancelarContrato");
+        vista.btnCancelarContrato.addActionListener(this);
+
+        //btnCancelaContrato
         //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
         vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
         vista.tablaCesta.getTableHeader().setResizingAllowed(false);
     }
-    
+
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
+    @Override
     public void actionPerformed(ActionEvent e) {
-        switch(AccionMVC.valueOf(e.getActionCommand())){
+        switch (AccionMVC.valueOf(e.getActionCommand())) {
             //REALIZAMOS LAS MISMAS ACCIONES QUE SE REALIZARÍAN AL PULSAR "ENTER" DESDE EL TEXTFIELD DE LA CONTRASEÑA
-            case btnIniciarSesion:                
+            case btnIniciarSesion:
                 vista.configuracionDB.pack();
                 vista.configuracionDB.setLocationRelativeTo(null);
                 vista.configuracionDB.setVisible(true);
                 break;
-                
+
             case btnAceptarConfig:
                 String bd = vista.txtNombreBD.getText();
                 String usu = vista.txtUsuBD.getText();
                 String pass = vista.txtPassBD.getText();
                 String ip = vista.txtIPBD.getText();
                 String port = vista.txtPortBD.getText();
-                                
+
                 vista.configuracionDB.setVisible(false);
                 vista.cargando.pack();
                 vista.cargando.setLocationRelativeTo(null);
                 vista.cargando.setVisible(true);
- 
+
                 modelo = new Modelo(bd, usu, pass, ip, port);
                 iniciarModelo();
-                
+
                 Uni1 uni1 = new Uni1();
                 Uni2 uni2 = new Uni2();
                 Temporizador t = new Temporizador();
                 t.run(uni1, uni2);
                 t.start();
+                vista.setVisible(false);
                 break;
             case btnCancelarConfig:
                 vista.configuracionDB.setVisible(false);
                 vista.setVisible(true);
                 break;
-                
+            case btnNuevoEmpleado:
+                vista.contratar.pack();
+                vista.contratar.setLocationRelativeTo(null);
+                vista.contratar.setVisible(true);
+                break;
+            case btnAceptarContrato:
+                //Hacer un insert en Trabajador
+
+//                vista.txtUserContra.getText();
+//                vista.txtPasswContra.getText();
+//                vista.txtDniContra.getText();
+//                vista.txtNombreContra.getText();
+//                vista.txtApellContra.getText();
+//                vista.txtTelefContra.getText();
+//                vista.txtEmailContra.getText();
+//                vista.txtNDomicilio.getText();
+//                vista.txtCDomicilio.getText();
+                break;
+            case btnCancelarContrato:
+                vista.txtUserContra.setText("");
+                vista.txtPasswContra.setText("");
+                vista.txtDniContra.setText("");
+                vista.txtNombreContra.setText("");
+                vista.txtApellContra.setText("");
+                vista.txtTelefContra.setText("");
+                vista.txtEmailContra.setText("");
+                vista.txtNDomicilio.setText("");
+                vista.txtCDomicilio.setText("");
+                vista.contratar.setVisible(false);
+                break;
+            case btnModificaEmpleado:
+                break;
+            case btnDespideEmpleado:
+                break;
             case btnSalirAdmin:
                 vista.usuarioConectado.setText("");
                 usuario = "";
@@ -400,22 +526,27 @@ public class Controlador implements ActionListener, MouseListener{
                 c.close();
         }
     }
-    
+
+    @Override
     public void mouseClicked(MouseEvent e) {
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
     }
-    
+
     //ESTE MÉTODO SERVIRÁ PARA LIMITAR LA ESCRITURA DE CIFRAS EN UN JTEXTFIELD
     public static void SCifras(JTextField a) {
         a.addKeyListener(new KeyAdapter() {
@@ -428,7 +559,7 @@ public class Controlador implements ActionListener, MouseListener{
             }
         });
     }
-    
+
     //ESTE MÉTODO SERVIRÁ PARA LIMITAR LA ESCRITURA DE LETRAS EN UN JTEXTFIELD
     public static void SLetras(JTextField a) {
         a.addKeyListener(new KeyAdapter() {
@@ -441,15 +572,16 @@ public class Controlador implements ActionListener, MouseListener{
             }
         });
     }
-    
-    //DEFINIMOS EL PRIMER HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
-    public class Uni1 extends Thread{
 
-        public void run(){
+    //DEFINIMOS EL PRIMER HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
+    public class Uni1 extends Thread {
+
+        @Override
+        public void run() {
             //CONTROLAMOS EL CONTADOR 1
-            while(contadorCarga1 < 10){
+            while (contadorCarga1 < 10) {
                 vista.textoCarga.setText("Cargando");
-                
+
                 //MODIFICAMOS LA IMAGEN DE LA PANTALLA DE CARGA
                 int uni2W = vista.uni.getWidth();
                 int uni2H = vista.uni.getHeight();
@@ -459,36 +591,37 @@ public class Controlador implements ActionListener, MouseListener{
                 Image uni2NewImg = uni2Img.getScaledInstance(uni2W, uni2H, java.awt.Image.SCALE_SMOOTH);
                 uni2 = new ImageIcon(uni2NewImg);
                 vista.uni.setIcon(uni2);
-                
-                try{
+
+                try {
                     //PONEMOS EL HILO A DORMIR DURANTE 0'2 SEGUNDOS
                     Thread.sleep(200);
-                }catch(InterruptedException ie){
+                } catch (InterruptedException ie) {
                     System.out.println(ie.getMessage());
                 }
                 //AUMENTAMOS EL CONTADOR 1
                 contadorCarga1++;
             }
             //CONTROLAMOS SI EL CONTADOR 1 HA SUPERADO EL MÁXIMO DEFINIDO
-            if(contadorCarga1 >= 10){
+            if (contadorCarga1 >= 10) {
                 vista.cargando.setVisible(false);
             }
             //REINICIAMOS EL CONTADOR 1
             contadorCarga1 = 0;
         }
     }
-    
-    //DEFINIMOS EL SEGUNDO HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
-    public class Uni2 extends Thread{
 
-        public void run(){
+    //DEFINIMOS EL SEGUNDO HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
+    public class Uni2 extends Thread {
+
+        @Override
+        public void run() {
             //CONTROLAMOS EL CONTADOR 2
-            while(contadorCarga2 < 10){
-                try{
+            while (contadorCarga2 < 10) {
+                try {
                     //EN ESTE CASO DIVIDIMOS EL TIEMPO EN DOS DÉCIMAS DE SEGUNDO DIFERENTES
                     Thread.sleep(100);
                     vista.textoCarga.setText("Cargando...");
-                    
+
                     //MODIFICAMOS LA IMAGEN DE LA PANTALLA DE CARGA
                     int uni2W = vista.uni.getWidth();
                     int uni2H = vista.uni.getHeight();
@@ -498,17 +631,17 @@ public class Controlador implements ActionListener, MouseListener{
                     Image uni2NewImg = uni2Img.getScaledInstance(uni2W, uni2H, java.awt.Image.SCALE_SMOOTH);
                     uni2 = new ImageIcon(uni2NewImg);
                     vista.uni.setIcon(uni2);
-                    
+
                     //AHORA LA SEGUNDA DÉCIMA DE SEGUNDO
                     Thread.sleep(100);
-                }catch(InterruptedException ie){
+                } catch (InterruptedException ie) {
                     System.out.println(ie.getMessage());
                 }
                 //AUMENTAMOS EL CONTADOR 2
                 contadorCarga2++;
             }
             //CONTROLAMOS SI EL CONTADOR 2 HA AUMENTADO EL MÁXIMO DEFINIDO
-            if(contadorCarga2 >= 10){
+            if (contadorCarga2 >= 10) {
                 //EN CASO DE QUE OCURRA, FINALIZAMOS LA PANTALLA DE CARGA, INCIAMOS SESIÓN Y ABRIMOS EL PANEL PRINCIPAL
                 vista.cargando.setVisible(false);
                 String u = vista.txtUsuario.getText();
@@ -516,36 +649,36 @@ public class Controlador implements ActionListener, MouseListener{
                 int pi = pc.length;
                 String p = "";
                 //REESCRIBE LA CONTRASEÑA CHAR A CHAR EN UN STRING
-                for(int i = 0; i < pi; i++){
+                for (int i = 0; i < pi; i++) {
                     p = p + pc[i];
                 }
                 //COMPROBAMOS QUE HA SIDO ESCRITO TANTO EL USUARIO COMO LA CONTRASEÑA
-                if(!vista.txtUsuario.getText().equals("") && !p.equals("")){
+                if (!vista.txtUsuario.getText().equals("") && !p.equals("")) {
                     //CONTROLAMOS EL INICIO DE SESIÓN
-                    if(modelo.iniciarSesion(u, p) == true){
+                    if (modelo.iniciarSesion(u, p) == true) {
                         //SI EL USUARIO CONECTADO ES UN TRABAJADOR, CONECTAMOS COMO TRABAJADOR NORMAL
-                        if(modelo.esAdmin(u) == false){
+                        if (modelo.esAdmin(u) == false) {
                             JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + ".");
                             usuario = u;
                             vista.usuarioConectado.setText(u);
                             inicioDeSesionDeTrabajador();
-                        //SI EL USUARIO CONECTADO ES UN ADMINISTRADOR, CONECTAMOS COMO ADMINISTRADOR
-                        }else{
+                            //SI EL USUARIO CONECTADO ES UN ADMINISTRADOR, CONECTAMOS COMO ADMINISTRADOR
+                        } else {
                             JOptionPane.showMessageDialog(null, "Ha conectado como " + modelo.getNombreTrabajadorPorUsuario(u) + " (Administrador).");
                             usuario = u;
                             vista.usuarioAdminConectado.setText(u);
                             inicioDeSesionDeAdministrador();
                         }
-                    //EN CASO DE QUE FALLE EL INICIO DE SESIÓN
-                    }else{
+                        //EN CASO DE QUE FALLE EL INICIO DE SESIÓN
+                    } else {
                         JOptionPane.showMessageDialog(null, "Credenciales inválidas.");
                         vista.setVisible(true);
                         vista.txtUsuario.setText("");
                         vista.txtPass.setText("");
                         vista.txtUsuario.requestFocus();
                     }
-                //EN CASO DE QUE UNO DE LOS CAMPOS ESTÉ VACÍO
-                }else{
+                    //EN CASO DE QUE UNO DE LOS CAMPOS ESTÉ VACÍO
+                } else {
                     JOptionPane.showMessageDialog(null, "Credenciales inválidas. Campos vacíos.");
                     vista.setVisible(true);
                     vista.txtUsuario.setText("");
@@ -557,17 +690,18 @@ public class Controlador implements ActionListener, MouseListener{
             contadorCarga2 = 0;
         }
     }
-    
+
     //DEFINIMOS EL HILO TEMPORIZADOR QUE INICIARÁ LOS DOS HILOS PARA LA ANIMACIÓN DE LA PANTALLA DE CARGA
-    public class Temporizador extends Thread{
-        public void run(Uni1 u1, Uni2 u2){
+    public class Temporizador extends Thread {
+
+        public void run(Uni1 u1, Uni2 u2) {
             u1.start();
             u2.start();
         }
     }
-    
+
     //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
-    public void inicioDeSesionDeTrabajador(){
+    public void inicioDeSesionDeTrabajador() {
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
         vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -579,9 +713,9 @@ public class Controlador implements ActionListener, MouseListener{
         //EJECUTAMOS EL HILO PARA ACUMULAR EL TIEMPO DE TRABAJO DEL TRABAJADOR
         a.run(tiempo);
     }
-    
+
     //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INCIAR SESIÓN COMO ADMINISTRADOR
-    public void inicioDeSesionDeAdministrador(){
+    public void inicioDeSesionDeAdministrador() {
         vista.principalAdmin.pack();
         vista.principalAdmin.setLocationRelativeTo(null);
         vista.principalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -591,19 +725,19 @@ public class Controlador implements ActionListener, MouseListener{
         c.resumir();
         c.run();
     }
-    
+
     //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN
-    public void cargarImagenesPrincipal(){
+    public void cargarImagenesPrincipal() {
         //CÓDIGO PARA REDIMENSIONAR UNA IMAGEN SEGÚN SU CONTENEDOR:
         /*int width = vista.btnVolver.getWidth();
-        int height = vista.btnVolver.getHeight();
-        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/image.png"));
-        Image img = icon.getImage();
-        Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-        icon = new ImageIcon(newImg);
-        vista.btn.setIcon(icon);
-        */
-        
+         int height = vista.btnVolver.getHeight();
+         ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/image.png"));
+         Image img = icon.getImage();
+         Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+         icon = new ImageIcon(newImg);
+         vista.btn.setIcon(icon);
+         */
+
         int salirW = vista.labelSalir.getWidth();
         int salirH = vista.labelSalir.getHeight();
         ImageIcon salirIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir2.png"));
@@ -611,7 +745,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image salirNewImg = salirImg.getScaledInstance(salirW, salirH, java.awt.Image.SCALE_SMOOTH);
         salirIcon = new ImageIcon(salirNewImg);
         vista.labelSalir.setIcon(salirIcon);
-        
+
         int nuevoPedidoW = vista.labelNuevoPedido.getWidth();
         int nuevoPedidoH = vista.labelNuevoPedido.getHeight();
         ImageIcon nuevoPedidoIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevoPedido.png"));
@@ -619,7 +753,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image nuevoPedidoNewImg = nuevoPedidoImg.getScaledInstance(nuevoPedidoW, nuevoPedidoH, java.awt.Image.SCALE_SMOOTH);
         nuevoPedidoIcon = new ImageIcon(nuevoPedidoNewImg);
         vista.labelNuevoPedido.setIcon(nuevoPedidoIcon);
-        
+
         int pedidosW = vista.labelPedidos.getWidth();
         int pedidosH = vista.labelPedidos.getHeight();
         ImageIcon pedidosIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pedidos.png"));
@@ -627,7 +761,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image pedidosNewImg = pedidosImg.getScaledInstance(pedidosW, pedidosH, java.awt.Image.SCALE_SMOOTH);
         pedidosIcon = new ImageIcon(pedidosNewImg);
         vista.labelPedidos.setIcon(pedidosIcon);
-        
+
         int avisarW = vista.labelAvisar.getWidth();
         int avisarH = vista.labelAvisar.getHeight();
         ImageIcon avisarIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/warning.png"));
@@ -635,7 +769,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image avisarNewImg = avisarImg.getScaledInstance(avisarW, avisarH, java.awt.Image.SCALE_SMOOTH);
         avisarIcon = new ImageIcon(avisarNewImg);
         vista.labelAvisar.setIcon(avisarIcon);
-        
+
         int perfilW = vista.labelPerfil.getWidth();
         int perfilH = vista.labelPerfil.getHeight();
         ImageIcon perfilIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/perfil.png"));
@@ -643,7 +777,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image perfilNewImg = perfilImg.getScaledInstance(perfilW, perfilH, java.awt.Image.SCALE_SMOOTH);
         perfilIcon = new ImageIcon(perfilNewImg);
         vista.labelPerfil.setIcon(perfilIcon);
-        
+
         int volverW = vista.labelVolver.getWidth();
         int volverH = vista.labelVolver.getHeight();
         ImageIcon volverIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver2.png"));
@@ -652,32 +786,35 @@ public class Controlador implements ActionListener, MouseListener{
         volverIcon = new ImageIcon(volverNewImg);
         vista.labelVolver.setIcon(volverIcon);
     }
-    
+
     //DEFINIMOS EL HILO COMPROBACIÓN PARA MANEJAR EL AVISO DE ASISTENCIA DE UN TRABAJADOR A UN ADMINISTRADOR
-    public class Comprobacion extends Thread{
+    public class Comprobacion extends Thread {
+
         boolean infinito = true;
-        public void run(){
-            while(infinito == true){
-                if(modelo.esAdmin(usuario) == true){
-                    if(modelo.comprobarAviso() == true){
+
+        @Override
+        public void run() {
+            while (infinito == true) {
+                if (modelo.esAdmin(usuario) == true) {
+                    if (modelo.comprobarAviso() == true) {
                         modelo.quitarAviso();
                         JOptionPane.showMessageDialog(null, "AVISO: Un trabajador necesita asistencia.");
                     }
                 }
             }
         }
-        
-        public void resumir(){
+
+        public void resumir() {
             infinito = true;
         }
-        
-        public void close(){
+
+        public void close() {
             infinito = false;
         }
     }
-    
+
     //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
-    public void cargarImagenesPrincipalAdmin(){
+    public void cargarImagenesPrincipalAdmin() {
         int adPW = vista.labelAdminProveedores.getWidth() + 180;
         int adPH = vista.labelAdminProveedores.getHeight();
         ImageIcon adPIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminProveedores.png"));
@@ -685,7 +822,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image adPNewImg = adPImg.getScaledInstance(adPW, adPH, java.awt.Image.SCALE_SMOOTH);
         adPIcon = new ImageIcon(adPNewImg);
         vista.labelAdminProveedores.setIcon(adPIcon);
-        
+
         int adPeW = vista.labelAdminPedidos.getWidth() - 200;
         int adPeH = vista.labelAdminPedidos.getHeight() - 100;
         ImageIcon adPeIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminPedidos.png"));
@@ -693,7 +830,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image adPeNewImg = adPeImg.getScaledInstance(adPeW, adPeH, java.awt.Image.SCALE_SMOOTH);
         adPeIcon = new ImageIcon(adPeNewImg);
         vista.labelAdminPedidos.setIcon(adPeIcon);
-        
+
         int adSW = vista.labelAdminStock.getWidth() - 200;
         int adSH = vista.labelAdminStock.getHeight() - 100;
         ImageIcon adSIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminStock.png"));
@@ -701,7 +838,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image adSNewImg = adSImg.getScaledInstance(adSW, adSH, java.awt.Image.SCALE_SMOOTH);
         adSIcon = new ImageIcon(adSNewImg);
         vista.labelAdminStock.setIcon(adSIcon);
-        
+
         int adTW = vista.labelAdminTrabajadores.getWidth() - 200;
         int adTH = vista.labelAdminTrabajadores.getHeight() - 100;
         ImageIcon adTIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminTrabajadores.png"));
@@ -709,7 +846,7 @@ public class Controlador implements ActionListener, MouseListener{
         Image adTNewImg = adTImg.getScaledInstance(adTW, adTH, java.awt.Image.SCALE_SMOOTH);
         adTIcon = new ImageIcon(adTNewImg);
         vista.labelAdminTrabajadores.setIcon(adTIcon);
-        
+
         int adVW = vista.labelAdminVentas.getWidth() - 200;
         int adVH = vista.labelAdminVentas.getHeight() - 100;
         ImageIcon adVIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminVentas.png"));
@@ -718,17 +855,17 @@ public class Controlador implements ActionListener, MouseListener{
         adVIcon = new ImageIcon(adVNewImg);
         vista.labelAdminVentas.setIcon(adVIcon);
     }
-    
+
     //ESTE MÉTODO DEVOLVERÁ UNA CADENA MOSTRANDO LAS HORAS, MINUTOS Y SEGUNDOS DEL TIEMPO DE TRABAJO
-    public String calculaTiempo(int t){
+    public String calculaTiempo(int t) {
         int h = 0;
         int m = 0;
         int s = 0;
-        while(t > 60){
-            if(t >= 3600){
+        while (t > 60) {
+            if (t >= 3600) {
                 t = t - 3600;
                 h++;
-            }else{
+            } else {
                 t = t - 60;
                 m++;
             }
@@ -737,9 +874,9 @@ public class Controlador implements ActionListener, MouseListener{
         String tiempo = h + " horas, " + m + " minutos, " + s + " segundos";
         return tiempo;
     }
-    
+
     //ESTE MÉTODO MODIFICARÁ LA IMAGEN DE LA VALORACIÓN DEL USUARIO SEGÚN LA CIFRA OBTENIDA DESDE LA BASE DE DATOS
-    public void imagenValoracion(int v){
+    public void imagenValoracion(int v) {
         int vW = vista.valoracionPerfil.getWidth();
         int vH = vista.valoracionPerfil.getHeight();
         ImageIcon vIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/" + v + ".png"));
@@ -748,15 +885,17 @@ public class Controlador implements ActionListener, MouseListener{
         vIcon = new ImageIcon(vNewImg);
         vista.valoracionPerfil.setIcon(vIcon);
     }
-    
+
     //DEFINIMOS EL HILO ACUMULADOR, EL CUAL AUMENTARÁ GRADUALMENTE EL TIEMPO DE TRABAJO DEL TRABAJADOR CONECTADO
-    public class Acumulador extends Thread{
+    public class Acumulador extends Thread {
+
         boolean infinito = true;
         int t;
+
         //RECIBIRÁ COMO PARÁMETRO EL TIEMPO OBTENIDO PREVIAMENTE DE LA BASE DE DATOS
-        public void run(int c){
+        public void run(int c) {
             t = c;
-            while(infinito == true){
+            while (infinito == true) {
                 try {
                     //POR CADA SEGUNDO, AUMENTA EL TIEMPO Y REESCRIBE LA INFORMACIÓN EN EL PERFIL DEL TRABAJADOR
                     sleep(1000);
@@ -769,21 +908,21 @@ public class Controlador implements ActionListener, MouseListener{
                 }
             }
         }
-        
-        public void resumir(){
+
+        public void resumir() {
             infinito = true;
         }
-        
+
         //EN CASO DE CORTAR EL HILO, ACTUALIZA EL TIEMPO EN LA BASE DE DATOS PARA QUE LA PRÓXIMA VEZ QUE EL
         //TRABAJADOR SE CONECTE, MANTENGA EL TIEMPO PRÁCTICAMENTE INTACTO
-        public void close(){
+        public void close() {
             modelo.actualizarTiempo(usuario, t);
             infinito = false;
             System.out.println("Tiempo actualizado: " + t + " " + usuario);
         }
     }
-    
-    public void iniciarModelo(){
+
+    public void iniciarModelo() {
         //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
         //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
         render = new TablaRenderizador();
@@ -791,5 +930,22 @@ public class Controlador implements ActionListener, MouseListener{
         vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
         vista.tablaPedidos.getTableHeader().setReorderingAllowed(false);
         vista.tablaPedidos.getTableHeader().setResizingAllowed(false);
+    }
+
+    public static String encriptaEnMD5(String stringAEncriptar) {
+        try {
+            MessageDigest msgd = MessageDigest.getInstance("MD5");
+            byte[] bytes = msgd.digest(stringAEncriptar.getBytes());
+            StringBuilder strbCadenaMD5 = new StringBuilder(2 * bytes.length);
+            for (int i = 0; i < bytes.length; i++) {
+                int bajo = (int) (bytes[i] & 0x0f);
+                int alto = (int) ((bytes[i] & 0xf0) >> 4);
+                strbCadenaMD5.append(CONSTS_HEX[alto]);
+                strbCadenaMD5.append(CONSTS_HEX[bajo]);
+            }
+            return strbCadenaMD5.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
     }
 }

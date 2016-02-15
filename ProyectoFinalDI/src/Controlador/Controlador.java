@@ -678,7 +678,7 @@ public class Controlador implements ActionListener, MouseListener{
     
     //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
     public void cargarImagenesPrincipalAdmin(){
-        int adPW = vista.labelAdminProveedores.getWidth() - 50;
+        int adPW = vista.labelAdminProveedores.getWidth() + 180;
         int adPH = vista.labelAdminProveedores.getHeight();
         ImageIcon adPIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminProveedores.png"));
         Image adPImg = adPIcon.getImage();

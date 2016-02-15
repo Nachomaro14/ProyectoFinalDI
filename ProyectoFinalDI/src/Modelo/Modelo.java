@@ -467,7 +467,7 @@ public class Modelo extends Database {
         try {
             stm = this.getConexion().createStatement();
             String sql;
-            sql = "insert into Trabajador (Usuario,Pass,DNI,Nombre,Apellidos,Telefono,Correo,Direccion,Administrador,Tiempo,Recaudacion,Valoracion) VALUES"
+            sql = "insert into Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
                     + " (" + usuario + "," + contrasenia + "," + nombre + "," + apellidos + "," + telefono + "," + correo + "," + numerodom + " " + calledom + "," + admin + ",0,0,0)";
             stm.executeUpdate(sql);
         } catch (SQLException ex) {
@@ -480,11 +480,91 @@ public class Modelo extends Database {
         try {
             stm = this.getConexion().createStatement();
             String sql;
-            sql = "insert into Trabajador (Usuario,Pass,DNI,Nombre,Apellidos,Telefono,Correo,Direccion,Administrador,Tiempo,Recaudacion,Valoracion) VALUES"
+            sql = "insert into Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
                     + " (" + usuario + "," + contrasenia + "," + nombre + "," + apellidos + "," + telefono + "," + correo + "," + numerodom + " " + calledom + ",0,0,0,0)";
             stm.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public DefaultListModel listaProveedores() {
+        DefaultListModel listmodel = new DefaultListModel();
+        try {
+            String q = "SELECT Nombre FROM Proveedor";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                String p = res.getString("Nombre");
+                listmodel.addElement(p);
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return listmodel;
+    }
+    
+    public String[] infoProveedor(String nombre){
+        String[] info = new String[6];
+        try {
+            String q = "SELECT NIF, Nombre, Direccion, Pais, Telefono, Correo FROM Proveedor WHERE Nombre = '" + nombre + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                info[0] = res.getString("NIF");
+                info[1] = res.getString("Nombre");
+                info[2] = res.getString("Direccion");
+                info[3] = res.getString("Pais");
+                info[4] = res.getString("Telefono");
+                info[5] = res.getString("Correo");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return info;
+    }
+    
+    public DefaultTableModel tablaProductosProveedores(String proveedor){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        try{
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("País");
+            tablemodel.addColumn("Tipo");
+            
+            String q = "SELECT Nombre, Pais, Tipo FROM Producto WHERE Proveedor = '" + proveedor + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            
+            String[] data = new String[3];
+            
+            while(res.next()){
+                data[0] = res.getString("Nombre");
+                data[1] = res.getString("Pais");
+                data[2] = res.getString("Tipo");
+                tablemodel.addRow(data);
+            }
+            
+            res.close();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaProductosProveedoresVacia(){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        
+        tablemodel.addColumn("Nombre");
+        tablemodel.addColumn("País");
+        tablemodel.addColumn("Tipo");
+        
+        return tablemodel;
     }
 }

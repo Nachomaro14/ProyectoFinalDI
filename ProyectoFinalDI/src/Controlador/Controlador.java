@@ -486,17 +486,43 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.contratar.setVisible(true);
                 break;
             case btnAceptarContrato:
-                //Hacer un insert en Trabajador
 
-//                vista.txtUserContra.getText();
-//                vista.txtPasswContra.getText();
-//                vista.txtDniContra.getText();
-//                vista.txtNombreContra.getText();
-//                vista.txtApellContra.getText();
-//                vista.txtTelefContra.getText();
-//                vista.txtEmailContra.getText();
-//                vista.txtNDomicilio.getText();
-//                vista.txtCDomicilio.getText();
+                if (vista.txtUserContra.getText() != null
+                        && vista.txtPasswContra.getText() != null
+                        && vista.txtDniContra.getText() != null
+                        && vista.txtNombreContra.getText() != null
+                        && vista.txtApellContra.getText() != null
+                        && vista.txtTelefContra.getText() != null
+                        && vista.txtNDomicilio.getText() != null
+                        && vista.txtCDomicilio.getText() != null
+                        && vista.txtEmailContra.getText() != null) {
+
+                    //COMPROBAMOS SI EL CHECK ESTA MARCADO
+                    if (vista.checkAdmin.isSelected()) {
+                        //SI LO ESTA, AÑADIREMOS UN ADMINISTRADOR
+                        modelo.insertAdmin(vista.txtUserContra.getText(),
+                                vista.txtPasswContra.getText(),
+                                vista.txtDniContra.getText(),
+                                vista.txtNombreContra.getText(),
+                                vista.txtApellContra.getText(),
+                                vista.txtTelefContra.getText(),
+                                vista.txtNDomicilio.getText(),
+                                vista.txtCDomicilio.getText(),
+                                vista.txtEmailContra.getText(),
+                                true);
+                    } else {
+                        //SI NO LO ESTA, SERA UN TRABAJADOR
+                        modelo.insertTrabajador(vista.txtUserContra.getText(),
+                                vista.txtPasswContra.getText(),
+                                vista.txtDniContra.getText(),
+                                vista.txtNombreContra.getText(),
+                                vista.txtApellContra.getText(),
+                                vista.txtTelefContra.getText(),
+                                vista.txtNDomicilio.getText(),
+                                vista.txtCDomicilio.getText(),
+                                vista.txtEmailContra.getText());
+                    }
+                }
                 break;
             case btnCancelarContrato:
                 vista.txtUserContra.setText("");

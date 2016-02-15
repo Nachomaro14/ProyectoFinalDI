@@ -4,27 +4,27 @@ import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-public class Modelo extends Database{
-    
-    public Modelo(String db, String user, String pass, String ip, String port){
+public class Modelo extends Database {
+
+    public Modelo(String db, String user, String pass, String ip, String port) {
         super.setDatabase(db);
         super.setUser(user);
         super.setPassword(pass);
         super.setURL(ip, port);
         super.conectar();
     }
-    
+
     public class ModeloTablaNoEditable extends DefaultTableModel {
 
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     }
-    
-    public boolean iniciarSesion(String usuario, String pass){
+
+    public boolean iniciarSesion(String usuario, String pass) {
         String contraseña = "";
         try {
-            String q = "SELECT Pass FROM Trabajador WHERE Usuario = '"+usuario+"'";
+            String q = "SELECT Pass FROM Trabajador WHERE Usuario = '" + usuario + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -35,17 +35,17 @@ public class Modelo extends Database{
             JOptionPane.showMessageDialog(null, "Error al iniciar sesión\n\n" + e.getMessage());
             e.printStackTrace();
         }
-        if(pass.equals(contraseña)){
+        if (pass.equals(contraseña)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
-    public boolean esAdmin(String usuario){
+
+    public boolean esAdmin(String usuario) {
         int ad = 0;
         try {
-            String q = "SELECT Administrador FROM Trabajador WHERE Usuario = '"+usuario+"'";
+            String q = "SELECT Administrador FROM Trabajador WHERE Usuario = '" + usuario + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -56,17 +56,17 @@ public class Modelo extends Database{
             JOptionPane.showMessageDialog(null, "Error al iniciar sesión\n\n" + e.getMessage());
             e.printStackTrace();
         }
-        if(ad == 1){
+        if (ad == 1) {
             return true;
-        }else{  
+        } else {
             return false;
         }
     }
-    
-    public String getNombreTrabajadorPorUsuario(String usuario){
+
+    public String getNombreTrabajadorPorUsuario(String usuario) {
         String nombre = "";
         try {
-            String q = "SELECT Nombre, Apellidos FROM Trabajador WHERE Usuario = '"+usuario+"'";
+            String q = "SELECT Nombre, Apellidos FROM Trabajador WHERE Usuario = '" + usuario + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -79,8 +79,8 @@ public class Modelo extends Database{
         }
         return nombre;
     }
-    
-    public String[] getNIFProveedores(){
+
+    public String[] getNIFProveedores() {
         int registros = 0;
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(NIF) as total FROM Proveedor");
@@ -109,11 +109,11 @@ public class Modelo extends Database{
         }
         return proveedores;
     }
-    
-    public String[] getInfoProveedor(String nif){
+
+    public String[] getInfoProveedor(String nif) {
         String[] info = new String[6];
         try {
-            String q = "SELECT NIF, Nombre, Direccion, Pais, Telefono, Correo FROM Proveedor WHERE NIF = '"+nif+"'";
+            String q = "SELECT NIF, Nombre, Direccion, Pais, Telefono, Correo FROM Proveedor WHERE NIF = '" + nif + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -131,8 +131,8 @@ public class Modelo extends Database{
         }
         return info;
     }
-    
-    public String[] getCodigoProductos(){
+
+    public String[] getCodigoProductos() {
         int registros = 0;
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(Codigo) as total FROM Producto");
@@ -161,11 +161,11 @@ public class Modelo extends Database{
         }
         return productos;
     }
-    
-    public Object[] getInfoProductoPorCodigo(String codigo){
+
+    public Object[] getInfoProductoPorCodigo(String codigo) {
         Object[] info = new Object[7];
         try {
-            String q = "SELECT Codigo, Proveedor, Nombre, Pais, Precio, Tipo, Descripcion FROM Producto WHERE Codigo = "+codigo;
+            String q = "SELECT Codigo, Proveedor, Nombre, Pais, Precio, Tipo, Descripcion FROM Producto WHERE Codigo = " + codigo;
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -184,11 +184,11 @@ public class Modelo extends Database{
         }
         return info;
     }
-    
-    public Object[] getInfoProductoPorCodigoYProveedor(int codigo, String proveedor){
+
+    public Object[] getInfoProductoPorCodigoYProveedor(int codigo, String proveedor) {
         Object[] info = new Object[7];
         try {
-            String q = "SELECT Codigo, Proveedor, Nombre, Pais, Precio, Tipo, Descripcion FROM Producto WHERE Codigo = "+codigo+" AND Proveedor = '"+proveedor+"'";
+            String q = "SELECT Codigo, Proveedor, Nombre, Pais, Precio, Tipo, Descripcion FROM Producto WHERE Codigo = " + codigo + " AND Proveedor = '" + proveedor + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -206,9 +206,9 @@ public class Modelo extends Database{
             e.printStackTrace();
         }
         return info;
-    }    
-    
-    public String[] getNIFProveedoresDeStockActual(){
+    }
+
+    public String[] getNIFProveedoresDeStockActual() {
         int registros = 0;
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(Proveedor) as total FROM Stock GROUP BY Proveedor");
@@ -237,8 +237,8 @@ public class Modelo extends Database{
         }
         return proveedores;
     }
-    
-    public String[] getDNITrabajadores(){
+
+    public String[] getDNITrabajadores() {
         int registros = 0;
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(DNI) as total FROM Trabajador");
@@ -267,11 +267,11 @@ public class Modelo extends Database{
         }
         return trabajadores;
     }
-    
-    public Object[] getInfoTrabajador(String dni){
+
+    public Object[] getInfoTrabajador(String dni) {
         Object[] info = new Object[11];
         try {
-            String q = "SELECT Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Tiempo, Recaudacion, Valoracion FROM Trabajador WHERE DNI = '"+dni+"'";
+            String q = "SELECT Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Tiempo, Recaudacion, Valoracion FROM Trabajador WHERE DNI = '" + dni + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -294,19 +294,19 @@ public class Modelo extends Database{
         }
         return info;
     }
-    
-    public void avisar(){
+
+    public void avisar() {
         try {
             String q = "UPDATE Aviso SET Aviso = 1";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al realizar aviso\n\n" + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-    public boolean comprobarAviso(){
+
+    public boolean comprobarAviso() {
         int aviso = 0;
         boolean avisado = false;
         try {
@@ -315,50 +315,50 @@ public class Modelo extends Database{
             ResultSet res = pstm.executeQuery();
             res.next();
             aviso = res.getInt("Aviso");
-            if(aviso == 0){
+            if (aviso == 0) {
                 avisado = false;
-            }else{
+            } else {
                 avisado = true;
             }
             res.close();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al comprobar aviso\n\n" + e.getMessage());
             e.printStackTrace();
         }
         return avisado;
     }
-    
-    public void quitarAviso(){
+
+    public void quitarAviso() {
         try {
             String q = "UPDATE Aviso SET Aviso = 0";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al realizar aviso\n\n" + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-    public DefaultTableModel tablaProductosRegistroVentasVacia() {        
+
+    public DefaultTableModel tablaProductosRegistroVentasVacia() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
-        try{            
+        try {
             tablemodel.addColumn("Producto");
             tablemodel.addColumn("Cantidad");
             tablemodel.addColumn("Precio/U");
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return tablemodel;
     }
-    
+
     public String[] getFechas() {
         int registros = 1;
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement("SELECT COUNT(Fecha) as total FROM RegVentas GROUP BY Fecha");
             ResultSet res = pstm.executeQuery();
-            if(res.next()){
+            if (res.next()) {
                 res.next();
-                if(res != null){
+                if (res != null) {
                     registros = res.getInt("total");
                 }
             }
@@ -384,11 +384,11 @@ public class Modelo extends Database{
         }
         return fechas;
     }
-    
-    public DefaultListModel listaPedidos(String fecha){
+
+    public DefaultListModel listaPedidos(String fecha) {
         DefaultListModel listmodel = new DefaultListModel();
         try {
-            String q = "SELECT Codigo, Hora, Cliente FROM RegVentas WHERE Fecha = '"+fecha+"'";
+            String q = "SELECT Codigo, Hora, Cliente FROM RegVentas WHERE Fecha = '" + fecha + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -407,8 +407,8 @@ public class Modelo extends Database{
         }
         return listmodel;
     }
-    
-    public Object[] infoTrabajador(String usuario){
+
+    public Object[] infoTrabajador(String usuario) {
         Object[] info = new Object[9];
         try {
             String q = "SELECT DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Tiempo, Recaudacion, Valoracion FROM Trabajador WHERE Usuario = '" + usuario + "'";
@@ -432,8 +432,8 @@ public class Modelo extends Database{
         }
         return info;
     }
-    
-    public int getTiempo(String usuario){
+
+    public int getTiempo(String usuario) {
         int tiempo = 0;
         try {
             String q = "SELECT Tiempo FROM Trabajador WHERE Usuario = '" + usuario + "'";
@@ -449,8 +449,8 @@ public class Modelo extends Database{
         }
         return tiempo;
     }
-    
-    public void actualizarTiempo(String usuario, int tiempo){
+
+    public void actualizarTiempo(String usuario, int tiempo) {
         try {
             String q = "UPDATE Trabajador SET Tiempo = " + tiempo + " WHERE Usuario = '" + usuario + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -459,6 +459,32 @@ public class Modelo extends Database{
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void insertAdmin(String usuario, String contrasenia, String dni, String nombre, String apellidos,  String telefono, String numerodom, String calledom, String correo, boolean admin) {
+        Statement stm;
+        try {
+            stm = this.getConexion().createStatement();
+            String sql;
+            sql = "insert into Trabajador (Usuario,Pass,DNI,Nombre,Apellidos,Telefono,Correo,Direccion,Administrador,Tiempo,Recaudacion,Valoracion) VALUES"
+                    + " (" + usuario + "," + contrasenia + "," + nombre + "," + apellidos + "," + telefono + "," + correo + "," + numerodom + " " + calledom + "," + admin + ",0,0,0)";
+            stm.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void insertTrabajador(String usuario, String contrasenia,  String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
+        Statement stm;
+        try {
+            stm = this.getConexion().createStatement();
+            String sql;
+            sql = "insert into Trabajador (Usuario,Pass,DNI,Nombre,Apellidos,Telefono,Correo,Direccion,Administrador,Tiempo,Recaudacion,Valoracion) VALUES"
+                    + " (" + usuario + "," + contrasenia + "," + nombre + "," + apellidos + "," + telefono + "," + correo + "," + numerodom + " " + calledom + ",0,0,0,0)";
+            stm.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }

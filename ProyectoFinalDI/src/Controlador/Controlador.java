@@ -487,15 +487,15 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             case btnAceptarContrato:
 
-                if (vista.txtUserContra.getText() != null
-                        && vista.txtPasswContra.getText() != null
-                        && vista.txtDniContra.getText() != null
-                        && vista.txtNombreContra.getText() != null
-                        && vista.txtApellContra.getText() != null
-                        && vista.txtTelefContra.getText() != null
-                        && vista.txtNDomicilio.getText() != null
-                        && vista.txtCDomicilio.getText() != null
-                        && vista.txtEmailContra.getText() != null) {
+                if ("".equals(vista.txtDniContra.getText())
+                        && "".equals(vista.txtUserContra.getText())
+                        && "".equals(vista.txtPasswContra.getText())
+                        && "".equals(vista.txtNombreContra.getText())
+                        && "".equals(vista.txtApellContra.getText())
+                        && "".equals(vista.txtTelefContra.getText())
+                        && "".equals(vista.txtNDomicilio.getText())
+                        && "".equals(vista.txtCDomicilio.getText())
+                        && "".equals(vista.txtEmailContra.getText())) {
 
                     //COMPROBAMOS SI EL CHECK ESTA MARCADO
                     if (vista.checkAdmin.isSelected()) {

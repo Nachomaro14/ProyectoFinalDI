@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Array;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -45,6 +46,7 @@ public class Controlador implements ActionListener, MouseListener {
     Comprobacion c = new Comprobacion(); //PARA PODER UTILIZAR EL HILO COMPROBACIÓN EN DIFERENTES SITUACIONES
     Acumulador a = new Acumulador(); //PARA PODER UTILIZAR EL HILO ACUMULADOR EN DIFERENTES SITUACIONES
     TablaRenderizador render; //PARA CONFIGURAR LA APARIENCIA DE UNA TABLA
+    int modificarTrabajador = 0; //PARA SABER SI INSERTAR O MODIFICAR UN TRABAJADOR
 
     private static final char[] CONSTS_HEX = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};//Array para encriptar en MD5
 
@@ -59,7 +61,6 @@ public class Controlador implements ActionListener, MouseListener {
         btnIniciarSesion,
         btnAceptarConfig,
         btnCancelarConfig,
-        
         //*************BOTONES ADMIN*****************
         btnNuevoEmpleado,
         btnModificaEmpleado,
@@ -308,7 +309,7 @@ public class Controlador implements ActionListener, MouseListener {
                     }
                 }
             });
-            
+
             //AÑADIMOS UN KEYLISTENER A LOS CAMPOS DE LA CONFIGURACIÓN DE LA BASE DE DATOS
             //PARA QUE AL PULSAR ENTER INICIE DIRECTAMENTE CON LO ESCRITO
             vista.txtNombreBD.addKeyListener(new KeyAdapter() {
@@ -358,7 +359,7 @@ public class Controlador implements ActionListener, MouseListener {
                 public void mouseClicked(MouseEvent e) {
                     DefaultListModel lp = modelo.listaProveedores();
                     vista.listaProvee.setModel(lp);
-                    
+
                     vista.proveedores1.pack();
                     vista.proveedores1.setLocationRelativeTo(null);
                     vista.proveedores1.setTitle("Proveedores");
@@ -414,7 +415,7 @@ public class Controlador implements ActionListener, MouseListener {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     vista.tablaTrabajadores.setModel(modelo.tablaTrabajadores());
-                    
+
                     vista.trabajadores4.pack();
                     vista.trabajadores4.setLocationRelativeTo(null);
                     vista.trabajadores4.setTitle("Trabajadores");
@@ -471,7 +472,7 @@ public class Controlador implements ActionListener, MouseListener {
                     vista.labelAdminSalir.setBorder(null);
                 }
             });
-            
+
             //AÑADIMOS ITEMLISTENERS A LAS LISTAS
             vista.listaProvee.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
@@ -534,7 +535,6 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.configuracionDB.setLocationRelativeTo(null);
                 vista.configuracionDB.setVisible(true);
                 break;
-
             case btnAceptarConfig:
                 abrirPrograma();
                 break;
@@ -543,41 +543,68 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.setVisible(true);
                 break;
             case btnNuevoEmpleado:
+                modificarTrabajador = 0;
                 vista.contratar.pack();
                 vista.contratar.setLocationRelativeTo(null);
                 vista.contratar.setVisible(true);
                 break;
             case btnAceptarContrato:
+                if (modificarTrabajador == 0) {
+                    if (!"".equals(vista.txtDniContra.getText())
+                            && !"".equals(vista.txtUserContra.getText())
+                            && !"".equals(vista.txtPasswContra.getText())
+                            && !"".equals(vista.txtNombreContra.getText())
+                            && !"".equals(vista.txtApellContra.getText())
+                            && !"".equals(vista.txtTelefContra.getText())
+                            && !"".equals(vista.txtNDomicilio.getText())
+                            && !"".equals(vista.txtCDomicilio.getText())
+                            && !"".equals(vista.txtEmailContra.getText())) {
+                        //COMPROBAMOS SI EL CHECK ESTA MARCADO
+                        if (vista.checkAdmin.isSelected()) {
+                            //SI LO ESTA, AÑADIREMOS UN ADMINISTRADOR
+                            String pass = vista.txtPasswContra.getText();
+                            pass = encriptaEnMD5(pass);
+                            modelo.insertAdmin(vista.txtUserContra.getText(),
+                                    pass,
+                                    vista.txtDniContra.getText(),
+                                    vista.txtNombreContra.getText(),
+                                    vista.txtApellContra.getText(),
+                                    vista.txtTelefContra.getText(),
+                                    vista.txtNDomicilio.getText(),
+                                    vista.txtCDomicilio.getText(),
+                                    vista.txtEmailContra.getText());
+                        } else {
+                            //SI NO LO ESTA, SERA UN TRABAJADOR
+                            String pass = vista.txtPasswContra.getText();
+                            pass = encriptaEnMD5(pass);
+                            modelo.insertTrabajador(vista.txtUserContra.getText(),
+                                    pass,
+                                    vista.txtDniContra.getText(),
+                                    vista.txtNombreContra.getText(),
+                                    vista.txtApellContra.getText(),
+                                    vista.txtTelefContra.getText(),
+                                    vista.txtNDomicilio.getText(),
+                                    vista.txtCDomicilio.getText(),
+                                    vista.txtEmailContra.getText());
+                        }
+                    }
+                } else if (modificarTrabajador == 1) {
+                    if (!"".equals(vista.txtDniContra.getText())
+                            && !"".equals(vista.txtUserContra.getText())
+                            && !"".equals(vista.txtPasswContra.getText())
+                            && !"".equals(vista.txtNombreContra.getText())
+                            && !"".equals(vista.txtApellContra.getText())
+                            && !"".equals(vista.txtTelefContra.getText())
+                            && !"".equals(vista.txtNDomicilio.getText())
+                            && !"".equals(vista.txtCDomicilio.getText())
+                            && !"".equals(vista.txtEmailContra.getText())) {
 
-                if (!"".equals(vista.txtDniContra.getText())
-                        && !"".equals(vista.txtUserContra.getText())
-                        && !"".equals(vista.txtPasswContra.getText())
-                        && !"".equals(vista.txtNombreContra.getText())
-                        && !"".equals(vista.txtApellContra.getText())
-                        && !"".equals(vista.txtTelefContra.getText())
-                        && !"".equals(vista.txtNDomicilio.getText())
-                        && !"".equals(vista.txtCDomicilio.getText())
-                        && !"".equals(vista.txtEmailContra.getText())) {
-
-                    //COMPROBAMOS SI EL CHECK ESTA MARCADO
-                    if (vista.checkAdmin.isSelected()) {
-                        //SI LO ESTA, AÑADIREMOS UN ADMINISTRADOR
+                        vista.txtUserContra.setEditable(false);
+                        //MODIFICAR AQUI
                         String pass = vista.txtPasswContra.getText();
                         pass = encriptaEnMD5(pass);
-                        modelo.insertAdmin(vista.txtUserContra.getText(),
-                                pass,
-                                vista.txtDniContra.getText(),
-                                vista.txtNombreContra.getText(),
-                                vista.txtApellContra.getText(),
-                                vista.txtTelefContra.getText(),
-                                vista.txtNDomicilio.getText(),
-                                vista.txtCDomicilio.getText(),
-                                vista.txtEmailContra.getText());
-                    } else {
-                        //SI NO LO ESTA, SERA UN TRABAJADOR
-                        String pass = vista.txtPasswContra.getText();
-                        pass = encriptaEnMD5(pass);
-                        modelo.insertTrabajador(vista.txtUserContra.getText(),
+                        
+                        modelo.updateTrabajador(vista.txtUserContra.getText(),
                                 pass,
                                 vista.txtDniContra.getText(),
                                 vista.txtNombreContra.getText(),
@@ -591,6 +618,7 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.tablaTrabajadores.setModel(modelo.tablaTrabajadores());
                 vista.contratar.dispose();
                 break;
+
             case btnCancelarContrato:
                 vista.txtUserContra.setText("");
                 vista.txtPasswContra.setText("");
@@ -604,6 +632,26 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.contratar.setVisible(false);
                 break;
             case btnModificaEmpleado:
+                modificarTrabajador = 1;
+                if (vista.tablaTrabajadores.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(vista, "Debes seleccionar un trabajador de la tabla primero");
+                } else {
+                    vista.txtUserContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
+                    vista.txtPasswContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 1).toString());
+                    vista.txtDniContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 2).toString());
+                    vista.txtNombreContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 3).toString());
+                    vista.txtApellContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 4).toString());
+                    vista.txtTelefContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 5).toString());
+                    vista.txtEmailContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 6).toString());
+
+                    String aux = vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 7).toString();
+                    vista.txtNDomicilio.setText(aux.substring(0, aux.indexOf(" ")));//Coge el numero de la direccion
+                    vista.txtCDomicilio.setText(aux.substring(aux.indexOf(" ")));
+
+                    vista.contratar.pack();
+                    vista.contratar.setLocationRelativeTo(null);
+                    vista.contratar.setVisible(true);
+                }
                 break;
             case btnDespideEmpleado:
                 break;
@@ -611,24 +659,29 @@ public class Controlador implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        
+    public void mouseClicked(MouseEvent e
+    ) {
+
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e
+    ) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e
+    ) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent e
+    ) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(MouseEvent e
+    ) {
     }
 
     //ESTE MÉTODO SERVIRÁ PARA LIMITAR LA ESCRITURA DE CIFRAS EN UN JTEXTFIELD
@@ -939,7 +992,7 @@ public class Controlador implements ActionListener, MouseListener {
         Image adVNewImg = adVImg.getScaledInstance(adVW, adVH, java.awt.Image.SCALE_SMOOTH);
         adVIcon = new ImageIcon(adVNewImg);
         vista.labelAdminVentas.setIcon(adVIcon);
-        
+
         int adSalirW = vista.labelAdminSalir.getWidth() - 200;
         int adSalirH = vista.labelAdminSalir.getHeight() - 100;
         ImageIcon adSalirIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir2.png"));
@@ -1024,11 +1077,13 @@ public class Controlador implements ActionListener, MouseListener {
         vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
         vista.tablaPedidos.getTableHeader().setReorderingAllowed(false);
         vista.tablaPedidos.getTableHeader().setResizingAllowed(false);
-        
+
         vista.tablaProductosProvee.setDefaultRenderer(String.class, render);
         vista.tablaProductosProvee.setModel(modelo.tablaProductosProveedoresVacia());
         vista.tablaProductosProvee.getTableHeader().setReorderingAllowed(false);
         vista.tablaProductosProvee.getTableHeader().setResizingAllowed(false);
+        vista.tablaTrabajadores.getTableHeader().setReorderingAllowed(false);
+        vista.tablaTrabajadores.getTableHeader().setResizingAllowed(false);
     }
 
     //MÉTODO PARA ENCRIPTAR INFORMACIÓN CON MD5
@@ -1048,9 +1103,9 @@ public class Controlador implements ActionListener, MouseListener {
             return null;
         }
     }
-    
+
     //MÉTODO QUE DARÁ COMIENZO AL PROGRAMA UNA VEZ CONECTADA LA BASE DE DATOS
-    public void abrirPrograma(){
+    public void abrirPrograma() {
         String bd = vista.txtNombreBD.getText();
         String usu = vista.txtUsuBD.getText();
         String pass = vista.txtPassBD.getText();

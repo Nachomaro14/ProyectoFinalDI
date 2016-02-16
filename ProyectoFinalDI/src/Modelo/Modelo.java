@@ -462,10 +462,10 @@ public class Modelo extends Database {
         }
     }
 
-    public void insertAdmin(String usuario, String contrasenia, String dni, String nombre, String apellidos,  String telefono, String numerodom, String calledom, String correo) {
+    public void insertAdmin(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
         try {
             String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
-                    + " ('" + usuario + "','" + contrasenia + "','"+dni+"','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',1,0,0,0)";
+                    + " ('" + usuario + "','" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',1,0,0,0)";
             PreparedStatement pstm = this.getConexion().prepareStatement(sql);
             pstm.execute();
             pstm.close();
@@ -474,10 +474,10 @@ public class Modelo extends Database {
         }
     }
 
-    public void insertTrabajador(String usuario, String contrasenia,  String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
+    public void insertTrabajador(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
         try {
             String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
-                    + " ('" + usuario + "','" + contrasenia + "','"+dni+"','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',0,0,0,0)";
+                    + " ('" + usuario + "','" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',0,0,0,0)";
             PreparedStatement pstm = this.getConexion().prepareStatement(sql);
             pstm.execute();
             pstm.close();
@@ -485,7 +485,21 @@ public class Modelo extends Database {
             ex.printStackTrace();
         }
     }
-    
+
+    public void updateTrabajador(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
+        try {
+            String q = "UPDATE Trabajador (Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion)"
+                    + "VALUES ('" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "')"
+                    + "WHERE Usuario='" + usuario + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public DefaultListModel listaProveedores() {
         DefaultListModel listmodel = new DefaultListModel();
         try {
@@ -505,8 +519,8 @@ public class Modelo extends Database {
         }
         return listmodel;
     }
-    
-    public String[] infoProveedor(String nombre){
+
+    public String[] infoProveedor(String nombre) {
         String[] info = new String[6];
         try {
             String q = "SELECT NIF, Nombre, Direccion, Pais, Telefono, Correo FROM Proveedor WHERE Nombre = '" + nombre + "'";
@@ -527,48 +541,48 @@ public class Modelo extends Database {
         }
         return info;
     }
-    
-    public DefaultTableModel tablaProductosProveedores(String proveedor){
+
+    public DefaultTableModel tablaProductosProveedores(String proveedor) {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
-        try{
+        try {
             tablemodel.addColumn("Nombre");
             tablemodel.addColumn("País");
             tablemodel.addColumn("Tipo");
-            
+
             String q = "SELECT Nombre, Pais, Tipo FROM Producto WHERE Proveedor = '" + proveedor + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
-            
+
             String[] data = new String[3];
-            
-            while(res.next()){
+
+            while (res.next()) {
                 data[0] = res.getString("Nombre");
                 data[1] = res.getString("Pais");
                 data[2] = res.getString("Tipo");
                 tablemodel.addRow(data);
             }
-            
+
             res.close();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
             e.printStackTrace();
         }
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaProductosProveedoresVacia(){
+
+    public DefaultTableModel tablaProductosProveedoresVacia() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
-        
+
         tablemodel.addColumn("Nombre");
         tablemodel.addColumn("País");
         tablemodel.addColumn("Tipo");
-        
+
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaTrabajadores(){
+
+    public DefaultTableModel tablaTrabajadores() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
-        try{
+        try {
             tablemodel.addColumn("Usuario");
             tablemodel.addColumn("Pass");
             tablemodel.addColumn("DNI");
@@ -577,14 +591,14 @@ public class Modelo extends Database {
             tablemodel.addColumn("Teléfono");
             tablemodel.addColumn("Correo");
             tablemodel.addColumn("Dirección");
-            
+
             String q = "SELECT Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion FROM Trabajador";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
-            
+
             String[] data = new String[8];
-            
-            while(res.next()){
+
+            while (res.next()) {
                 data[0] = res.getString("Usuario");
                 data[1] = res.getString("Pass");
                 data[2] = res.getString("DNI");
@@ -595,18 +609,18 @@ public class Modelo extends Database {
                 data[7] = res.getString("Direccion");
                 tablemodel.addRow(data);
             }
-            
+
             res.close();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
             e.printStackTrace();
         }
         return tablemodel;
     }
-    
+
     public void deleteTrabajador(String usuario) {
         try {
-            String sql = "DELETE FROM Trabajador WHERE Usuario = '"+usuario+"'";
+            String sql = "DELETE FROM Trabajador WHERE Usuario = '" + usuario + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(sql);
             pstm.execute();
             pstm.close();

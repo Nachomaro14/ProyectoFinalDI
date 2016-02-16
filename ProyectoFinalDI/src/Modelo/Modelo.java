@@ -603,4 +603,15 @@ public class Modelo extends Database {
         }
         return tablemodel;
     }
+    
+    public void deleteTrabajador(String usuario) {
+        try {
+            String sql = "DELETE FROM Trabajador WHERE Usuario = '"+usuario+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(sql);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

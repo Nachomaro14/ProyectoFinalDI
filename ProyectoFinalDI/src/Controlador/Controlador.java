@@ -612,6 +612,7 @@ public class Controlador implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        
     }
 
     @Override

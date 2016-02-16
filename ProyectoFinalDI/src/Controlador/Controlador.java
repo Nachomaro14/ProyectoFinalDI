@@ -1007,6 +1007,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
+    //INICIAMOS LOS MÉTODOS RELACIONADOS CON EL MODELO Y ESTE MÉTODO SERÁ UTILIZADO TRAS LA CONEXIÓN A LA BASE DE DATOS
     public void iniciarModelo() {
         //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
         //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
@@ -1022,6 +1023,7 @@ public class Controlador implements ActionListener, MouseListener {
         vista.tablaProductosProvee.getTableHeader().setResizingAllowed(false);
     }
 
+    //MÉTODO PARA ENCRIPTAR INFORMACIÓN CON MD5
     public static String encriptaEnMD5(String stringAEncriptar) {
         try {
             MessageDigest msgd = MessageDigest.getInstance("MD5");
@@ -1039,6 +1041,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
     
+    //MÉTODO QUE DARÁ COMIENZO AL PROGRAMA UNA VEZ CONECTADA LA BASE DE DATOS
     public void abrirPrograma(){
         String bd = vista.txtNombreBD.getText();
         String usu = vista.txtUsuBD.getText();

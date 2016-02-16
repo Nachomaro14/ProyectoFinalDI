@@ -66,7 +66,9 @@ public class Controlador implements ActionListener, MouseListener {
         btnModificaEmpleado,
         btnDespideEmpleado,
         btnAceptarContrato,
-        btnCancelarContrato
+        btnCancelarContrato,
+        //esto miradlo porque no se si es asi
+        checkModContra
     }
 
     //ESTE GRAN MÉTODO INICIARÁ E INICIALIZARÁ TODO LO NECESARIO PARA COMENZAR EL FUNCIONAMIENTO DE LA APLICACIÓN
@@ -79,6 +81,9 @@ public class Controlador implements ActionListener, MouseListener {
             SwingUtilities.updateComponentTreeUI(vista.principal);
             SwingUtilities.updateComponentTreeUI(vista.principalAdmin);
             SwingUtilities.updateComponentTreeUI(vista.proveedores1);
+            SwingUtilities.updateComponentTreeUI(vista.stock3);
+            SwingUtilities.updateComponentTreeUI(vista.contratar);
+            SwingUtilities.updateComponentTreeUI(vista.trabajadores4);
 
             //MODIFICAMOS LAS PROPIEDADES DE LOS PANELES PRINCIPALES
             vista.principal.setResizable(false);
@@ -518,6 +523,9 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnCancelarContrato.setActionCommand("btnCancelarContrato");
         vista.btnCancelarContrato.addActionListener(this);
 
+        vista.checkModifico.setActionCommand("checkModContra");
+        vista.checkModifico.addActionListener(this);
+
         //btnCancelaContrato
         //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
@@ -549,16 +557,18 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.contratar.setVisible(true);
                 break;
             case btnAceptarContrato:
-                if (modificarTrabajador == 0) {
-                    if (!"".equals(vista.txtDniContra.getText())
-                            && !"".equals(vista.txtUserContra.getText())
-                            && !"".equals(vista.txtPasswContra.getText())
-                            && !"".equals(vista.txtNombreContra.getText())
-                            && !"".equals(vista.txtApellContra.getText())
-                            && !"".equals(vista.txtTelefContra.getText())
-                            && !"".equals(vista.txtNDomicilio.getText())
-                            && !"".equals(vista.txtCDomicilio.getText())
-                            && !"".equals(vista.txtEmailContra.getText())) {
+                if (!"".equals(vista.txtDniContra.getText())
+                        && !"".equals(vista.txtUserContra.getText())
+                        && !"".equals(vista.txtPasswContra.getText())
+                        && !"".equals(vista.txtNombreContra.getText())
+                        && !"".equals(vista.txtApellContra.getText())
+                        && !"".equals(vista.txtTelefContra.getText())
+                        && !"".equals(vista.txtNDomicilio.getText())
+                        && !"".equals(vista.txtCDomicilio.getText())
+                        && !"".equals(vista.txtEmailContra.getText())) {
+
+                    if (modificarTrabajador == 0) {//INSERTAR
+
                         //COMPROBAMOS SI EL CHECK ESTA MARCADO
                         if (vista.checkAdmin.isSelected()) {
                             //SI LO ESTA, AÑADIREMOS UN ADMINISTRADOR
@@ -587,33 +597,37 @@ public class Controlador implements ActionListener, MouseListener {
                                     vista.txtCDomicilio.getText(),
                                     vista.txtEmailContra.getText());
                         }
-                    }
-                } else if (modificarTrabajador == 1) {
-                    if (!"".equals(vista.txtDniContra.getText())
-                            && !"".equals(vista.txtUserContra.getText())
-                            && !"".equals(vista.txtPasswContra.getText())
-                            && !"".equals(vista.txtNombreContra.getText())
-                            && !"".equals(vista.txtApellContra.getText())
-                            && !"".equals(vista.txtTelefContra.getText())
-                            && !"".equals(vista.txtNDomicilio.getText())
-                            && !"".equals(vista.txtCDomicilio.getText())
-                            && !"".equals(vista.txtEmailContra.getText())) {
 
-                        vista.txtUserContra.setEditable(false);
+                    } else if (modificarTrabajador == 1) {//MODIFICAR
+
                         //MODIFICAR AQUI
-                        String pass = vista.txtPasswContra.getText();
-                        pass = encriptaEnMD5(pass);
-                        
-                        modelo.updateTrabajador(vista.txtUserContra.getText(),
-                                pass,
-                                vista.txtDniContra.getText(),
-                                vista.txtNombreContra.getText(),
-                                vista.txtApellContra.getText(),
-                                vista.txtTelefContra.getText(),
-                                vista.txtNDomicilio.getText(),
-                                vista.txtCDomicilio.getText(),
-                                vista.txtEmailContra.getText());
+                        if (vista.checkModifico.isSelected()) {
+
+                            String pass = vista.txtPasswContra.getText();
+                            pass = encriptaEnMD5(pass);
+
+                            modelo.updateTrabajadorPassword(vista.txtUserContra.getText(),
+                                    pass,
+                                    vista.txtDniContra.getText(),
+                                    vista.txtNombreContra.getText(),
+                                    vista.txtApellContra.getText(),
+                                    vista.txtTelefContra.getText(),
+                                    vista.txtNDomicilio.getText(),
+                                    vista.txtCDomicilio.getText(),
+                                    vista.txtEmailContra.getText());
+                        } else {
+                            modelo.updateTrabajadorNoPassword(vista.txtUserContra.getText(),
+                                    vista.txtDniContra.getText(),
+                                    vista.txtNombreContra.getText(),
+                                    vista.txtApellContra.getText(),
+                                    vista.txtTelefContra.getText(),
+                                    vista.txtNDomicilio.getText(),
+                                    vista.txtCDomicilio.getText(),
+                                    vista.txtEmailContra.getText());
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(vista, "Todos los campos deben ser rellenados");
                 }
                 vista.tablaTrabajadores.setModel(modelo.tablaTrabajadores());
                 vista.contratar.dispose();
@@ -633,6 +647,8 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             case btnModificaEmpleado:
                 modificarTrabajador = 1;
+                vista.txtPasswContra.setEditable(false);
+
                 if (vista.tablaTrabajadores.getSelectedRow() == -1) {
                     JOptionPane.showMessageDialog(vista, "Debes seleccionar un trabajador de la tabla primero");
                 } else {
@@ -654,6 +670,14 @@ public class Controlador implements ActionListener, MouseListener {
                 }
                 break;
             case btnDespideEmpleado:
+                break;
+            case checkModContra:
+                if (vista.checkModifico.isSelected()) {
+                    vista.txtPasswContra.setEditable(true);
+                    vista.txtPasswContra.setText("");
+                } else {
+                    vista.txtPasswContra.setEditable(false);
+                }
                 break;
         }
     }
@@ -708,6 +732,7 @@ public class Controlador implements ActionListener, MouseListener {
                 }
             }
         });
+
     }
 
     //DEFINIMOS EL PRIMER HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
@@ -747,7 +772,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-    //DEFINIMOS EL SEGUNDO HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
+//DEFINIMOS EL SEGUNDO HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
     public class Uni2 extends Thread {
 
         @Override
@@ -829,7 +854,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-    //DEFINIMOS EL HILO TEMPORIZADOR QUE INICIARÁ LOS DOS HILOS PARA LA ANIMACIÓN DE LA PANTALLA DE CARGA
+//DEFINIMOS EL HILO TEMPORIZADOR QUE INICIARÁ LOS DOS HILOS PARA LA ANIMACIÓN DE LA PANTALLA DE CARGA
     public class Temporizador extends Thread {
 
         public void run(Uni1 u1, Uni2 u2) {
@@ -838,7 +863,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-    //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
+//DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
     public void inicioDeSesionDeTrabajador() {
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
@@ -923,6 +948,7 @@ public class Controlador implements ActionListener, MouseListener {
         Image volverNewImg = volverImg.getScaledInstance(volverW, volverH, java.awt.Image.SCALE_SMOOTH);
         volverIcon = new ImageIcon(volverNewImg);
         vista.labelVolver.setIcon(volverIcon);
+
     }
 
     //DEFINIMOS EL HILO COMPROBACIÓN PARA MANEJAR EL AVISO DE ASISTENCIA DE UN TRABAJADOR A UN ADMINISTRADOR
@@ -951,7 +977,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-    //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
+//CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
     public void cargarImagenesPrincipalAdmin() {
         int adPW = vista.labelAdminProveedores.getWidth() - 100;
         int adPH = vista.labelAdminProveedores.getHeight() - 100;
@@ -1030,6 +1056,7 @@ public class Controlador implements ActionListener, MouseListener {
         Image vNewImg = vImg.getScaledInstance(vW, vH, java.awt.Image.SCALE_SMOOTH);
         vIcon = new ImageIcon(vNewImg);
         vista.valoracionPerfil.setIcon(vIcon);
+
     }
 
     //DEFINIMOS EL HILO ACUMULADOR, EL CUAL AUMENTARÁ GRADUALMENTE EL TIEMPO DE TRABAJO DEL TRABAJADOR CONECTADO
@@ -1068,22 +1095,28 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-    //INICIAMOS LOS MÉTODOS RELACIONADOS CON EL MODELO Y ESTE MÉTODO SERÁ UTILIZADO TRAS LA CONEXIÓN A LA BASE DE DATOS
+//INICIAMOS LOS MÉTODOS RELACIONADOS CON EL MODELO Y ESTE MÉTODO SERÁ UTILIZADO TRAS LA CONEXIÓN A LA BASE DE DATOS
     public void iniciarModelo() {
         //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
         //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
         render = new TablaRenderizador();
         vista.tablaPedidos.setDefaultRenderer(String.class, render);
         vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
-        vista.tablaPedidos.getTableHeader().setReorderingAllowed(false);
-        vista.tablaPedidos.getTableHeader().setResizingAllowed(false);
+        vista.tablaPedidos.getTableHeader()
+                .setReorderingAllowed(false);
+        vista.tablaPedidos.getTableHeader()
+                .setResizingAllowed(false);
 
         vista.tablaProductosProvee.setDefaultRenderer(String.class, render);
         vista.tablaProductosProvee.setModel(modelo.tablaProductosProveedoresVacia());
-        vista.tablaProductosProvee.getTableHeader().setReorderingAllowed(false);
-        vista.tablaProductosProvee.getTableHeader().setResizingAllowed(false);
-        vista.tablaTrabajadores.getTableHeader().setReorderingAllowed(false);
-        vista.tablaTrabajadores.getTableHeader().setResizingAllowed(false);
+        vista.tablaProductosProvee.getTableHeader()
+                .setReorderingAllowed(false);
+        vista.tablaProductosProvee.getTableHeader()
+                .setResizingAllowed(false);
+        vista.tablaTrabajadores.getTableHeader()
+                .setReorderingAllowed(false);
+        vista.tablaTrabajadores.getTableHeader()
+                .setResizingAllowed(false);
     }
 
     //MÉTODO PARA ENCRIPTAR INFORMACIÓN CON MD5

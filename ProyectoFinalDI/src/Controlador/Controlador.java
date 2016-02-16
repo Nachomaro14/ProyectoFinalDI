@@ -76,7 +76,6 @@ public class Controlador implements ActionListener, MouseListener {
             UIManager.setLookAndFeel(new UpperEssentialLookAndFeel("Oscuros.theme"));
             SwingUtilities.updateComponentTreeUI(vista);
             SwingUtilities.updateComponentTreeUI(vista.principal);
-            SwingUtilities.updateComponentTreeUI(vista.cargando);
             SwingUtilities.updateComponentTreeUI(vista.principalAdmin);
             SwingUtilities.updateComponentTreeUI(vista.proveedores1);
 
@@ -729,6 +728,7 @@ public class Controlador implements ActionListener, MouseListener {
                 for (int i = 0; i < pi; i++) {
                     p = p + pc[i];
                 }
+                p = encriptaEnMD5(p);
                 //COMPROBAMOS QUE HA SIDO ESCRITO TANTO EL USUARIO COMO LA CONTRASEÑA
                 if (!vista.txtUsuario.getText().equals("") && !p.equals("")) {
                     //CONTROLAMOS EL INICIO DE SESIÓN

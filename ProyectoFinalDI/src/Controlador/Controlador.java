@@ -413,6 +413,8 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelAdminTrabajadores.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.tablaTrabajadores.setModel(modelo.tablaTrabajadores());
+                    
                     vista.trabajadores4.pack();
                     vista.trabajadores4.setLocationRelativeTo(null);
                     vista.trabajadores4.setTitle("Trabajadores");
@@ -510,7 +512,7 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnModificaEmpleado.addActionListener(this);
         vista.btnDespideEmpleado.setActionCommand("btnDespideEmpleado");
         vista.btnDespideEmpleado.addActionListener(this);
-        vista.btnAceptarContrato.setActionCommand("btnContrata");
+        vista.btnAceptarContrato.setActionCommand("btnAceptarContrato");
         vista.btnAceptarContrato.addActionListener(this);
         vista.btnCancelarContrato.setActionCommand("btnCancelarContrato");
         vista.btnCancelarContrato.addActionListener(this);
@@ -547,33 +549,36 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             case btnAceptarContrato:
 
-                if ("".equals(vista.txtDniContra.getText())
-                        && "".equals(vista.txtUserContra.getText())
-                        && "".equals(vista.txtPasswContra.getText())
-                        && "".equals(vista.txtNombreContra.getText())
-                        && "".equals(vista.txtApellContra.getText())
-                        && "".equals(vista.txtTelefContra.getText())
-                        && "".equals(vista.txtNDomicilio.getText())
-                        && "".equals(vista.txtCDomicilio.getText())
-                        && "".equals(vista.txtEmailContra.getText())) {
+                if (!"".equals(vista.txtDniContra.getText())
+                        && !"".equals(vista.txtUserContra.getText())
+                        && !"".equals(vista.txtPasswContra.getText())
+                        && !"".equals(vista.txtNombreContra.getText())
+                        && !"".equals(vista.txtApellContra.getText())
+                        && !"".equals(vista.txtTelefContra.getText())
+                        && !"".equals(vista.txtNDomicilio.getText())
+                        && !"".equals(vista.txtCDomicilio.getText())
+                        && !"".equals(vista.txtEmailContra.getText())) {
 
                     //COMPROBAMOS SI EL CHECK ESTA MARCADO
                     if (vista.checkAdmin.isSelected()) {
                         //SI LO ESTA, AÑADIREMOS UN ADMINISTRADOR
+                        String pass = vista.txtPasswContra.getText();
+                        pass = encriptaEnMD5(pass);
                         modelo.insertAdmin(vista.txtUserContra.getText(),
-                                vista.txtPasswContra.getText(),
+                                pass,
                                 vista.txtDniContra.getText(),
                                 vista.txtNombreContra.getText(),
                                 vista.txtApellContra.getText(),
                                 vista.txtTelefContra.getText(),
                                 vista.txtNDomicilio.getText(),
                                 vista.txtCDomicilio.getText(),
-                                vista.txtEmailContra.getText(),
-                                true);
+                                vista.txtEmailContra.getText());
                     } else {
                         //SI NO LO ESTA, SERA UN TRABAJADOR
+                        String pass = vista.txtPasswContra.getText();
+                        pass = encriptaEnMD5(pass);
                         modelo.insertTrabajador(vista.txtUserContra.getText(),
-                                vista.txtPasswContra.getText(),
+                                pass,
                                 vista.txtDniContra.getText(),
                                 vista.txtNombreContra.getText(),
                                 vista.txtApellContra.getText(),
@@ -583,6 +588,8 @@ public class Controlador implements ActionListener, MouseListener {
                                 vista.txtEmailContra.getText());
                     }
                 }
+                vista.tablaTrabajadores.setModel(modelo.tablaTrabajadores());
+                vista.contratar.dispose();
                 break;
             case btnCancelarContrato:
                 vista.txtUserContra.setText("");

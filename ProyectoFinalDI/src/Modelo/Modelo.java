@@ -462,27 +462,25 @@ public class Modelo extends Database {
         }
     }
 
-    public void insertAdmin(String usuario, String contrasenia, String dni, String nombre, String apellidos,  String telefono, String numerodom, String calledom, String correo, boolean admin) {
-        Statement stm;
+    public void insertAdmin(String usuario, String contrasenia, String dni, String nombre, String apellidos,  String telefono, String numerodom, String calledom, String correo) {
         try {
-            stm = this.getConexion().createStatement();
-            String sql;
-            sql = "insert into Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
-                    + " (" + usuario + "," + contrasenia + "," + nombre + "," + apellidos + "," + telefono + "," + correo + "," + numerodom + " " + calledom + "," + admin + ",0,0,0)";
-            stm.executeUpdate(sql);
+            String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
+                    + " ('" + usuario + "','" + contrasenia + "','"+dni+"','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',1,0,0,0)";
+            PreparedStatement pstm = this.getConexion().prepareStatement(sql);
+            pstm.execute();
+            pstm.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
     public void insertTrabajador(String usuario, String contrasenia,  String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
-        Statement stm;
         try {
-            stm = this.getConexion().createStatement();
-            String sql;
-            sql = "insert into Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
-                    + " (" + usuario + "," + contrasenia + "," + nombre + "," + apellidos + "," + telefono + "," + correo + "," + numerodom + " " + calledom + ",0,0,0,0)";
-            stm.executeUpdate(sql);
+            String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
+                    + " ('" + usuario + "','" + contrasenia + "','"+dni+"','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',0,0,0,0)";
+            PreparedStatement pstm = this.getConexion().prepareStatement(sql);
+            pstm.execute();
+            pstm.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -565,6 +563,44 @@ public class Modelo extends Database {
         tablemodel.addColumn("País");
         tablemodel.addColumn("Tipo");
         
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaTrabajadores(){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        try{
+            tablemodel.addColumn("Usuario");
+            tablemodel.addColumn("Pass");
+            tablemodel.addColumn("DNI");
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("Apellidos");
+            tablemodel.addColumn("Teléfono");
+            tablemodel.addColumn("Correo");
+            tablemodel.addColumn("Dirección");
+            
+            String q = "SELECT Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion FROM Trabajador";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            
+            String[] data = new String[8];
+            
+            while(res.next()){
+                data[0] = res.getString("Usuario");
+                data[1] = res.getString("Pass");
+                data[2] = res.getString("DNI");
+                data[3] = res.getString("Nombre");
+                data[4] = res.getString("Apellidos");
+                data[5] = res.getString("Telefono");
+                data[6] = res.getString("Correo");
+                data[7] = res.getString("Direccion");
+                tablemodel.addRow(data);
+            }
+            
+            res.close();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
         return tablemodel;
     }
 }

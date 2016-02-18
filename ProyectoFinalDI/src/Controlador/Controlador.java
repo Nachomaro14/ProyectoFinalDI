@@ -16,7 +16,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Array;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -26,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import jdk.nashorn.internal.runtime.ListAdapter;
 
 public class Controlador implements ActionListener, MouseListener {
 
@@ -480,6 +478,7 @@ public class Controlador implements ActionListener, MouseListener {
 
             //AÑADIMOS ITEMLISTENERS A LAS LISTAS
             vista.listaProvee.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(MouseEvent e) {
                     String proveedor = vista.listaProvee.getSelectedValue();
                     vista.tablaProductosProvee.setModel(modelo.tablaProductosProveedores(proveedor));
@@ -650,7 +649,7 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.txtPasswContra.setEditable(false);
 
                 if (vista.tablaTrabajadores.getSelectedRow() == -1) {
-                    JOptionPane.showMessageDialog(vista, "Debes seleccionar un trabajador de la tabla primero");
+                    JOptionPane.showMessageDialog(null, "Debes seleccionar un trabajador de la tabla primero");
                 } else {
                     vista.txtUserContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
                     vista.txtPasswContra.setText(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 1).toString());
@@ -670,7 +669,14 @@ public class Controlador implements ActionListener, MouseListener {
                 }
                 break;
             case btnDespideEmpleado:
+                if (vista.tablaTrabajadores.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(null, "Debes seleccionar un trabajador de la tabla primero");
+                } else {
+                    JOptionPane.showMessageDialog(null, vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
+                    //modelo.deleteTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
+                }
                 break;
+
             case checkModContra:
                 if (vista.checkModifico.isSelected()) {
                     vista.txtPasswContra.setEditable(true);

@@ -462,58 +462,6 @@ public class Modelo extends Database {
         }
     }
 
-    public void insertAdmin(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
-        try {
-            String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
-                    + " ('" + usuario + "','" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',1,0,0,0)";
-            PreparedStatement pstm = this.getConexion().prepareStatement(sql);
-            pstm.execute();
-            pstm.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void insertTrabajador(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
-        try {
-            String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
-                    + " ('" + usuario + "','" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',0,0,0,0)";
-            PreparedStatement pstm = this.getConexion().prepareStatement(sql);
-            pstm.execute();
-            pstm.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void updateTrabajadorPassword(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
-        try {
-            String q = "UPDATE Trabajador (Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion)"
-                    + "VALUES ('" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "')"
-                    + "WHERE Usuario='" + usuario + "'";
-            PreparedStatement pstm = this.getConexion().prepareStatement(q);
-            pstm.execute();
-            pstm.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void updateTrabajadorNoPassword(String usuario, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
-        try {
-            String q = "UPDATE Trabajador ( DNI, Nombre, Apellidos, Telefono, Correo, Direccion)"
-                    + "VALUES ('" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "')"
-                    + "WHERE Usuario='" + usuario + "'";
-            PreparedStatement pstm = this.getConexion().prepareStatement(q);
-            pstm.execute();
-            pstm.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     public DefaultListModel listaProveedores() {
         DefaultListModel listmodel = new DefaultListModel();
         try {
@@ -630,6 +578,58 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
         return tablemodel;
+    }
+
+    public void insertAdmin(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
+        try {
+            String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
+                    + " ('" + usuario + "','" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',1,0,0,0)";
+            PreparedStatement pstm = this.getConexion().prepareStatement(sql);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void insertTrabajador(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
+        try {
+            String sql = "INSERT INTO Trabajador (Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion, Administrador, Tiempo, Recaudacion, Valoracion) VALUES"
+                    + " ('" + usuario + "','" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "',0,0,0,0)";
+            PreparedStatement pstm = this.getConexion().prepareStatement(sql);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateTrabajadorPassword(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
+        try {
+            String q = "UPDATE Trabajador (Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion)"
+                    + "VALUES ('" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "')"
+                    + "WHERE Usuario='" + usuario + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTrabajadorNoPassword(String usuario, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
+        try {
+            String q = "UPDATE Trabajador ( DNI, Nombre, Apellidos, Telefono, Correo, Direccion)"
+                    + "VALUES ('" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "')"
+                    + "WHERE Usuario='" + usuario + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void deleteTrabajador(String usuario) {

@@ -599,7 +599,6 @@ public class Controlador implements ActionListener, MouseListener {
 
                     } else if (modificarTrabajador == 1) {//MODIFICAR
 
-                        //MODIFICAR AQUI
                         if (vista.checkModifico.isSelected()) {
 
                             String pass = vista.txtPasswContra.getText();
@@ -647,6 +646,7 @@ public class Controlador implements ActionListener, MouseListener {
             case btnModificaEmpleado:
                 modificarTrabajador = 1;
                 vista.txtPasswContra.setEditable(false);
+                vista.txtNombreContra.setEditable(false);
 
                 if (vista.tablaTrabajadores.getSelectedRow() == -1) {
                     JOptionPane.showMessageDialog(null, "Debes seleccionar un trabajador de la tabla primero");
@@ -672,15 +672,14 @@ public class Controlador implements ActionListener, MouseListener {
                 if (vista.tablaTrabajadores.getSelectedRow() == -1) {
                     JOptionPane.showMessageDialog(null, "Debes seleccionar un trabajador de la tabla primero");
                 } else {
-                    JOptionPane.showMessageDialog(null, vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
-                    //modelo.deleteTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
+                    modelo.deleteTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
+                    
                 }
                 break;
 
             case checkModContra:
                 if (vista.checkModifico.isSelected()) {
                     vista.txtPasswContra.setEditable(true);
-                    vista.txtPasswContra.setText("");
                 } else {
                     vista.txtPasswContra.setEditable(false);
                 }

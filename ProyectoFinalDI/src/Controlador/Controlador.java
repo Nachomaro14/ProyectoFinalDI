@@ -62,11 +62,13 @@ public class Controlador implements ActionListener, MouseListener {
         //*************BOTONES ADMIN*****************
         btnNuevoEmpleado,
         btnModificaEmpleado,
+        checkModContra,
         btnDespideEmpleado,
         btnAceptarContrato,
         btnCancelarContrato,
-        //esto miradlo porque no se si es asi
-        checkModContra
+        //COMPRAS
+        btnNewPedido,
+        btnHistorialPedido
     }
 
     //ESTE GRAN MÉTODO INICIARÁ E INICIALIZARÁ TODO LO NECESARIO PARA COMENZAR EL FUNCIONAMIENTO DE LA APLICACIÓN
@@ -80,6 +82,8 @@ public class Controlador implements ActionListener, MouseListener {
             SwingUtilities.updateComponentTreeUI(vista.principalAdmin);
             SwingUtilities.updateComponentTreeUI(vista.proveedores1);
             SwingUtilities.updateComponentTreeUI(vista.compras2);
+            SwingUtilities.updateComponentTreeUI(vista.historial);
+            SwingUtilities.updateComponentTreeUI(vista.nuevosPedidos);
 
             SwingUtilities.updateComponentTreeUI(vista.stock3);
             SwingUtilities.updateComponentTreeUI(vista.contratar);
@@ -521,6 +525,10 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnNuevoEmpleado.addActionListener(this);
         vista.btnModificaEmpleado.setActionCommand("btnModificaEmpleado");
         vista.btnModificaEmpleado.addActionListener(this);
+
+        vista.checkModifico.setActionCommand("checkModContra");
+        vista.checkModifico.addActionListener(this);
+
         vista.btnDespideEmpleado.setActionCommand("btnDespideEmpleado");
         vista.btnDespideEmpleado.addActionListener(this);
         vista.btnAceptarContrato.setActionCommand("btnAceptarContrato");
@@ -528,10 +536,13 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnCancelarContrato.setActionCommand("btnCancelarContrato");
         vista.btnCancelarContrato.addActionListener(this);
 
-        vista.checkModifico.setActionCommand("checkModContra");
-        vista.checkModifico.addActionListener(this);
+        //COMPRAS AL PROVEEDOR
+        vista.btnNewPedido.setActionCommand("btnNewPedido");
+        vista.btnNewPedido.addActionListener(this);
 
-        //btnCancelaContrato
+        vista.btnHistorialPedido.setActionCommand("btnHistorialPedido");
+        vista.btnHistorialPedido.addActionListener(this);
+
         //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
         vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
@@ -689,6 +700,18 @@ public class Controlador implements ActionListener, MouseListener {
                 } else {
                     vista.txtPasswContra.setEditable(false);
                 }
+                break;
+            case btnNewPedido:
+                vista.nuevosPedidos.pack();
+                vista.nuevosPedidos.setLocationRelativeTo(null);
+                vista.nuevosPedidos.setVisible(true);
+                vista.compras2.dispose();
+                break;
+            case btnHistorialPedido:
+                vista.historial.pack();
+                vista.historial.setLocationRelativeTo(null);
+                vista.historial.setVisible(true);
+                vista.compras2.dispose();
                 break;
         }
     }

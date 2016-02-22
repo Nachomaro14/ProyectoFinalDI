@@ -129,8 +129,8 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         listaProvee = new javax.swing.JList<String>();
         compras2 = new javax.swing.JDialog();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnNewPedido = new javax.swing.JButton();
+        btnHistorialPedido = new javax.swing.JButton();
         stock3 = new javax.swing.JDialog();
         jPanel9 = new javax.swing.JPanel();
         comboBusquedaStock = new javax.swing.JComboBox();
@@ -178,6 +178,20 @@ public class Interfaz extends javax.swing.JFrame {
         btnAceptarContrato = new javax.swing.JButton();
         btnCancelarContrato = new javax.swing.JButton();
         checkModifico = new javax.swing.JCheckBox();
+        historial = new javax.swing.JDialog();
+        jPanel12 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tablaFechasHistorial = new javax.swing.JTable();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        tablaProductosHistorial = new javax.swing.JTable();
+        nuevosPedidos = new javax.swing.JDialog();
+        jPanel13 = new javax.swing.JPanel();
+        comboProveed = new javax.swing.JComboBox();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        tablaProdProveed = new javax.swing.JTable();
+        btnAgregarAlPedido = new javax.swing.JButton();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        tablaPedidosCompra = new javax.swing.JTable();
         inicio = new javax.swing.JPanel();
         infoInicio = new javax.swing.JPanel();
         logoInicio = new javax.swing.JLabel();
@@ -1068,23 +1082,23 @@ public class Interfaz extends javax.swing.JFrame {
         compras2.setUndecorated(true);
         compras2.setResizable(false);
 
-        jButton5.setText("jButton5");
+        btnNewPedido.setText("NUEVO PEDIDO");
 
-        jButton6.setText("jButton6");
+        btnHistorialPedido.setText("HISTORIAL");
 
         javax.swing.GroupLayout compras2Layout = new javax.swing.GroupLayout(compras2.getContentPane());
         compras2.getContentPane().setLayout(compras2Layout);
         compras2Layout.setHorizontalGroup(
             compras2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(compras2Layout.createSequentialGroup()
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNewPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
+                .addComponent(btnHistorialPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
         );
         compras2Layout.setVerticalGroup(
             compras2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNewPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+            .addComponent(btnHistorialPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         stock3.setResizable(false);
@@ -1433,6 +1447,144 @@ public class Interfaz extends javax.swing.JFrame {
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        historial.setModal(true);
+
+        tablaFechasHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(tablaFechasHistorial);
+
+        tablaProductosHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane10.setViewportView(tablaProductosHistorial);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout historialLayout = new javax.swing.GroupLayout(historial.getContentPane());
+        historial.getContentPane().setLayout(historialLayout);
+        historialLayout.setHorizontalGroup(
+            historialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        historialLayout.setVerticalGroup(
+            historialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        nuevosPedidos.setModal(true);
+
+        comboProveed.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        tablaProdProveed.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane11.setViewportView(tablaProdProveed);
+
+        btnAgregarAlPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Flechita.png"))); // NOI18N
+        btnAgregarAlPedido.setBorder(null);
+
+        tablaPedidosCompra.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane12.setViewportView(tablaPedidosCompra);
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboProveed, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarAlPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(comboProveed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(btnAgregarAlPedido)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+
+        javax.swing.GroupLayout nuevosPedidosLayout = new javax.swing.GroupLayout(nuevosPedidos.getContentPane());
+        nuevosPedidos.getContentPane().setLayout(nuevosPedidosLayout);
+        nuevosPedidosLayout.setHorizontalGroup(
+            nuevosPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        nuevosPedidosLayout.setVerticalGroup(
+            nuevosPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -1548,14 +1700,17 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAceptarConfig;
     public javax.swing.JButton btnAceptarContrato;
+    public javax.swing.JButton btnAgregarAlPedido;
     public javax.swing.JButton btnCancelarConfig;
     public javax.swing.JButton btnCancelarContrato;
     public javax.swing.JButton btnCancelarPed;
     public javax.swing.JButton btnDespideEmpleado;
     public javax.swing.JButton btnEsp;
+    public javax.swing.JButton btnHistorialPedido;
     public javax.swing.JButton btnIng;
     public javax.swing.JButton btnIniciarSesion;
     public javax.swing.JButton btnModificaEmpleado;
+    public javax.swing.JButton btnNewPedido;
     public javax.swing.JButton btnNuevoEmpleado;
     public javax.swing.JButton btnRealizarPed;
     public javax.swing.JDialog cargando;
@@ -1564,6 +1719,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JComboBox comboBusquedaStock;
     public javax.swing.JComboBox comboDescuentos;
     public javax.swing.JComboBox<String> comboFechaPed;
+    public javax.swing.JComboBox comboProveed;
     public javax.swing.JDialog compras2;
     public javax.swing.JDialog configuracionDB;
     public javax.swing.JDialog contratar;
@@ -1574,6 +1730,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel dniPerfil;
     public javax.swing.JLabel fondo;
     public javax.swing.JPanel fondoInicio;
+    public javax.swing.JDialog historial;
     public javax.swing.JPanel infoInicio;
     public javax.swing.JPanel inicio;
     public javax.swing.JButton jButton1;
@@ -1581,8 +1738,6 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
     public javax.swing.JButton jButton4;
-    public javax.swing.JButton jButton5;
-    public javax.swing.JButton jButton6;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1633,6 +1788,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1642,10 +1799,14 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     public javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JScrollPane jScrollPane10;
+    public javax.swing.JScrollPane jScrollPane11;
+    public javax.swing.JScrollPane jScrollPane12;
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JScrollPane jScrollPane5;
+    public javax.swing.JScrollPane jScrollPane6;
     public javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
@@ -1674,6 +1835,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel logoInicio;
     public javax.swing.JLabel nifProveedor;
     public javax.swing.JLabel nombrePerfil;
+    public javax.swing.JDialog nuevosPedidos;
     public javax.swing.JLabel paisProveedor;
     public javax.swing.JPanel panelArticulos;
     public javax.swing.JPanel panelCentral;
@@ -1691,7 +1853,11 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel recaudacionPerfil;
     public javax.swing.JDialog stock3;
     public javax.swing.JTable tablaCesta;
+    private javax.swing.JTable tablaFechasHistorial;
     public javax.swing.JTable tablaPedidos;
+    private javax.swing.JTable tablaPedidosCompra;
+    private javax.swing.JTable tablaProdProveed;
+    private javax.swing.JTable tablaProductosHistorial;
     public javax.swing.JTable tablaProductosProvee;
     private javax.swing.JTable tablaStock;
     public javax.swing.JTable tablaTrabajadores;

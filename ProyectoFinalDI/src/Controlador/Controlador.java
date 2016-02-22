@@ -79,9 +79,12 @@ public class Controlador implements ActionListener, MouseListener {
             SwingUtilities.updateComponentTreeUI(vista.principal);
             SwingUtilities.updateComponentTreeUI(vista.principalAdmin);
             SwingUtilities.updateComponentTreeUI(vista.proveedores1);
+            SwingUtilities.updateComponentTreeUI(vista.compras2);
+
             SwingUtilities.updateComponentTreeUI(vista.stock3);
             SwingUtilities.updateComponentTreeUI(vista.contratar);
             SwingUtilities.updateComponentTreeUI(vista.trabajadores4);
+            SwingUtilities.updateComponentTreeUI(vista.ventas5);
 
             //MODIFICAMOS LAS PROPIEDADES DE LOS PANELES PRINCIPALES
             vista.principal.setResizable(false);
@@ -382,7 +385,10 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelAdminPedidos.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    vista.compras2.pack();
+                    vista.compras2.setLocationRelativeTo(null);
+                    vista.compras2.setTitle("Compras");
+                    vista.compras2.setVisible(true);
                 }
 
                 @Override
@@ -673,7 +679,7 @@ public class Controlador implements ActionListener, MouseListener {
                     JOptionPane.showMessageDialog(null, "Debes seleccionar un trabajador de la tabla primero");
                 } else {
                     modelo.deleteTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
-                    
+
                 }
                 break;
 

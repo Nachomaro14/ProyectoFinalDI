@@ -129,6 +129,8 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         listaProvee = new javax.swing.JList<String>();
         compras2 = new javax.swing.JDialog();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         stock3 = new javax.swing.JDialog();
         jPanel9 = new javax.swing.JPanel();
         comboBusquedaStock = new javax.swing.JComboBox();
@@ -1062,17 +1064,27 @@ public class Interfaz extends javax.swing.JFrame {
             .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        compras2.setModal(true);
+        compras2.setUndecorated(true);
         compras2.setResizable(false);
+
+        jButton5.setText("jButton5");
+
+        jButton6.setText("jButton6");
 
         javax.swing.GroupLayout compras2Layout = new javax.swing.GroupLayout(compras2.getContentPane());
         compras2.getContentPane().setLayout(compras2Layout);
         compras2Layout.setHorizontalGroup(
             compras2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(compras2Layout.createSequentialGroup()
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
         );
         compras2Layout.setVerticalGroup(
             compras2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         stock3.setResizable(false);
@@ -1552,7 +1564,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JComboBox comboBusquedaStock;
     public javax.swing.JComboBox comboDescuentos;
     public javax.swing.JComboBox<String> comboFechaPed;
-    private javax.swing.JDialog compras2;
+    public javax.swing.JDialog compras2;
     public javax.swing.JDialog configuracionDB;
     public javax.swing.JDialog contratar;
     public javax.swing.JLabel correoPerfil;
@@ -1569,6 +1581,8 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
     public javax.swing.JButton jButton4;
+    public javax.swing.JButton jButton5;
+    public javax.swing.JButton jButton6;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1711,6 +1725,6 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel usuarioAdminConectado;
     public javax.swing.JLabel usuarioConectado;
     public javax.swing.JLabel valoracionPerfil;
-    private javax.swing.JDialog ventas5;
+    public javax.swing.JDialog ventas5;
     // End of variables declaration//GEN-END:variables
 }

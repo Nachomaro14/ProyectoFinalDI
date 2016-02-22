@@ -75,7 +75,7 @@ public class Controlador implements ActionListener, MouseListener {
     public void iniciar() {
 
         try {
-            //MODIFICAMOS EL LOOKANDFEEL DE LAS VENTANAS DE LA APLICACIÓN
+            //MODIFICAMOS EL LOOK AND FEEL DE LAS VENTANAS DE LA APLICACIÓN
             UIManager.setLookAndFeel(new UpperEssentialLookAndFeel("Oscuros.theme"));
             SwingUtilities.updateComponentTreeUI(vista);
             SwingUtilities.updateComponentTreeUI(vista.principal);
@@ -448,7 +448,10 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelAdminVentas.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    vista.ventas5.pack();
+                    vista.ventas5.setLocationRelativeTo(null);
+                    vista.ventas5.setTitle("Ventas");
+                    vista.ventas5.setVisible(true);
                 }
 
                 @Override
@@ -539,7 +542,7 @@ public class Controlador implements ActionListener, MouseListener {
         //COMPRAS AL PROVEEDOR
         vista.btnNewPedido.setActionCommand("btnNewPedido");
         vista.btnNewPedido.addActionListener(this);
-
+        //HISTORIAL DE COMPRAS
         vista.btnHistorialPedido.setActionCommand("btnHistorialPedido");
         vista.btnHistorialPedido.addActionListener(this);
 
@@ -704,12 +707,14 @@ public class Controlador implements ActionListener, MouseListener {
             case btnNewPedido:
                 vista.nuevosPedidos.pack();
                 vista.nuevosPedidos.setLocationRelativeTo(null);
+                vista.nuevosPedidos.setTitle("Nuevos Pedidos");
                 vista.nuevosPedidos.setVisible(true);
                 vista.compras2.dispose();
                 break;
             case btnHistorialPedido:
                 vista.historial.pack();
                 vista.historial.setLocationRelativeTo(null);
+                vista.historial.setTitle("Historial de compras");
                 vista.historial.setVisible(true);
                 vista.compras2.dispose();
                 break;

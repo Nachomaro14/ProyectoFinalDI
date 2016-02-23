@@ -100,7 +100,14 @@ public class Controlador implements ActionListener, MouseListener {
             Toolkit t = Toolkit.getDefaultToolkit();
             vista.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
             vista.principal.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
-
+            vista.proveedores1.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.historial.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.nuevosPedidos.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.stock3.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.contratar.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.trabajadores4.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.ventas5.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+       
             //MODIFICAMOS EL TÍTULO DE LAS VENTANAS DE LA APLICACIÓN
             vista.pack();
             vista.setLocationRelativeTo(null);

@@ -642,4 +642,81 @@ public class Modelo extends Database {
             ex.printStackTrace();
         }
     }
+
+    //************REVISAR PORFAVOR***************
+    public Object[] getPasteles() {
+        Object[] pasteles = new Object[3];
+        try {
+            String q = "SELECT Codigo, Nombre, Precio FROM Producto WHERE Tipo = 'Pastelería'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                pasteles[0] = res.getInt("Codigo");
+                pasteles[1] = res.getString("Nombre");
+                pasteles[2] = res.getDouble("Precio");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto/pasteles\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return pasteles;
+    }
+
+    public Object[] getBebidas() {
+        Object[] bebidas = new Object[3];
+        try {
+            String q = "SELECT Codigo, Nombre, Precio FROM Producto WHERE Tipo = 'Bebida'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                bebidas[0] = res.getInt("Codigo");
+                bebidas[1] = res.getString("Nombre");
+                bebidas[2] = res.getDouble("Precio");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto/bebidas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return bebidas;
+    }
+
+    public Object[] getMenus() {
+        Object[] menus = new Object[3];
+        try {
+            String q = "SELECT Codigo, Nombre, Precio FROM Menus";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                menus[0] = res.getInt("Codigo");
+                menus[1] = res.getString("Nombre");
+                menus[2] = res.getDouble("Precio");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de menus\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return menus;
+    }
+
+    public Object[] getOfertas() {
+        Object[] ofertas = new Object[3];
+        try {
+            String q = "SELECT Codigo, Nombre, Precio FROM Ofertas";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                ofertas[0] = res.getInt("Codigo");
+                ofertas[1] = res.getString("Nombre");
+                ofertas[2] = res.getDouble("Precio");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return ofertas;
+    }
 }

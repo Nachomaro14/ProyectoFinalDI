@@ -68,7 +68,12 @@ public class Controlador implements ActionListener, MouseListener {
         btnCancelarContrato,
         //COMPRAS
         btnNewPedido,
-        btnHistorialPedido
+        btnHistorialPedido,
+        //***********BOTONES PEDIDOS*****************
+        btnBebidas,
+        btnPasteleria,
+        btnMenus,
+        btnOfertas
     }
 
     //ESTE GRAN MÉTODO INICIARÁ E INICIALIZARÁ TODO LO NECESARIO PARA COMENZAR EL FUNCIONAMIENTO DE LA APLICACIÓN
@@ -107,7 +112,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.contratar.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
             vista.trabajadores4.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
             vista.ventas5.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
-       
+
             //MODIFICAMOS EL TÍTULO DE LAS VENTANAS DE LA APLICACIÓN
             vista.pack();
             vista.setLocationRelativeTo(null);
@@ -553,6 +558,15 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnHistorialPedido.setActionCommand("btnHistorialPedido");
         vista.btnHistorialPedido.addActionListener(this);
 
+        vista.btnNewPedido.setActionCommand("btnBebidas");
+        vista.btnNewPedido.addActionListener(this);
+        vista.btnNewPedido.setActionCommand("btnPasteleria");
+        vista.btnNewPedido.addActionListener(this);
+        vista.btnNewPedido.setActionCommand("btnMenus");
+        vista.btnNewPedido.addActionListener(this);
+        vista.btnNewPedido.setActionCommand("btnOfertas");
+        vista.btnNewPedido.addActionListener(this);
+
         //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
         vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
@@ -576,6 +590,7 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.configuracionDB.setVisible(false);
                 vista.setVisible(true);
                 break;
+            //************ADMINISTRACION*****************
             case btnNuevoEmpleado:
                 modificarTrabajador = 0;
                 vista.contratar.pack();
@@ -724,6 +739,16 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.historial.setTitle("Historial de compras");
                 vista.historial.setVisible(true);
                 vista.compras2.dispose();
+                break;
+            //************EMPLEADOS****************
+            case btnBebidas:
+                
+                break;
+            case btnPasteleria:
+                break;
+            case btnMenus:
+                break;
+            case btnOfertas:
                 break;
         }
     }

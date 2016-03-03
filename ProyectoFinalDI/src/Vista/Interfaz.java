@@ -34,10 +34,10 @@ public class Interfaz extends javax.swing.JFrame {
         panelPrincipal = new javax.swing.JPanel();
         panelCentral = new javax.swing.JPanel();
         panelArticulos = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnBebidas = new javax.swing.JButton();
+        btnPasteleria = new javax.swing.JButton();
+        btnOfertas = new javax.swing.JButton();
+        btnMenus = new javax.swing.JButton();
         panelCesta = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaCesta = new javax.swing.JTable();
@@ -358,32 +358,32 @@ public class Interfaz extends javax.swing.JFrame {
         panelArticulos.setBorder(new javax.swing.border.MatteBorder(null));
         panelArticulos.setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton1.setMinimumSize(new java.awt.Dimension(200, 200));
+        btnBebidas.setMaximumSize(new java.awt.Dimension(200, 200));
+        btnBebidas.setMinimumSize(new java.awt.Dimension(200, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 60.0;
         gridBagConstraints.weighty = 60.0;
-        panelArticulos.add(jButton1, gridBagConstraints);
+        panelArticulos.add(btnBebidas, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 60.0;
         gridBagConstraints.weighty = 60.0;
-        panelArticulos.add(jButton2, gridBagConstraints);
+        panelArticulos.add(btnPasteleria, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 60.0;
         gridBagConstraints.weighty = 60.0;
-        panelArticulos.add(jButton3, gridBagConstraints);
+        panelArticulos.add(btnOfertas, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 60.0;
         gridBagConstraints.weighty = 60.0;
-        panelArticulos.add(jButton4, gridBagConstraints);
+        panelArticulos.add(btnMenus, gridBagConstraints);
 
         panelCesta.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -1767,6 +1767,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnAceptarConfig;
     public javax.swing.JButton btnAceptarContrato;
     public javax.swing.JButton btnAgregarAlPedido;
+    public javax.swing.JButton btnBebidas;
     public javax.swing.JButton btnCancelarConfig;
     public javax.swing.JButton btnCancelarContrato;
     public javax.swing.JButton btnCancelarPed;
@@ -1775,9 +1776,12 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnHistorialPedido;
     public javax.swing.JButton btnIng;
     public javax.swing.JButton btnIniciarSesion;
+    public javax.swing.JButton btnMenus;
     public javax.swing.JButton btnModificaEmpleado;
     public javax.swing.JButton btnNewPedido;
     public javax.swing.JButton btnNuevoEmpleado;
+    public javax.swing.JButton btnOfertas;
+    public javax.swing.JButton btnPasteleria;
     public javax.swing.JButton btnRealizarPed;
     public javax.swing.JDialog cargando;
     public javax.swing.JCheckBox checkAdmin;
@@ -1799,11 +1803,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JDialog historial;
     public javax.swing.JPanel infoInicio;
     public javax.swing.JPanel inicio;
-    public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
-    public javax.swing.JButton jButton2;
-    public javax.swing.JButton jButton3;
-    public javax.swing.JButton jButton4;
     public javax.swing.JComboBox jComboBox1;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

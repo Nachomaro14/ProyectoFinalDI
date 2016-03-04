@@ -232,7 +232,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelAvisar.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    //COMPROBAMOS SI EL USUATIO ES UN TRABAJADOR PARA PODER REALIZAR UN AVISO
+                    //COMPROBAMOS SI EL USUARIO ES UN TRABAJADOR PARA PODER REALIZAR UN AVISO
                     if (modelo.esAdmin(usuario) == true) {
                         JOptionPane.showMessageDialog(null, "No disponible.");
                     } else {

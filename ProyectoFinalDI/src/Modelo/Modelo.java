@@ -14,6 +14,7 @@ public class Modelo extends Database {
         super.conectar();
     }
 
+    //MÉTODO PARA HACER QUE LAS CELDAS DE LAS TABLAS NO SEAN EDITABLES
     public class ModeloTablaNoEditable extends DefaultTableModel {
 
         public boolean isCellEditable(int row, int column) {
@@ -21,6 +22,7 @@ public class Modelo extends Database {
         }
     }
 
+    //MÉTODO INCIO DE SESIÓN
     public boolean iniciarSesion(String usuario, String pass) {
         String contraseña = "";
         try {
@@ -42,6 +44,7 @@ public class Modelo extends Database {
         }
     }
 
+    //MÉTODO PARA COMPROBAR SI EL USUARIO INICIADO ES ADMINISTRADOR
     public boolean esAdmin(String usuario) {
         int ad = 0;
         try {
@@ -110,6 +113,7 @@ public class Modelo extends Database {
         return proveedores;
     }
 
+    //MÉTODO PARA OBTENER LA INFORMACIÓN DE LOS PROVEEDORES DE LA BD
     public String[] getInfoProveedor(String nif) {
         String[] info = new String[6];
         try {
@@ -295,6 +299,7 @@ public class Modelo extends Database {
         return info;
     }
 
+    //MÉTODO PARA AVISAR AL ADMINISTRADOR
     public void avisar() {
         try {
             String q = "UPDATE Aviso SET Aviso = 1";
@@ -306,6 +311,7 @@ public class Modelo extends Database {
         }
     }
 
+    //MÉTODO PARA COMPROBAR EL AVISO DEL TRABAJADOR
     public boolean comprobarAviso() {
         int aviso = 0;
         boolean avisado = false;
@@ -328,6 +334,7 @@ public class Modelo extends Database {
         return avisado;
     }
 
+    //MÉTODO PARA QUITAR EL AVISO AL ADMINISTRADOR
     public void quitarAviso() {
         try {
             String q = "UPDATE Aviso SET Aviso = 0";

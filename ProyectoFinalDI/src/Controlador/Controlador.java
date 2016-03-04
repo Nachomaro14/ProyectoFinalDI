@@ -742,13 +742,25 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             //************EMPLEADOS****************
             case btnBebidas:
-                
+                Object[] drinks = modelo.getBebidas();
+                int aux = drinks.length;
+                //añadir botones por cada articulo
+                for (int i = 0; i < aux; i++) {
+
+                }
+
                 break;
             case btnPasteleria:
+                modelo.getPasteles();
+
                 break;
             case btnMenus:
+                modelo.getMenus();
+
                 break;
             case btnOfertas:
+                modelo.getOfertas();
+
                 break;
         }
     }

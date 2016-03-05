@@ -388,7 +388,7 @@ public class Interfaz extends javax.swing.JFrame {
         gridBagConstraints.weighty = 60.0;
         panelArticulos.add(btnMenus, gridBagConstraints);
 
-        panelArticulosAux.setLayout(new java.awt.GridLayout(5, 0));
+        panelArticulosAux.setLayout(new java.awt.GridLayout());
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -398,8 +398,8 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
-                    .addGap(154, 154, 154)))
+                    .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE)
+                    .addGap(135, 135, 135)))
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap()

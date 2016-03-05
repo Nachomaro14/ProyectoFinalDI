@@ -143,6 +143,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelNuevoPedido.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(true);
                     vista.panelArticulos.setVisible(true);
                     vista.panelArticulosAux.setVisible(false);
@@ -172,6 +173,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelPedidos.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(true);
                     vista.panelPerfil.setVisible(false);
@@ -202,6 +204,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelSalir.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.panelDescripcion.setVisible(false);
                     //CERRAMOS EL HILO QUE ACUMULA TIEMPO DE TRABAJO DEL TRABAJADOR
                     a.close();
                     vista.usuarioConectado.setText("");
@@ -260,6 +263,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelVolver.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.panelDescripcion.setVisible(false);
 
                 }
 
@@ -276,6 +280,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelPerfil.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(false);
                     vista.panelPerfil.setVisible(true);
@@ -746,13 +751,57 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             //************EMPLEADOS****************
             case btnBebidas:
+                vista.panelArticulosAux.removeAll();
+                vista.panelArticulosAux.repaint();
                 Object[] drinks = modelo.getNameBebidas();
                 int auxbeb = drinks.length;
-
                 JButton botonProduc;
                 //Creamos un objeto boton por cada articulo recogido de la BD
                 for (int i = 0; i < auxbeb; i++) {
                     botonProduc = new JButton(drinks[i].toString());
+                    //ActionListener de cada boton creado desde codigo
+
+                    botonProduc.addMouseListener(new MouseListener() {
+
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                //añadir a la cesta
+                                System.out.println("double clicked");
+                            } else if (e.getClickCount() == 1) {
+                                vista.panelDescripcion.setVisible(true);
+                            }
+
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
+
+                    botonProduc.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+                        }
+                    });
                     vista.panelArticulosAux.add(botonProduc);
                 }
                 vista.panelArticulosAux.setVisible(true);
@@ -765,15 +814,43 @@ public class Controlador implements ActionListener, MouseListener {
                 botonesOfertas = 0;
                 botonesPais = "";
                 break;
-            case btnPasteleria:
 
-                Object[] pasteles = modelo.getNamePasteles();
-                int auxpast = pasteles.length;
-                JButton botonPasteles;
+            case btnPasteleria:
+                vista.panelArticulosAux.removeAll();
+                vista.panelArticulosAux.repaint();
+                Object[] paises = modelo.getPaisPasteles();
+                int auxpais = paises.length;
+                JButton botonPais;
                 //Creamos un objeto boton por cada articulo recogido de la BD
-                for (int i = 0; i < auxpast; i++) {
-                    botonPasteles = new JButton(pasteles[i].toString());
-                    vista.panelArticulosAux.add(botonPasteles);
+                for (int i = 0; i < auxpais; i++) {
+                    String name = paises[i].toString();
+                    botonPais = new JButton(name);
+                    //ActionListener de cada boton creado desde codigo
+                    botonPais.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            botonesPais = name;
+                            vista.panelArticulosAux.removeAll();
+                            vista.panelArticulosAux.repaint();
+                            Object[][] pasteles = modelo.getPasteles(name);
+                            int auxpast = pasteles.length;
+                            JButton botonPasteles;
+                            //Creamos un objeto boton por cada articulo recogido de la BD
+                            for (int i = 0; i < auxpast; i++) {
+                                botonPasteles = new JButton(pasteles[i][1].toString());
+                                //ActionListener de cada boton creado desde codigo
+                                botonPasteles.addActionListener(new ActionListener() {
+
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+
+                                    }
+                                });
+                                vista.panelArticulosAux.add(botonPasteles);
+                            }
+                        }
+                    });
+                    vista.panelArticulosAux.add(botonPais);
                 }
                 vista.panelArticulosAux.setVisible(true);
                 vista.panelArticulos.setVisible(false);
@@ -783,18 +860,29 @@ public class Controlador implements ActionListener, MouseListener {
                 botonesMenus = 0;
                 botonesPasteleria = 1;
                 botonesOfertas = 0;
-                botonesPais = "";
                 break;
+
             case btnMenus:
-                modelo.getMenus();
-//                Object[] drinks = modelo.getNameBebidas();
-//                int aux = drinks.length;
-//                JButton botonProduc;
+                vista.panelArticulosAux.removeAll();
+                vista.panelArticulosAux.repaint();
+                Object[][] menus = modelo.getMenus();
+
+                int auxMen = menus.length;
+                JButton botonMenus;
                 //Creamos un objeto boton por cada articulo recogido de la BD
-//                for (int i = 0; i < aux; i++) {
-//                    botonProduc = new JButton(drinks[i].toString());
-//                    vista.panelArticulosAux.add(botonProduc);
-//                }
+                for (int i = 0; i < auxMen; i++) {
+                    botonMenus = new JButton(menus[i][1].toString());
+                    //ActionListener de cada boton creado desde codigo
+                    botonMenus.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+                        }
+                    });
+
+                    vista.panelArticulosAux.add(botonMenus);
+                }
                 vista.panelArticulosAux.setVisible(true);
                 vista.panelArticulos.setVisible(false);
                 //Boton actual para el Label Atras
@@ -805,16 +893,28 @@ public class Controlador implements ActionListener, MouseListener {
                 botonesOfertas = 0;
                 botonesPais = "";
                 break;
+
             case btnOfertas:
-                modelo.getOfertas();
-//                Object[] drinks = modelo.getNameBebidas();
-//                int aux = drinks.length;
-//                JButton botonProduc;
+                vista.panelArticulosAux.removeAll();
+                vista.panelArticulosAux.repaint();
+                Object[][] ofertas = modelo.getOfertas();
+
+                int auxOfer = ofertas.length;
+                JButton botonOfertas;
                 //Creamos un objeto boton por cada articulo recogido de la BD
-//                for (int i = 0; i < aux; i++) {
-//                    botonProduc = new JButton(drinks[i].toString());
-//                    vista.panelArticulosAux.add(botonProduc);
-//                }
+                for (int i = 0; i < auxOfer; i++) {
+                    botonOfertas = new JButton(ofertas[i][1].toString());
+                    //ActionListener de cada boton creado desde codigo
+                    botonOfertas.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+                        }
+                    });
+
+                    vista.panelArticulosAux.add(botonOfertas);
+                }
                 vista.panelArticulosAux.setVisible(true);
                 vista.panelArticulos.setVisible(false);
                 //Boton actual para el Label Atras

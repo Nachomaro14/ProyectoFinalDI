@@ -427,8 +427,8 @@
                               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="panelArticulos" pref="927" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                                      <Component id="panelArticulos" pref="946" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
@@ -532,7 +532,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                             <Property name="columns" type="int" value="0"/>
-                            <Property name="rows" type="int" value="5"/>
+                            <Property name="rows" type="int" value="1"/>
                           </Layout>
                         </Container>
                       </SubComponents>

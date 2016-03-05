@@ -264,7 +264,79 @@ public class Controlador implements ActionListener, MouseListener {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     vista.panelDescripcion.setVisible(false);
+                    if(botonesPrincipales == 1){
+                        //NO OCURRE NADA
+                    }else if(botonesMenus == 1){
+                        botonesMenus = 0;
+                        botonesPrincipales = 1;
+                        vista.panelArticulosAux.setVisible(false);
+                        vista.panelArticulosAux.removeAll();
+                        vista.panelArticulosAux.repaint();
+                        vista.panelArticulos.setVisible(true);
+                    }else if(botonesOfertas == 1){
+                        botonesOfertas = 0;
+                        botonesPrincipales = 1;
+                        vista.panelArticulosAux.setVisible(false);
+                        vista.panelArticulosAux.removeAll();
+                        vista.panelArticulosAux.repaint();
+                        vista.panelArticulos.setVisible(true);
+                    }else if(botonesBebidas == 1){
+                        botonesBebidas = 0;
+                        botonesPrincipales = 1;
+                        vista.panelArticulosAux.setVisible(false);
+                        vista.panelArticulosAux.removeAll();
+                        vista.panelArticulosAux.repaint();
+                        vista.panelArticulos.setVisible(true);
+                    }else if(botonesPasteleria == 1){
+                        botonesPasteleria = 0;
+                        botonesPrincipales = 1;
+                        vista.panelArticulosAux.setVisible(false);
+                        vista.panelArticulosAux.removeAll();
+                        vista.panelArticulosAux.repaint();
+                        vista.panelArticulos.setVisible(true);
+                    }else if(!botonesPais.equals("")){
+                        botonesPais = "";
+                        botonesPasteleria = 1;
+                        vista.panelArticulosAux.removeAll();
+                        vista.panelArticulosAux.repaint();
+                        Object[] paises = modelo.getPaisPasteles();
+                        int auxpais = paises.length;
+                        JButton botonPais;
+                        //Creamos un objeto boton por cada articulo recogido de la BD
+                        for (int i = 0; i < auxpais; i++) {
+                            String name = paises[i].toString();
+                            botonPais = new JButton(name);
+                            //ActionListener de cada boton creado desde codigo
+                            botonPais.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    botonesPasteleria = 0;
+                                    botonesPais = name;
+                                    vista.panelArticulosAux.removeAll();
+                                    vista.panelArticulosAux.repaint();
+                                    Object[][] pasteles = modelo.getPasteles(name);
+                                    int auxpast = pasteles.length;
+                                    JButton botonPasteles;
+                                    //Creamos un objeto boton por cada articulo recogido de la BD
+                                    for (int i = 0; i < auxpast; i++) {
+                                        botonPasteles = new JButton(pasteles[i][1].toString());
+                                        //ActionListener de cada boton creado desde codigo
+                                        botonPasteles.addActionListener(new ActionListener() {
 
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+
+                                            }
+                                        });
+                                        vista.panelArticulosAux.add(botonPasteles);
+                                    }
+                                }
+                            });
+                            vista.panelArticulosAux.add(botonPais);
+                        }
+                        vista.panelArticulosAux.setVisible(true);
+                        vista.panelArticulos.setVisible(false);
+                    }
                 }
 
                 @Override
@@ -751,6 +823,8 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             //************EMPLEADOS****************
             case btnBebidas:
+                botonesBebidas = 1;
+                botonesPrincipales = 0;
                 vista.panelArticulosAux.removeAll();
                 vista.panelArticulosAux.repaint();
                 Object[] drinks = modelo.getNameBebidas();
@@ -816,6 +890,8 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
 
             case btnPasteleria:
+                botonesPasteleria = 1;
+                botonesPrincipales = 0;
                 vista.panelArticulosAux.removeAll();
                 vista.panelArticulosAux.repaint();
                 Object[] paises = modelo.getPaisPasteles();
@@ -829,6 +905,7 @@ public class Controlador implements ActionListener, MouseListener {
                     botonPais.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
+                            botonesPasteleria = 0;
                             botonesPais = name;
                             vista.panelArticulosAux.removeAll();
                             vista.panelArticulosAux.repaint();
@@ -863,6 +940,8 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
 
             case btnMenus:
+                botonesMenus = 1;
+                botonesPrincipales = 0;
                 vista.panelArticulosAux.removeAll();
                 vista.panelArticulosAux.repaint();
                 Object[][] menus = modelo.getMenus();
@@ -895,6 +974,8 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
 
             case btnOfertas:
+                botonesOfertas = 1;
+                botonesPrincipales = 0;
                 vista.panelArticulosAux.removeAll();
                 vista.panelArticulosAux.repaint();
                 Object[][] ofertas = modelo.getOfertas();

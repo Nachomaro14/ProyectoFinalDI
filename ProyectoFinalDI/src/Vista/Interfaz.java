@@ -33,6 +33,7 @@ public class Interfaz extends javax.swing.JFrame {
         labelPrecioArticulo = new javax.swing.JLabel();
         panelPrincipal = new javax.swing.JPanel();
         panelCentral = new javax.swing.JPanel();
+        jScrollPane15 = new javax.swing.JScrollPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         panelArticulos = new javax.swing.JPanel();
         btnBebidas = new javax.swing.JButton();
@@ -393,12 +394,12 @@ public class Interfaz extends javax.swing.JFrame {
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 955, Short.MAX_VALUE)
+            .addGap(0, 1091, Short.MAX_VALUE)
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 935, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
+                    .addGap(154, 154, 154)))
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -409,7 +410,7 @@ public class Interfaz extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 597, Short.MAX_VALUE)
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
                     .addContainerGap()))
@@ -421,6 +422,8 @@ public class Interfaz extends javax.swing.JFrame {
         );
         jLayeredPane1.setLayer(panelArticulos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(panelArticulosAux, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jScrollPane15.setViewportView(jLayeredPane1);
 
         panelCesta.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -521,7 +524,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                 .addGroup(panelCestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRealizarPed)
                     .addComponent(btnCancelarPed))
@@ -533,20 +536,26 @@ public class Interfaz extends javax.swing.JFrame {
         panelCentralLayout.setHorizontalGroup(
             panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCentralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1)
-                .addGap(13, 13, 13)
+                .addContainerGap(978, Short.MAX_VALUE)
                 .addComponent(panelCesta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelCentralLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 958, Short.MAX_VALUE)
+                    .addGap(281, 281, 281)))
         );
         panelCentralLayout.setVerticalGroup(
             panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCentralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelCesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLayeredPane1))
+                .addComponent(panelCesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(panelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCentralLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane15)
+                    .addContainerGap()))
         );
 
         jLabel7.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
@@ -1910,6 +1919,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JScrollPane jScrollPane12;
     public javax.swing.JScrollPane jScrollPane13;
     public javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

@@ -918,7 +918,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-//DEFINIMOS EL SEGUNDO HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
+    //DEFINIMOS EL SEGUNDO HILO PARA LA MODIFICACIÓN DE LA IMAGEN DE LA PANTALLA DE CARGA
     public class Uni2 extends Thread {
 
         @Override
@@ -1000,7 +1000,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-//DEFINIMOS EL HILO TEMPORIZADOR QUE INICIARÁ LOS DOS HILOS PARA LA ANIMACIÓN DE LA PANTALLA DE CARGA
+    //DEFINIMOS EL HILO TEMPORIZADOR QUE INICIARÁ LOS DOS HILOS PARA LA ANIMACIÓN DE LA PANTALLA DE CARGA
     public class Temporizador extends Thread {
 
         public void run(Uni1 u1, Uni2 u2) {
@@ -1009,7 +1009,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-//DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
+    //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
     public void inicioDeSesionDeTrabajador() {
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
@@ -1123,7 +1123,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-//CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
+    //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
     public void cargarImagenesPrincipalAdmin() {
         int adPW = vista.labelAdminProveedores.getWidth() - 100;
         int adPH = vista.labelAdminProveedores.getHeight() - 100;
@@ -1241,7 +1241,7 @@ public class Controlador implements ActionListener, MouseListener {
         }
     }
 
-//INICIAMOS LOS MÉTODOS RELACIONADOS CON EL MODELO Y ESTE MÉTODO SERÁ UTILIZADO TRAS LA CONEXIÓN A LA BASE DE DATOS
+    //INICIAMOS LOS MÉTODOS RELACIONADOS CON EL MODELO Y ESTE MÉTODO SERÁ UTILIZADO TRAS LA CONEXIÓN A LA BASE DE DATOS
     public void iniciarModelo() {
         //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
         //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN

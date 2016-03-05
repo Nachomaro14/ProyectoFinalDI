@@ -264,37 +264,37 @@ public class Controlador implements ActionListener, MouseListener {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     vista.panelDescripcion.setVisible(false);
-                    if(botonesPrincipales == 1){
+                    if (botonesPrincipales == 1) {
                         //NO OCURRE NADA
-                    }else if(botonesMenus == 1){
+                    } else if (botonesMenus == 1) {
                         botonesMenus = 0;
                         botonesPrincipales = 1;
                         vista.panelArticulosAux.setVisible(false);
                         vista.panelArticulosAux.removeAll();
                         vista.panelArticulosAux.repaint();
                         vista.panelArticulos.setVisible(true);
-                    }else if(botonesOfertas == 1){
+                    } else if (botonesOfertas == 1) {
                         botonesOfertas = 0;
                         botonesPrincipales = 1;
                         vista.panelArticulosAux.setVisible(false);
                         vista.panelArticulosAux.removeAll();
                         vista.panelArticulosAux.repaint();
                         vista.panelArticulos.setVisible(true);
-                    }else if(botonesBebidas == 1){
+                    } else if (botonesBebidas == 1) {
                         botonesBebidas = 0;
                         botonesPrincipales = 1;
                         vista.panelArticulosAux.setVisible(false);
                         vista.panelArticulosAux.removeAll();
                         vista.panelArticulosAux.repaint();
                         vista.panelArticulos.setVisible(true);
-                    }else if(botonesPasteleria == 1){
+                    } else if (botonesPasteleria == 1) {
                         botonesPasteleria = 0;
                         botonesPrincipales = 1;
                         vista.panelArticulosAux.setVisible(false);
                         vista.panelArticulosAux.removeAll();
                         vista.panelArticulosAux.repaint();
                         vista.panelArticulos.setVisible(true);
-                    }else if(!botonesPais.equals("")){
+                    } else if (!botonesPais.equals("")) {
                         botonesPais = "";
                         botonesPasteleria = 1;
                         vista.panelArticulosAux.removeAll();
@@ -319,12 +319,42 @@ public class Controlador implements ActionListener, MouseListener {
                                     JButton botonPasteles;
                                     //Creamos un objeto boton por cada articulo recogido de la BD
                                     for (int i = 0; i < auxpast; i++) {
-                                        botonPasteles = new JButton(pasteles[i][1].toString());
+                                        String pastel = pasteles[i][1].toString();
+                                        botonPasteles = new JButton(pastel);
                                         //ActionListener de cada boton creado desde codigo
-                                        botonPasteles.addActionListener(new ActionListener() {
+                                        botonPasteles.addMouseListener(new MouseListener() {
 
                                             @Override
-                                            public void actionPerformed(ActionEvent e) {
+                                            public void mouseClicked(MouseEvent e) {
+                                                if (e.getClickCount() == 2) {
+                                                    //añadir a la cesta
+                                                    System.out.println("double clicked");
+                                                } else if (e.getClickCount() == 1) {
+                                                    Object[] infopastel = modelo.getInfoPastel(pastel);
+                                                    vista.labelNombreArticulo.setText("Nombre: " + infopastel[0].toString());
+                                                    vista.labelPrecioArticulo.setText("Precio: " + infopastel[1].toString() + "€");
+                                                    vista.txtDescripción.setText(infopastel[2].toString());
+                                                    vista.panelDescripcion.setVisible(true);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void mousePressed(MouseEvent e) {
+
+                                            }
+
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+
+                                            }
+
+                                            @Override
+                                            public void mouseEntered(MouseEvent e) {
+
+                                            }
+
+                                            @Override
+                                            public void mouseExited(MouseEvent e) {
 
                                             }
                                         });
@@ -690,7 +720,6 @@ public class Controlador implements ActionListener, MouseListener {
                         && !"".equals(vista.txtEmailContra.getText())) {
 
                     if (modificarTrabajador == 0) {//INSERTAR
-
                         //COMPROBAMOS SI EL CHECK ESTA MARCADO
                         if (vista.checkAdmin.isSelected()) {
                             //SI LO ESTA, AÑADIREMOS UN ADMINISTRADOR
@@ -719,14 +748,10 @@ public class Controlador implements ActionListener, MouseListener {
                                     vista.txtCDomicilio.getText(),
                                     vista.txtEmailContra.getText());
                         }
-
                     } else if (modificarTrabajador == 1) {//MODIFICAR
-
                         if (vista.checkModifico.isSelected()) {
-
                             String pass = vista.txtPasswContra.getText();
                             pass = encriptaEnMD5(pass);
-
                             modelo.updateTrabajadorPassword(vista.txtUserContra.getText(),
                                     pass,
                                     vista.txtDniContra.getText(),
@@ -796,7 +821,6 @@ public class Controlador implements ActionListener, MouseListener {
                     JOptionPane.showMessageDialog(null, "Debes seleccionar un trabajador de la tabla primero");
                 } else {//
                     modelo.deleteTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
-
                 }
                 break;
 
@@ -832,7 +856,8 @@ public class Controlador implements ActionListener, MouseListener {
                 JButton botonProduc;
                 //Creamos un objeto boton por cada articulo recogido de la BD
                 for (int i = 0; i < auxbeb; i++) {
-                    botonProduc = new JButton(drinks[i].toString());
+                    String nameBebida = drinks[i].toString();
+                    botonProduc = new JButton(nameBebida);
                     //ActionListener de cada boton creado desde codigo
 
                     botonProduc.addMouseListener(new MouseListener() {
@@ -843,6 +868,11 @@ public class Controlador implements ActionListener, MouseListener {
                                 //añadir a la cesta
                                 System.out.println("double clicked");
                             } else if (e.getClickCount() == 1) {
+                                //meter la descripcion en el panel descripcion
+                                Object[] infobebida = modelo.getInfoBebida(nameBebida);
+                                vista.labelNombreArticulo.setText("Nombre: " + infobebida[0].toString());
+                                vista.labelPrecioArticulo.setText("Precio: " + infobebida[1].toString() + "€");
+                                vista.txtDescripción.setText(infobebida[2].toString());
                                 vista.panelDescripcion.setVisible(true);
                             }
                         }
@@ -905,40 +935,45 @@ public class Controlador implements ActionListener, MouseListener {
                             JButton botonPasteles;
                             //Creamos un objeto boton por cada articulo recogido de la BD
                             for (int i = 0; i < auxpast; i++) {
-                                botonPasteles = new JButton(pasteles[i][1].toString());
+                                String pastel = pasteles[i][1].toString();
+                                botonPasteles = new JButton(pastel);
                                 //ActionListener de cada boton creado desde codigo
                                 botonPasteles.addMouseListener(new MouseListener() {
 
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            if (e.getClickCount() == 2) {
-                                //añadir a la cesta
-                                System.out.println("double clicked");
-                            } else if (e.getClickCount() == 1) {
-                                vista.panelDescripcion.setVisible(true);
-                            }
-                        }
+                                    @Override
+                                    public void mouseClicked(MouseEvent e) {
+                                        if (e.getClickCount() == 2) {
+                                            //añadir a la cesta
+                                            System.out.println("double clicked");
+                                        } else if (e.getClickCount() == 1) {
+                                            Object[] infopastel = modelo.getInfoPastel(pastel);
+                                            vista.labelNombreArticulo.setText("Nombre: " + infopastel[0].toString());
+                                            vista.labelPrecioArticulo.setText("Precio: " + infopastel[1].toString() + "€");
+                                            vista.txtDescripción.setText(infopastel[2].toString());
+                                            vista.panelDescripcion.setVisible(true);
+                                        }
+                                    }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
+                                    @Override
+                                    public void mousePressed(MouseEvent e) {
 
-                        }
+                                    }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
+                                    @Override
+                                    public void mouseReleased(MouseEvent e) {
 
-                        }
+                                    }
 
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
+                                    @Override
+                                    public void mouseEntered(MouseEvent e) {
 
-                        }
+                                    }
 
-                        @Override
-                        public void mouseExited(MouseEvent e) {
+                                    @Override
+                                    public void mouseExited(MouseEvent e) {
 
-                        }
-                    });
+                                    }
+                                });
                                 vista.panelArticulosAux.add(botonPasteles);
                             }
                         }
@@ -966,7 +1001,8 @@ public class Controlador implements ActionListener, MouseListener {
                 JButton botonMenus;
                 //Creamos un objeto boton por cada articulo recogido de la BD
                 for (int i = 0; i < auxMen; i++) {
-                    botonMenus = new JButton(menus[i][1].toString());
+                    String nombreMenu = menus[i][1].toString();
+                    botonMenus = new JButton(nombreMenu);
                     //ActionListener de cada boton creado desde codigo
                     botonMenus.addMouseListener(new MouseListener() {
 
@@ -976,6 +1012,10 @@ public class Controlador implements ActionListener, MouseListener {
                                 //añadir a la cesta
                                 System.out.println("double clicked");
                             } else if (e.getClickCount() == 1) {
+                                Object[] infoMenus = modelo.getInfoMenu(nombreMenu);
+                                vista.labelNombreArticulo.setText("Nombre: " + infoMenus[0].toString());
+                                vista.labelPrecioArticulo.setText("Precio: " + infoMenus[1].toString() + "€");
+                                vista.txtDescripción.setText(infoMenus[2].toString());
                                 vista.panelDescripcion.setVisible(true);
                             }
                         }
@@ -1025,7 +1065,8 @@ public class Controlador implements ActionListener, MouseListener {
                 JButton botonOfertas;
                 //Creamos un objeto boton por cada articulo recogido de la BD
                 for (int i = 0; i < auxOfer; i++) {
-                    botonOfertas = new JButton(ofertas[i][1].toString());
+                    String nombreOferta = ofertas[i][1].toString();
+                    botonOfertas = new JButton(nombreOferta);
                     //ActionListener de cada boton creado desde codigo
                     botonOfertas.addMouseListener(new MouseListener() {
 
@@ -1035,6 +1076,10 @@ public class Controlador implements ActionListener, MouseListener {
                                 //añadir a la cesta
                                 System.out.println("double clicked");
                             } else if (e.getClickCount() == 1) {
+                                Object[] infoOferta = modelo.getInfoOferta(nombreOferta);
+                                vista.labelNombreArticulo.setText("Nombre: " + infoOferta[0].toString());
+                                vista.labelPrecioArticulo.setText("Precio: " + infoOferta[1].toString() + "€");
+                                vista.txtDescripción.setText(infoOferta[2].toString());
                                 vista.panelDescripcion.setVisible(true);
                             }
                         }

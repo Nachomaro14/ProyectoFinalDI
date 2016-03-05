@@ -654,7 +654,7 @@ public class Modelo extends Database {
     public Object[] getPasteles() {
         Object[] pasteles = new Object[3];
         try {
-            String q = "SELECT Codigo, Nombre, Precio FROM Producto WHERE Tipo = 'Pastelería'";
+            String q = "SELECT Codigo,Nombre,Precio FROM Producto WHERE Tipo = 'Pastelería'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -671,9 +671,10 @@ public class Modelo extends Database {
     }
 
     public Object[] getBebidas() {
+
         Object[] bebidas = new Object[3];
         try {
-            String q = "SELECT Codigo, Nombre, Precio FROM Producto WHERE Tipo = 'Bebida'";
+            String q = "SELECT Codigo,Nombre,Precio FROM Producto WHERE Tipo = 'Bebida'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -689,10 +690,72 @@ public class Modelo extends Database {
         return bebidas;
     }
 
+    public Object[] getNameBebidas() {
+        int registros = 0;
+        try {
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(Codigo) as total FROM Producto WHERE Tipo = 'Bebida'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al contar tuplas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        Object[] bebidas = new Object[registros];
+        try {
+            String q = "SELECT Nombre FROM Producto WHERE Tipo = 'Bebida'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                bebidas[i] = res.getString("Nombre");
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto/bebidas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return bebidas;
+    }
+
+    public Object[] getNamePasteles() {
+        int registros = 0;
+        try {
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(Codigo) as total FROM Producto WHERE Tipo = 'Pastelería'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al contar tuplas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        Object[] pasteles = new Object[registros];
+        try {
+            String q = "SELECT Nombre FROM Producto WHERE Tipo = 'Pastelería'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                pasteles[i] = res.getString("Nombre");
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto/bebidas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return pasteles;
+    }
+
     public Object[] getMenus() {
         Object[] menus = new Object[3];
         try {
-            String q = "SELECT Codigo, Nombre, Precio FROM Menus";
+            String q = "SELECT Codigo,Nombre,Precio FROM Menu";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -702,7 +765,7 @@ public class Modelo extends Database {
             }
             res.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener datos de menus\n\n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de menu\n\n" + e.getMessage());
             e.printStackTrace();
         }
         return menus;
@@ -711,7 +774,7 @@ public class Modelo extends Database {
     public Object[] getOfertas() {
         Object[] ofertas = new Object[3];
         try {
-            String q = "SELECT Codigo, Nombre, Precio FROM Ofertas";
+            String q = "SELECT Codigo,Nombre,Precio FROM Oferta";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -721,7 +784,7 @@ public class Modelo extends Database {
             }
             res.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener datos de Ofertas\n\n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de Oferta\n\n" + e.getMessage());
             e.printStackTrace();
         }
         return ofertas;

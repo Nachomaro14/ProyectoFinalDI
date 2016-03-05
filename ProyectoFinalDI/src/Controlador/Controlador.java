@@ -20,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -143,6 +144,8 @@ public class Controlador implements ActionListener, MouseListener {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     vista.panelCentral.setVisible(true);
+                    vista.panelArticulos.setVisible(true);
+                    vista.panelArticulosAux.setVisible(false);
                     vista.panelPedidos.setVisible(false);
                     vista.panelPerfil.setVisible(false);
                     //DEBEMOS CONTROLAR QUÉ BOTONES SE MOSTRARÁN EN EL PANEL DE PEDIDO EN TODO MOMENTO
@@ -376,6 +379,7 @@ public class Controlador implements ActionListener, MouseListener {
             });
 
             //A PARTIR DE AQUÍ DEFINIMOS LAS ACCIONES AL CLICKAR SOBRE LOS LABELS DEL PANEL PRINCIPAL DEL ADMINISTRADOR
+            //*******************ADMINISTRADOR***************
             vista.labelAdminProveedores.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -558,14 +562,14 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnHistorialPedido.setActionCommand("btnHistorialPedido");
         vista.btnHistorialPedido.addActionListener(this);
 
-        vista.btnNewPedido.setActionCommand("btnBebidas");
-        vista.btnNewPedido.addActionListener(this);
-        vista.btnNewPedido.setActionCommand("btnPasteleria");
-        vista.btnNewPedido.addActionListener(this);
-        vista.btnNewPedido.setActionCommand("btnMenus");
-        vista.btnNewPedido.addActionListener(this);
-        vista.btnNewPedido.setActionCommand("btnOfertas");
-        vista.btnNewPedido.addActionListener(this);
+        vista.btnBebidas.setActionCommand("btnBebidas");
+        vista.btnBebidas.addActionListener(this);
+        vista.btnPasteleria.setActionCommand("btnPasteleria");
+        vista.btnPasteleria.addActionListener(this);
+        vista.btnMenus.setActionCommand("btnMenus");
+        vista.btnMenus.addActionListener(this);
+        vista.btnOfertas.setActionCommand("btnOfertas");
+        vista.btnOfertas.addActionListener(this);
 
         //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
@@ -713,7 +717,7 @@ public class Controlador implements ActionListener, MouseListener {
             case btnDespideEmpleado:
                 if (vista.tablaTrabajadores.getSelectedRow() == -1) {
                     JOptionPane.showMessageDialog(null, "Debes seleccionar un trabajador de la tabla primero");
-                } else {
+                } else {//
                     modelo.deleteTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
 
                 }
@@ -742,25 +746,84 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             //************EMPLEADOS****************
             case btnBebidas:
-                Object[] drinks = modelo.getBebidas();
-                int aux = drinks.length;
-                //añadir botones por cada articulo
-                for (int i = 0; i < aux; i++) {
+                Object[] drinks = modelo.getNameBebidas();
+                int auxbeb = drinks.length;
 
+                JButton botonProduc;
+                //Creamos un objeto boton por cada articulo recogido de la BD
+                for (int i = 0; i < auxbeb; i++) {
+                    botonProduc = new JButton(drinks[i].toString());
+                    vista.panelArticulosAux.add(botonProduc);
                 }
-
+                vista.panelArticulosAux.setVisible(true);
+                vista.panelArticulos.setVisible(false);
+                //Boton actual para el Label Atras
+                botonesPrincipales = 0;
+                botonesBebidas = 1;
+                botonesMenus = 0;
+                botonesPasteleria = 0;
+                botonesOfertas = 0;
+                botonesPais = "";
                 break;
             case btnPasteleria:
-                modelo.getPasteles();
 
+                Object[] pasteles = modelo.getNamePasteles();
+                int auxpast = pasteles.length;
+                JButton botonPasteles;
+                //Creamos un objeto boton por cada articulo recogido de la BD
+                for (int i = 0; i < auxpast; i++) {
+                    botonPasteles = new JButton(pasteles[i].toString());
+                    vista.panelArticulosAux.add(botonPasteles);
+                }
+                vista.panelArticulosAux.setVisible(true);
+                vista.panelArticulos.setVisible(false);
+                //Boton actual para el Label Atras
+                botonesPrincipales = 0;
+                botonesBebidas = 0;
+                botonesMenus = 0;
+                botonesPasteleria = 1;
+                botonesOfertas = 0;
+                botonesPais = "";
                 break;
             case btnMenus:
                 modelo.getMenus();
-
+//                Object[] drinks = modelo.getNameBebidas();
+//                int aux = drinks.length;
+//                JButton botonProduc;
+                //Creamos un objeto boton por cada articulo recogido de la BD
+//                for (int i = 0; i < aux; i++) {
+//                    botonProduc = new JButton(drinks[i].toString());
+//                    vista.panelArticulosAux.add(botonProduc);
+//                }
+                vista.panelArticulosAux.setVisible(true);
+                vista.panelArticulos.setVisible(false);
+                //Boton actual para el Label Atras
+                botonesPrincipales = 0;
+                botonesBebidas = 0;
+                botonesMenus = 1;
+                botonesPasteleria = 0;
+                botonesOfertas = 0;
+                botonesPais = "";
                 break;
             case btnOfertas:
                 modelo.getOfertas();
-
+//                Object[] drinks = modelo.getNameBebidas();
+//                int aux = drinks.length;
+//                JButton botonProduc;
+                //Creamos un objeto boton por cada articulo recogido de la BD
+//                for (int i = 0; i < aux; i++) {
+//                    botonProduc = new JButton(drinks[i].toString());
+//                    vista.panelArticulosAux.add(botonProduc);
+//                }
+                vista.panelArticulosAux.setVisible(true);
+                vista.panelArticulos.setVisible(false);
+                //Boton actual para el Label Atras
+                botonesPrincipales = 0;
+                botonesBebidas = 0;
+                botonesMenus = 0;
+                botonesPasteleria = 0;
+                botonesOfertas = 1;
+                botonesPais = "";
                 break;
         }
     }

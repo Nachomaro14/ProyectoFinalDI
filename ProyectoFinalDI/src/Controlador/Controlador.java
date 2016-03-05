@@ -845,7 +845,6 @@ public class Controlador implements ActionListener, MouseListener {
                             } else if (e.getClickCount() == 1) {
                                 vista.panelDescripcion.setVisible(true);
                             }
-
                         }
 
                         @Override
@@ -865,14 +864,6 @@ public class Controlador implements ActionListener, MouseListener {
 
                         @Override
                         public void mouseExited(MouseEvent e) {
-
-                        }
-                    });
-
-                    botonProduc.addActionListener(new ActionListener() {
-
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
 
                         }
                     });
@@ -916,13 +907,38 @@ public class Controlador implements ActionListener, MouseListener {
                             for (int i = 0; i < auxpast; i++) {
                                 botonPasteles = new JButton(pasteles[i][1].toString());
                                 //ActionListener de cada boton creado desde codigo
-                                botonPasteles.addActionListener(new ActionListener() {
+                                botonPasteles.addMouseListener(new MouseListener() {
 
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                //añadir a la cesta
+                                System.out.println("double clicked");
+                            } else if (e.getClickCount() == 1) {
+                                vista.panelDescripcion.setVisible(true);
+                            }
+                        }
 
-                                    }
-                                });
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
                                 vista.panelArticulosAux.add(botonPasteles);
                             }
                         }
@@ -952,10 +968,35 @@ public class Controlador implements ActionListener, MouseListener {
                 for (int i = 0; i < auxMen; i++) {
                     botonMenus = new JButton(menus[i][1].toString());
                     //ActionListener de cada boton creado desde codigo
-                    botonMenus.addActionListener(new ActionListener() {
+                    botonMenus.addMouseListener(new MouseListener() {
 
                         @Override
-                        public void actionPerformed(ActionEvent e) {
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                //añadir a la cesta
+                                System.out.println("double clicked");
+                            } else if (e.getClickCount() == 1) {
+                                vista.panelDescripcion.setVisible(true);
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
 
                         }
                     });
@@ -986,10 +1027,35 @@ public class Controlador implements ActionListener, MouseListener {
                 for (int i = 0; i < auxOfer; i++) {
                     botonOfertas = new JButton(ofertas[i][1].toString());
                     //ActionListener de cada boton creado desde codigo
-                    botonOfertas.addActionListener(new ActionListener() {
+                    botonOfertas.addMouseListener(new MouseListener() {
 
                         @Override
-                        public void actionPerformed(ActionEvent e) {
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                //añadir a la cesta
+                                System.out.println("double clicked");
+                            } else if (e.getClickCount() == 1) {
+                                vista.panelDescripcion.setVisible(true);
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
 
                         }
                     });

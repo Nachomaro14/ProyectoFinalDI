@@ -788,9 +788,9 @@ public class Modelo extends Database {
             JOptionPane.showMessageDialog(null, "Error al contar tuplas\n\n" + e.getMessage());
             e.printStackTrace();
         }
-        Object[][] menus = new Object[registros][3];
+        Object[][] menus = new Object[registros][4];
         try {
-            String q = "SELECT Codigo,Nombre,Precio FROM Menu";
+            String q = "SELECT Codigo,Nombre,Precio,Descripcion FROM Menu";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -798,6 +798,7 @@ public class Modelo extends Database {
                 menus[i][0] = res.getInt("Codigo");
                 menus[i][1] = res.getString("Nombre");
                 menus[i][2] = res.getDouble("Precio");
+                menus[i][3] = res.getString("Descripcion");
                 i++;
             }
             res.close();
@@ -820,7 +821,7 @@ public class Modelo extends Database {
             JOptionPane.showMessageDialog(null, "Error al contar tuplas\n\n" + e.getMessage());
             e.printStackTrace();
         }
-        Object[][] ofertas = new Object[registros][3];
+        Object[][] ofertas = new Object[registros][4];
         try {
             String q = "SELECT Codigo,Nombre,Precio FROM Oferta";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -830,6 +831,7 @@ public class Modelo extends Database {
                 ofertas[i][0] = res.getInt("Codigo");
                 ofertas[i][1] = res.getString("Nombre");
                 ofertas[i][2] = res.getDouble("Precio");
+                ofertas[i][3] = res.getString("Descripcion");
                 i++;
             }
             res.close();

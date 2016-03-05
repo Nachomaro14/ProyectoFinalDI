@@ -14,7 +14,7 @@ public class Database {
     public void conectar(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(this.url, this.user , this.password );    
+            conn = DriverManager.getConnection(this.url, this.user , this.password);    
             System.out.println("Conexion MySQL realizada con exito.");
         }catch(SQLException e){
             System.out.println("Conexion NO realizada con exito por error de SQL.");
@@ -25,7 +25,16 @@ public class Database {
         }
     }
 
-    public Connection getConexion(){
+    //Aplicamos el funcionamiento de Singleton para evitar crear un segundo objeto de Conexión mediante la reutilización del ya existente
+    public Connection getConexion() {
+        try{
+            if(this.conn.isClosed()){
+                Class.forName("com.mysql.jdbc.Driver");
+                this.conn = DriverManager.getConnection(this.url, this.user , this.password);    
+            }
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
         return this.conn;
     }
     

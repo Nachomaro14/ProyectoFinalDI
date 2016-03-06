@@ -1328,7 +1328,6 @@ public class Controlador implements ActionListener, MouseListener {
                 try {
                     // String userTabla = vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString();
                     String userTabla = String.valueOf(vista.tablaTrabajadores.getValueAt(articulo, 0));
-                    System.out.println(userTabla);
 
                     Object[] datosTraba = modelo.getDatosTrabajador(userTabla);
 

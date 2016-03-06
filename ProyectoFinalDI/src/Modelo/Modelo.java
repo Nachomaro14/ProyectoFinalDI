@@ -553,32 +553,29 @@ public class Modelo extends Database {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         try {
             tablemodel.addColumn("Usuario");
-            tablemodel.addColumn("Pass");
             tablemodel.addColumn("DNI");
             tablemodel.addColumn("Nombre");
             tablemodel.addColumn("Apellidos");
-            tablemodel.addColumn("Teléfono");
+            tablemodel.addColumn("Telefono");
             tablemodel.addColumn("Correo");
             tablemodel.addColumn("Dirección");
 
-            String q = "SELECT Usuario, Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion FROM Trabajador";
+            String q = "SELECT Usuario, DNI, Nombre, Apellidos, Telefono, Correo, Direccion FROM Trabajador";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
 
-            String[] data = new String[8];
+            String[] data = new String[7];
 
             while (res.next()) {
                 data[0] = res.getString("Usuario");
-                data[1] = res.getString("Pass");
-                data[2] = res.getString("DNI");
-                data[3] = res.getString("Nombre");
-                data[4] = res.getString("Apellidos");
-                data[5] = res.getString("Telefono");
-                data[6] = res.getString("Correo");
-                data[7] = res.getString("Direccion");
+                data[1] = res.getString("DNI");
+                data[2] = res.getString("Nombre");
+                data[3] = res.getString("Apellidos");
+                data[4] = res.getString("Telefono");
+                data[5] = res.getString("Correo");
+                data[6] = res.getString("Direccion");
                 tablemodel.addRow(data);
             }
-
             res.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
@@ -613,8 +610,8 @@ public class Modelo extends Database {
 
     public void updateTrabajadorPassword(String usuario, String contrasenia, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
         try {
-            String q = "UPDATE Trabajador (Pass, DNI, Nombre, Apellidos, Telefono, Correo, Direccion)"
-                    + "VALUES ('" + contrasenia + "','" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "')"
+            String q = "UPDATE Trabajador "
+                    + "SET Pass='" + contrasenia + "',DNI='" + dni + "',Nombre='" + nombre + "',Apellidos'" + apellidos + "',Telefono='" + telefono + "',Correo='" + correo + "',Domicilio='" + numerodom + " " + calledom + "')"
                     + "WHERE Usuario='" + usuario + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
@@ -627,8 +624,9 @@ public class Modelo extends Database {
 
     public void updateTrabajadorNoPassword(String usuario, String dni, String nombre, String apellidos, String telefono, String numerodom, String calledom, String correo) {
         try {
-            String q = "UPDATE Trabajador ( DNI, Nombre, Apellidos, Telefono, Correo, Direccion)"
-                    + "VALUES ('" + dni + "','" + nombre + "','" + apellidos + "','" + telefono + "','" + correo + "','" + numerodom + " " + calledom + "')"
+
+            String q = "UPDATE Trabajador"
+                    + "SET DNI='" + dni + "',Nombre='" + nombre + "', Apellidos='" + apellidos + "', Telefono='" + telefono + "', Correo='" + correo + "', Domicilio='" + numerodom + " " + calledom + "')"
                     + "WHERE Usuario='" + usuario + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
@@ -918,8 +916,8 @@ public class Modelo extends Database {
         }
         return oferta;
     }
-    
-    public String[] getProveedores(){
+
+    public String[] getProveedores() {
         int registros = 0;
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(NIF) as total FROM Proveedor");
@@ -948,8 +946,8 @@ public class Modelo extends Database {
         }
         return proveedores;
     }
-    
-    public DefaultTableModel tablaProductosProveedoresAdmin(String proveedor){
+
+    public DefaultTableModel tablaProductosProveedoresAdmin(String proveedor) {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         try {
             tablemodel.addColumn("Nombre");
@@ -978,64 +976,64 @@ public class Modelo extends Database {
         }
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaProductosCestaProveedoresVacia(){
+
+    public DefaultTableModel tablaProductosCestaProveedoresVacia() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
-        
+
         tablemodel.addColumn("Código");
         tablemodel.addColumn("Nombre");
         tablemodel.addColumn("Precio");
         tablemodel.addColumn("Cantidad");
-        
+
         return tablemodel;
     }
-    
-    public int getCantidadProductoEnCesta(String nombreProducto){
+
+    public int getCantidadProductoEnCesta(String nombreProducto) {
         int c = 0;
-        try{
-            String q = "SELECT Cantidad FROM CestaProveedor WHERE Nombre = '"+nombreProducto+"'";
+        try {
+            String q = "SELECT Cantidad FROM CestaProveedor WHERE Nombre = '" + nombreProducto + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
-            
+
             if (res.next()) {
                 c = res.getInt("Cantidad");
-            }else{
+            } else {
                 c = 0;
             }
-            
+
             res.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return c;
     }
-    
-    public void anadirNuevoProductoPedidoProveedor(String nombreProducto, String admin, int cantidad, double precio){
-        try{
-            String q = "INSERT INTO CestaProveedor(Administrador, CodigoP, Nombre, Precio, Cantidad) VALUES ('"+admin+"', (SELECT Codigo FROM Producto WHERE Nombre = '"+nombreProducto+"'),"
-                    + " '"+nombreProducto+"', "+precio+", "+cantidad+")";
+
+    public void anadirNuevoProductoPedidoProveedor(String nombreProducto, String admin, int cantidad, double precio) {
+        try {
+            String q = "INSERT INTO CestaProveedor(Administrador, CodigoP, Nombre, Precio, Cantidad) VALUES ('" + admin + "', (SELECT Codigo FROM Producto WHERE Nombre = '" + nombreProducto + "'),"
+                    + " '" + nombreProducto + "', " + precio + ", " + cantidad + ")";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void actualizarNuevoProductoPedidoProveedor(String nombreProducto, String admin, int cantidad){
-        try{
-            String q = "UPDATE CestaProveedor SET Cantidad = "+cantidad+" WHERE Nombre = '"+nombreProducto+"' AND Administrador = '"+admin+"'";
+
+    public void actualizarNuevoProductoPedidoProveedor(String nombreProducto, String admin, int cantidad) {
+        try {
+            String q = "UPDATE CestaProveedor SET Cantidad = " + cantidad + " WHERE Nombre = '" + nombreProducto + "' AND Administrador = '" + admin + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public DefaultTableModel tablaProductosCestaProveedores(String admin){
+
+    public DefaultTableModel tablaProductosCestaProveedores(String admin) {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
-        
+
         try {
             tablemodel.addColumn("Código");
             tablemodel.addColumn("Nombre");
@@ -1063,45 +1061,79 @@ public class Modelo extends Database {
         }
         return tablemodel;
     }
-    
-    public double getPrecioTotalCestaProveedor(String admin){
+
+    public double getPrecioTotalCestaProveedor(String admin) {
         double precio = 0.0;
-        try{
-            String q = "SELECT SUM(Precio * Cantidad) as suma FROM CestaProveedor WHERE Administrador = '"+admin+"'";
+        try {
+            String q = "SELECT SUM(Precio * Cantidad) as suma FROM CestaProveedor WHERE Administrador = '" + admin + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
-            
+
             if (res.next()) {
                 precio = res.getDouble("suma");
-            }else{
+            } else {
                 precio = 0.0;
             }
-            
+
             res.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return precio;
     }
-    
-    public void vaciarCestaProveedor(String admin){
-        try{
-            String q = "DELETE FROM CestaProveedor WHERE Administrador = '"+admin+"'";
+
+    public void vaciarCestaProveedor(String admin) {
+        try {
+            String q = "DELETE FROM CestaProveedor WHERE Administrador = '" + admin + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void eliminarProductoCestaProveedor(String admin, String nombreProducto){
-        try{
-            String q = "DELETE FROM CestaProveedor WHERE Nombre = '"+nombreProducto+"' AND Administrador = '"+admin+"'";
+
+    public void eliminarProductoCestaProveedor(String admin, String nombreProducto) {
+        try {
+            String q = "DELETE FROM CestaProveedor WHERE Nombre = '" + nombreProducto + "' AND Administrador = '" + admin + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Object[] getDatosTrabajador(String nombre) {
+        Object[] trabaj = new Object[3];
+        try {
+            String q = "SELECT Tiempo,Recaudacion,Valoracion FROM Trabajador WHERE Usuario='" + nombre + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                trabaj[0] = res.getInt("Tiempo");
+                trabaj[1] = res.getDouble("Recaudacion");
+                trabaj[2] = res.getInt("Valoracion");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de trabajador\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return trabaj;
+    }
+
+    public void updateTrabajadorValor(String usuario, int valoracion) {
+        try {
+
+            String q = "UPDATE Trabajador"
+                    + " SET Valoracion=" + valoracion
+                    + " WHERE Usuario='" + usuario + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
             e.printStackTrace();
         }
     }

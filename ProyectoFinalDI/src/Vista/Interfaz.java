@@ -146,11 +146,14 @@ public class Interfaz extends javax.swing.JFrame {
         tablaTrabajadores = new javax.swing.JTable();
         panelInfoTrabajadores = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
+        labelTiempoTrabajado = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
-        jLabel54 = new javax.swing.JLabel();
+        labelValoracion = new javax.swing.JLabel();
+        labelVentasRealizadas = new javax.swing.JLabel();
+        txtNewValora = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        btnAceptaNewValora = new javax.swing.JButton();
         btnNuevoEmpleado = new javax.swing.JButton();
         btnModificaEmpleado = new javax.swing.JButton();
         btnDespideEmpleado = new javax.swing.JButton();
@@ -1251,6 +1254,10 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel31.setText("Valoracion:");
 
+        jLabel28.setText("Nueva Valoracion:");
+
+        btnAceptaNewValora.setText("Aceptar");
+
         javax.swing.GroupLayout panelInfoTrabajadoresLayout = new javax.swing.GroupLayout(panelInfoTrabajadores);
         panelInfoTrabajadores.setLayout(panelInfoTrabajadoresLayout);
         panelInfoTrabajadoresLayout.setHorizontalGroup(
@@ -1258,15 +1265,22 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(panelInfoTrabajadoresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInfoTrabajadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelTiempoTrabajado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelValoracion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelVentasRealizadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelInfoTrabajadoresLayout.createSequentialGroup()
                         .addGroup(panelInfoTrabajadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel27)
                             .addComponent(jLabel29)
                             .addComponent(jLabel31))
                         .addGap(0, 116, Short.MAX_VALUE))
-                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel53, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel54, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelInfoTrabajadoresLayout.createSequentialGroup()
+                        .addComponent(jLabel28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNewValora))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoTrabajadoresLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAceptaNewValora)))
                 .addContainerGap())
         );
         panelInfoTrabajadoresLayout.setVerticalGroup(
@@ -1275,15 +1289,21 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jLabel27)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelTiempoTrabajado, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel29)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelVentasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel31)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelValoracion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelInfoTrabajadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNewValora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28))
+                .addGap(18, 18, 18)
+                .addComponent(btnAceptaNewValora)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1934,6 +1954,7 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnAceptaNewValora;
     public javax.swing.JButton btnAceptarConfig;
     public javax.swing.JButton btnAceptarContrato;
     public javax.swing.JButton btnAceptarPedidoProv;
@@ -2026,8 +2047,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel54;
     public javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2083,8 +2102,11 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JLabel labelPrecioPed;
     public javax.swing.JLabel labelPrecioPed1;
     public javax.swing.JLabel labelSalir;
+    public javax.swing.JLabel labelTiempoTrabajado;
     public javax.swing.JLabel labelTrabajadorPed;
     public javax.swing.JLabel labelTrabajadorPed1;
+    public javax.swing.JLabel labelValoracion;
+    public javax.swing.JLabel labelVentasRealizadas;
     public javax.swing.JLabel labelVolver;
     public javax.swing.JList<String> listaPedidos;
     public javax.swing.JList<String> listaPedidos1;
@@ -2135,6 +2157,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JTextField txtIPBD;
     public javax.swing.JTextField txtIVA;
     public javax.swing.JTextField txtNDomicilio;
+    public javax.swing.JTextField txtNewValora;
     public javax.swing.JTextField txtNombreBD;
     public javax.swing.JTextField txtNombreContra;
     public javax.swing.JPasswordField txtPass;

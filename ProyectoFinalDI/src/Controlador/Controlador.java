@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -541,6 +542,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelAdminStock.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.tablaStock.setModel(modelo.tablaStockVacia());
                     vista.stock3.pack();
                     vista.stock3.setLocationRelativeTo(null);
                     vista.stock3.setTitle("Stock Tienda");
@@ -645,6 +647,26 @@ public class Controlador implements ActionListener, MouseListener {
             SCifras(vista.txtNDomicilio);
             //restriccion de letras
             SLetras(vista.txtApellContra);
+
+            vista.txtBusquedaStock.addKeyListener(new KeyListener() {
+
+                @Override
+                public void keyTyped(KeyEvent e) {
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    String textoAux = vista.txtBusquedaStock.getText();
+                    System.out.println(textoAux);
+                    String campoBusqueda = vista.comboBusquedaStock.getSelectedItem().toString();
+                    System.out.println(campoBusqueda);
+                    vista.tablaStock.setModel(modelo.tablaStock(textoAux, campoBusqueda));
+                }
+            });
 
             //ANTES DE TERMINAR EL MÉTODO "INICIAR" OCULTAMOS LOS PANELES DEL PANEL PRINCIPAL
             //PARA QUE NO SE MUESTRE UNO INICIALMENTE
@@ -958,16 +980,16 @@ public class Controlador implements ActionListener, MouseListener {
                 modelo.nuevoRegistroCompra(proveedor, precioTotal, ad);
                 int c = modelo.obtenerUltimaID();
                 int cc = vista.tablaPedidosCompra.getRowCount();
-                for(int i = 0; i < cc; i++){
+                for (int i = 0; i < cc; i++) {
                     int codProd = Integer.parseInt(vista.tablaPedidosCompra.getValueAt(i, 0).toString());
                     int canti = Integer.parseInt(vista.tablaPedidosCompra.getValueAt(i, 3).toString());
                     String nomb = vista.tablaPedidosCompra.getValueAt(i, 1).toString();
                     double precio = Double.parseDouble(vista.tablaPedidosCompra.getValueAt(i, 2).toString());
                     modelo.nuevoProductoCompra(c, codProd, canti);
                     int ca = modelo.getStockDeProducto(nomb);
-                    if(ca == 0){
+                    if (ca == 0) {
                         modelo.nuevoProductoStock(codProd, proveedor, nomb, canti, (precio * 1.25));
-                    }else{
+                    } else {
                         modelo.actualizarStockDeProducto(nomb, ca + canti);
                     }
                 }
@@ -985,7 +1007,7 @@ public class Controlador implements ActionListener, MouseListener {
                 vista.txtPaisFacturaCompra.setText(info[2].toString());
                 vista.txtNIFFacturaCompra.setText(info[0].toString());
                 String productos = "";
-                for(int i = 0; i < cc; i++){
+                for (int i = 0; i < cc; i++) {
                     int canti = Integer.parseInt(vista.tablaPedidosCompra.getValueAt(i, 3).toString());
                     String nomb = vista.tablaPedidosCompra.getValueAt(i, 1).toString();
                     double precio = Double.parseDouble(vista.tablaPedidosCompra.getValueAt(i, 2).toString());

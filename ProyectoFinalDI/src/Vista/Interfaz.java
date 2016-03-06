@@ -1204,9 +1204,7 @@ public class Interfaz extends javax.swing.JFrame {
         stock3.setModal(true);
         stock3.setResizable(false);
 
-        comboBusquedaStock.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtBusquedaStock.setText("jTextField1");
+        comboBusquedaStock.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PROVEEDOR", "NOMBRE", "PAIS" }));
 
         tablaStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2387,7 +2385,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JTable tablaProdProveed;
     private javax.swing.JTable tablaProductosHistorial;
     public javax.swing.JTable tablaProductosProvee;
-    private javax.swing.JTable tablaStock;
+    public javax.swing.JTable tablaStock;
     public javax.swing.JTable tablaTrabajadores;
     public javax.swing.JLabel telefonoPerfil;
     public javax.swing.JLabel telefonoProveedor;

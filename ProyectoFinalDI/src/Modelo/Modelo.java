@@ -1137,22 +1137,22 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
-    
-    public void nuevoRegistroCompra(String proveedor, double precioTotal, String admin){
-        try{
+
+    public void nuevoRegistroCompra(String proveedor, double precioTotal, String admin) {
+        try {
             String q = "INSERT INTO RegCompras (Fecha, Hora, PrecioT, Proveedor, Administrador) VALUES (CURDATE(), CURTIME(), "
-                    +precioTotal+", '"+proveedor+"', '"+admin+"')";
+                    + precioTotal + ", '" + proveedor + "', '" + admin + "')";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public int obtenerUltimaID(){
+
+    public int obtenerUltimaID() {
         int i = 0;
-        try{
+        try {
             String q = "SELECT last_insert_id() AS last_id FROM RegCompras";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
@@ -1160,39 +1160,39 @@ public class Modelo extends Database {
                 i = res.getInt("last_id");
             }
             res.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return i;
     }
-    
-    public void nuevoProductoCompra(int compra, int producto, int cantidad){
-        try{
-            String q = "INSERT INTO ProdCompras (CodigoC, Producto, Cantidad) VALUES ("+compra+", "+producto+", "+cantidad+")";
+
+    public void nuevoProductoCompra(int compra, int producto, int cantidad) {
+        try {
+            String q = "INSERT INTO ProdCompras (CodigoC, Producto, Cantidad) VALUES (" + compra + ", " + producto + ", " + cantidad + ")";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void nuevoProductoStock(int producto, String proveedor, String nombre, int cantidad, double precio){
-        try{
-            String q = "INSERT INTO Stock (Proveedor, Nombre, Pais, Precio, Stock) VALUES ('"+proveedor+"', '"+nombre+"', "
-                    + "(SELECT Pais FROM Producto WHERE Codigo = "+producto+"), "+precio+", "+cantidad+")";
+
+    public void nuevoProductoStock(int producto, String proveedor, String nombre, int cantidad, double precio) {
+        try {
+            String q = "INSERT INTO Stock (Proveedor, Nombre, Pais, Precio, Stock) VALUES ('" + proveedor + "', '" + nombre + "', "
+                    + "(SELECT Pais FROM Producto WHERE Codigo = " + producto + "), " + precio + ", " + cantidad + ")";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public String[] getInfoFacturaProveedor(String proveedor){
+
+    public String[] getInfoFacturaProveedor(String proveedor) {
         String[] info = new String[5];
-        try{
-            String q = "SELECT NIF, Direccion, Pais, Telefono, Correo FROM Proveedor WHERE Nombre = '"+proveedor+"'";
+        try {
+            String q = "SELECT NIF, Direccion, Pais, Telefono, Correo FROM Proveedor WHERE Nombre = '" + proveedor + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             while (res.next()) {
@@ -1203,38 +1203,93 @@ public class Modelo extends Database {
                 info[4] = res.getString("Correo");
             }
             res.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return info;
     }
-    
-    public int getStockDeProducto(String nombre){
+
+    public int getStockDeProducto(String nombre) {
         int cantidad = 0;
-        try{
-            String q = "SELECT Stock FROM Stock WHERE Nombre = '"+nombre+"'";
+        try {
+            String q = "SELECT Stock FROM Stock WHERE Nombre = '" + nombre + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             if (res.next()) {
                 cantidad = res.getInt("Stock");
-            }else{
+            } else {
                 cantidad = 0;
             }
             res.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return cantidad;
     }
-    
-    public void actualizarStockDeProducto(String nombre, int cantidad){
-        try{
-            String q = "UPDATE Stock SET Stock = "+cantidad+" WHERE Nombre = '"+nombre+"'";
+
+    public void actualizarStockDeProducto(String nombre, int cantidad) {
+        try {
+            String q = "UPDATE Stock SET Stock = " + cantidad + " WHERE Nombre = '" + nombre + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
             pstm.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public DefaultTableModel tablaStockVacia() {
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+
+        tablemodel.addColumn("Codigo");
+        tablemodel.addColumn("Proveedor");
+        tablemodel.addColumn("Nombre");
+        tablemodel.addColumn("Pais");
+        tablemodel.addColumn("Precio");
+        tablemodel.addColumn("Stock");
+
+        return tablemodel;
+    }
+
+    public DefaultTableModel tablaStock(String N, String CAMPO) {
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        try {
+            tablemodel.addColumn("Codigo");
+            tablemodel.addColumn("Proveedor");
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("Pais");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Stock");
+
+            String q = null;
+            if ("PROVEEDOR".equals(CAMPO)) {
+                q = "SELECT Codigo, Proveedor, Nombre, Pais, Precio, Stock FROM Stock WHERE Proveedor LIKE '" + N + "%'";
+            } else if ("NOMBRE".equals(CAMPO)) {
+                q = "SELECT Codigo, Proveedor, Nombre, Pais, Precio, Stock FROM Stock WHERE Nombre LIKE '" + N + "%'";
+            } else if ("PAIS".equals(CAMPO)) {
+                q = "SELECT Codigo, Proveedor, Nombre, Pais, Precio, Stock FROM Stock WHERE Pais LIKE '" + N + "%'";
+            }
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            String[] data = new String[6];
+
+            while (res.next()) {
+                data[0] = res.getString("Codigo");
+                data[1] = res.getString("Proveedor");
+                data[2] = res.getString("Nombre");
+                data[3] = res.getString("Pais");
+                data[4] = res.getString("Precio");
+                data[5] = res.getString("Stock");
+
+                tablemodel.addRow(data);
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return tablemodel;
     }
 }

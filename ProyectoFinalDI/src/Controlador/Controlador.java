@@ -26,6 +26,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -203,18 +204,16 @@ public class Controlador implements ActionListener, MouseListener {
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(true);
                     vista.panelPerfil.setVisible(false);
+                    DefaultComboBoxModel cm = new DefaultComboBoxModel(modelo.getFechas());
+                    vista.comboFechaPed.setModel(cm);
+                    String f = vista.comboFechaPed.getSelectedItem().toString();
+                    vista.listaPedidos.setModel(modelo.listaPedidos(f));
                     botonesPrincipales = 0;
                     botonesBebidas = 0;
                     botonesMenus = 0;
                     botonesPasteleria = 0;
                     botonesOfertas = 0;
                     botonesPais = "";
-
-                    //CONFIGURAMOS EL COMBOBOX PARA QUE MUESTRE LAS FECHAS DE PEDIDOS REGISTRADOS HASTA ESE MOMENTO
-                    vista.comboFechaPed.setModel(new DefaultComboBoxModel(modelo.getFechas()));
-                    String fp = "";
-                    DefaultListModel lm = modelo.listaPedidos(fp);
-                    vista.listaPedidos.setModel(lm);
                 }
 
                 @Override
@@ -225,6 +224,58 @@ public class Controlador implements ActionListener, MouseListener {
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     vista.labelPedidos.setBorder(null);
+                }
+            });
+            vista.listaPedidos.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(vista.listaPedidos.getSelectedIndex() != -1){
+                        int cod = Integer.parseInt(vista.listaPedidos.getSelectedValue());
+                        vista.tablaPedidos.setModel(modelo.tablaProductosHistorial(cod));
+                        Object[] info = modelo.infoVenta(cod);
+                        vista.labelHoraPed.setText(String.valueOf(info[1]));
+                        vista.labelTrabajadorPed.setText(String.valueOf(info[3]));
+                        vista.labelClientePed.setText(String.valueOf(info[4]));
+                        vista.labelPrecioPed.setText(String.valueOf(info[2]));
+                        vista.labelCodPed.setText(String.valueOf(cod));
+                    }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+            });
+            vista.listaPedidos1.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(vista.listaPedidos1.getSelectedIndex() != -1){
+                        int cod = Integer.parseInt(vista.listaPedidos1.getSelectedValue());
+                        vista.tablaPedidos1.setModel(modelo.tablaProductosHistorial(cod));
+                        Object[] info = modelo.infoVenta(cod);
+                        vista.labelHoraPed1.setText(String.valueOf(info[1]));
+                        vista.labelTrabajadorPed1.setText(String.valueOf(info[3]));
+                        vista.labelClientePed1.setText(String.valueOf(info[4]));
+                        vista.labelPrecioPed1.setText(String.valueOf(info[2]));
+                        vista.labelCodPed1.setText(String.valueOf(cod));
+                    }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
                 }
             });
             vista.labelSalir.addMouseListener(new MouseAdapter() {
@@ -629,6 +680,10 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelAdminVentas.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    DefaultComboBoxModel cm = new DefaultComboBoxModel(modelo.getFechas());
+                    vista.comboFechaPed1.setModel(cm);
+                    String f = vista.comboFechaPed1.getSelectedItem().toString();
+                    vista.listaPedidos1.setModel(modelo.listaPedidos(f));
                     vista.ventas5.pack();
                     vista.ventas5.setLocationRelativeTo(null);
                     vista.ventas5.setTitle("Ventas");
@@ -2092,7 +2147,8 @@ public class Controlador implements ActionListener, MouseListener {
         //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
         render = new TablaRenderizador();
         vista.tablaPedidos.setDefaultRenderer(String.class, render);
-        vista.tablaPedidos.setModel(modelo.tablaProductosRegistroVentasVacia());
+        vista.tablaPedidos.setModel(modelo.tablaProductosHistorialVacia());
+        vista.tablaPedidos1.setModel(modelo.tablaProductosHistorialVacia());
         vista.tablaPedidos.getTableHeader()
                 .setReorderingAllowed(false);
         vista.tablaPedidos.getTableHeader()

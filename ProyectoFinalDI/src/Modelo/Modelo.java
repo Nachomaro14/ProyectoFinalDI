@@ -360,17 +360,14 @@ public class Modelo extends Database {
     }
 
     public String[] getFechas() {
-        int registros = 1;
+        int registros = 0;
         try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT COUNT(Fecha) as total FROM RegVentas GROUP BY Fecha");
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT COUNT(Fecha) AS total FROM RegVentas GROUP BY Fecha");
             ResultSet res = pstm.executeQuery();
-            if (res.next()) {
-                res.next();
-                if (res != null) {
-                    registros = res.getInt("total");
-                }
+            if(res.next()){
+                registros = res.getInt("total");
+                res.close();
             }
-            res.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al contar tuplas\n\n" + e.getMessage());
             e.printStackTrace();
@@ -382,7 +379,7 @@ public class Modelo extends Database {
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while (res.next()) {
-                fechas[i] = res.getString("Fecha");
+                fechas[i] = String.valueOf(res.getDate("Fecha"));
                 i++;
             }
             res.close();
@@ -396,17 +393,12 @@ public class Modelo extends Database {
     public DefaultListModel listaPedidos(String fecha) {
         DefaultListModel listmodel = new DefaultListModel();
         try {
-            String q = "SELECT Codigo, Hora, Cliente FROM RegVentas WHERE Fecha = '" + fecha + "'";
+            String q = "SELECT Codigo FROM RegVentas WHERE Fecha = '" + fecha + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
-            int i = 0;
             while (res.next()) {
                 String cod = String.valueOf(res.getInt("Codigo"));
-                String h = res.getString("Hora");
-                String c = res.getString("Cliente");
-                String t = cod + "-" + h + "-" + c;
-                listmodel.addElement(t);
-                i++;
+                listmodel.addElement(cod);
             }
             res.close();
         } catch (SQLException e) {
@@ -1636,5 +1628,87 @@ public class Modelo extends Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public DefaultTableModel tablaProductosHistorial(int pedido) {
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        ArrayList<Integer> cantidades = new ArrayList<>();
+        try {
+
+            String q = "SELECT Cantidad FROM ProdVentas WHERE CodigoV = " + pedido;
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            int i = 0;
+            while (res.next()) {
+                cantidades.add(res.getInt("Cantidad"));
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        try {
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Cantidad");
+
+            String q = "SELECT Nombre, Precio FROM Producto WHERE Codigo IN (SELECT CodigoP FROM ProdVentas WHERE CodigoV = " + pedido + ")";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            Object[] data = new Object[3];
+
+            int i = 0;
+            while (res.next()) {
+                data[0] = res.getString("Nombre");
+                data[1] = res.getDouble("Precio");
+                data[2] = cantidades.get(i).toString();
+                i++;
+
+                tablemodel.addRow(data);
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaProductosHistorialVacia(){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        tablemodel.addColumn("Nombre");
+        tablemodel.addColumn("Precio");
+        tablemodel.addColumn("Cantidad");
+        return tablemodel;
+    }
+    
+    public Object[] infoVenta(int codigo){
+        Object[] info = new Object[5];
+        try {
+
+            String q = "SELECT Fecha, Hora, PrecioT, Trabajador, Cliente FROM RegVentas WHERE Codigo = "+codigo;
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            while (res.next()) {
+                info[0] = String.valueOf(res.getDate("Fecha"));
+                info[1] = String.valueOf(res.getTime("Hora"));
+                info[2] = res.getDouble("PrecioT");
+                info[3] = res.getString("Trabajador");
+                info[4] = res.getString("Cliente");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return info;
     }
 }

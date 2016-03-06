@@ -1916,6 +1916,7 @@ public class Controlador implements ActionListener, MouseListener {
         vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vista.principal.setVisible(true);
         cargarImagenesPrincipal();
+        //cargarIconosPedido();
         int tiempo = modelo.getTiempo(usuario);
         //RESUMIMOS EL HILO EN CASO DE HABER DESLOGEADO PARA QUE SIGA CONTANDO EL TIEMPO DE TRABAJO
         a.resumir();
@@ -1996,7 +1997,42 @@ public class Controlador implements ActionListener, MouseListener {
         vista.labelVolver.setIcon(volverIcon);
 
     }
-
+    
+    //CARGAMOS LAS IMÁGENES DEL MENÚ PEDIDO
+//    public void cargarIconosPedido(){
+//    
+//        int btnPasteleriaW = vista.btnPasteleria.getWidth();
+//        int btnPasteleriaH = vista.btnPasteleria.getHeight();
+//        ImageIcon pasteleriaIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pasteles2.jpg"));
+//        Image pasteleriaImg = pasteleriaIcon.getImage();
+//        Image pasteleriaNewImg = pasteleriaImg.getScaledInstance(btnPasteleriaW, btnPasteleriaH, java.awt.Image.SCALE_SMOOTH);
+//        pasteleriaIcon = new ImageIcon(pasteleriaNewImg);
+//        vista.btnPasteleria.setIcon(pasteleriaIcon);
+//
+//        int btnBebidasW = vista.btnBebidas.getWidth();
+//        int btnBebidasH = vista.btnBebidas.getHeight();
+//        ImageIcon bebidasIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidas-cafeterias.jpg"));
+//        Image bebidasImg = bebidasIcon.getImage();
+//        Image bebidasNewImg = bebidasImg.getScaledInstance(btnBebidasW, btnBebidasH, java.awt.Image.SCALE_SMOOTH);
+//        bebidasIcon = new ImageIcon(bebidasNewImg);
+//        vista.btnBebidas.setIcon(pasteleriaIcon);
+//
+//        int btnOfertasW = vista.btnOfertas.getWidth();
+//        int btnOfertasH = vista.btnOfertas.getHeight();
+//        ImageIcon ofertasIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ofertas.png"));
+//        Image ofertasImg = ofertasIcon.getImage();
+//        Image ofertasNewImg = ofertasImg.getScaledInstance(btnOfertasW, btnOfertasH, java.awt.Image.SCALE_SMOOTH);
+//        ofertasIcon = new ImageIcon(ofertasNewImg);
+//        vista.btnOfertas.setIcon(ofertasIcon);
+//
+//        int btnMenusW = vista.btnMenus.getWidth();
+//        int btnMenusH = vista.btnMenus.getHeight();
+//        ImageIcon menusIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1001menus.png"));
+//        Image menusImg = menusIcon.getImage();
+//        Image menusNewImg = menusImg.getScaledInstance(btnMenusW, btnMenusH, java.awt.Image.SCALE_SMOOTH);
+//        menusIcon = new ImageIcon(menusNewImg);
+//        vista.btnMenus.setIcon(menusIcon);
+//    }
     //DEFINIMOS EL HILO COMPROBACIÓN PARA MANEJAR EL AVISO DE ASISTENCIA DE UN TRABAJADOR A UN ADMINISTRADOR
     public class Comprobacion extends Thread {
 

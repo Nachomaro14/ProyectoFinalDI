@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -76,7 +77,9 @@ public class Controlador implements ActionListener, MouseListener {
         btnHistorialPedido,
         btnAgregarAlPedido,
         btnBorrarDelPedido,
+        btnAceptarPedidoProv,
         btnCancelarPedidoProv,
+        btnAceptarFacturaCompra,
         //***********BOTONES PEDIDOS*****************
         btnBebidas,
         btnPasteleria,
@@ -685,8 +688,12 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnAgregarAlPedido.addActionListener(this);
         vista.btnBorrarDelPedido.setActionCommand("btnBorrarDelPedido");
         vista.btnBorrarDelPedido.addActionListener(this);
+        vista.btnAceptarPedidoProv.setActionCommand("btnAceptarPedidoProv");
+        vista.btnAceptarPedidoProv.addActionListener(this);
         vista.btnCancelarPedidoProv.setActionCommand("btnCancelarPedidoProv");
         vista.btnCancelarPedidoProv.addActionListener(this);
+        vista.btnAceptarFacturaCompra.setActionCommand("btnAceptarFacturaCompra");
+        vista.btnAceptarFacturaCompra.addActionListener(this);
         //HISTORIAL DE COMPRAS
         vista.btnHistorialPedido.setActionCommand("btnHistorialPedido");
         vista.btnHistorialPedido.addActionListener(this);
@@ -919,7 +926,6 @@ public class Controlador implements ActionListener, MouseListener {
                 }
 
                 break;
-
             case btnBorrarDelPedido:
                 if (vista.tablaPedidosCompra.getSelectedRow() != -1) {
                     String prodB = String.valueOf(vista.tablaPedidosCompra.getValueAt(vista.tablaPedidosCompra.getSelectedRow(), 1));
@@ -938,13 +944,63 @@ public class Controlador implements ActionListener, MouseListener {
                     JOptionPane.showMessageDialog(null, "Seleccione un producto a borrar");
                 }
                 break;
-
             case btnCancelarPedidoProv:
                 String admin = vista.usuarioAdminConectado.getText();
                 modelo.vaciarCestaProveedor(admin);
                 vista.comboProveed.enable();
                 vista.nuevosPedidos.setVisible(false);
                 vista.txtPrecioTotalPedidoProv.setText("");
+                break;
+            case btnAceptarPedidoProv:
+                double precioTotal = Double.parseDouble(vista.txtPrecioTotalPedidoProv.getText());
+                String proveedor = vista.comboProveed.getSelectedItem().toString();
+                String ad = vista.usuarioAdminConectado.getText();
+                modelo.nuevoRegistroCompra(proveedor, precioTotal, ad);
+                int c = modelo.obtenerUltimaID();
+                int cc = vista.tablaPedidosCompra.getRowCount();
+                for(int i = 0; i < cc; i++){
+                    int codProd = Integer.parseInt(vista.tablaPedidosCompra.getValueAt(i, 0).toString());
+                    int canti = Integer.parseInt(vista.tablaPedidosCompra.getValueAt(i, 3).toString());
+                    String nomb = vista.tablaPedidosCompra.getValueAt(i, 1).toString();
+                    double precio = Double.parseDouble(vista.tablaPedidosCompra.getValueAt(i, 2).toString());
+                    modelo.nuevoProductoCompra(c, codProd, canti);
+                    int ca = modelo.getStockDeProducto(nomb);
+                    if(ca == 0){
+                        modelo.nuevoProductoStock(codProd, proveedor, nomb, canti, (precio * 1.25));
+                    }else{
+                        modelo.actualizarStockDeProducto(nomb, ca + canti);
+                    }
+                }
+                vista.tablaPedidosCompra.setModel(modelo.tablaProductosCestaProveedores(ad));
+                vista.nuevosPedidos.setVisible(false);
+                String[] info = modelo.getInfoFacturaProveedor(proveedor);
+                vista.txtDireccionFacturaCompra.setText(info[1].toString());
+                Calendar cal = Calendar.getInstance();
+                vista.txtFechaFacturaCompra.setText(Calendar.DAY_OF_MONTH + "/" + (Calendar.MONTH + 1) + "/" + Calendar.YEAR);
+                vista.txtHoraFacturaCompra.setText(Calendar.HOUR + ":" + Calendar.MINUTE);
+                vista.txtTelefonoFacturaCompra.setText(info[3].toString());
+                vista.txtProveedorFacturaCompra.setText(proveedor);
+                vista.txtPrecioFacturaCompra.setText(String.valueOf(precioTotal));
+                vista.txtCorreoFacturaCompra.setText(info[4].toString());
+                vista.txtPaisFacturaCompra.setText(info[2].toString());
+                vista.txtNIFFacturaCompra.setText(info[0].toString());
+                String productos = "";
+                for(int i = 0; i < cc; i++){
+                    int canti = Integer.parseInt(vista.tablaPedidosCompra.getValueAt(i, 3).toString());
+                    String nomb = vista.tablaPedidosCompra.getValueAt(i, 1).toString();
+                    double precio = Double.parseDouble(vista.tablaPedidosCompra.getValueAt(i, 2).toString());
+                    productos = productos + canti + "x " + nomb + " (" + precio + "€)\n";
+                }
+                vista.productosFacturaCompra.setText(productos);
+                vista.facturaCompra.pack();
+                vista.facturaCompra.setLocationRelativeTo(null);
+                vista.facturaCompra.setVisible(true);
+                break;
+            case btnAceptarFacturaCompra:
+                vista.facturaCompra.setVisible(false);
+                vista.nuevosPedidos.setVisible(false);
+                String a = vista.usuarioAdminConectado.getText();
+                modelo.vaciarCestaProveedor(a);
                 break;
 
             case btnHistorialPedido:

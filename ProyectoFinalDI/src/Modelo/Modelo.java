@@ -1137,4 +1137,104 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
+    
+    public void nuevoRegistroCompra(String proveedor, double precioTotal, String admin){
+        try{
+            String q = "INSERT INTO RegCompras (Fecha, Hora, PrecioT, Proveedor, Administrador) VALUES (CURDATE(), CURTIME(), "
+                    +precioTotal+", '"+proveedor+"', '"+admin+"')";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public int obtenerUltimaID(){
+        int i = 0;
+        try{
+            String q = "SELECT last_insert_id() AS last_id FROM RegCompras";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                i = res.getInt("last_id");
+            }
+            res.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return i;
+    }
+    
+    public void nuevoProductoCompra(int compra, int producto, int cantidad){
+        try{
+            String q = "INSERT INTO ProdCompras (CodigoC, Producto, Cantidad) VALUES ("+compra+", "+producto+", "+cantidad+")";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void nuevoProductoStock(int producto, String proveedor, String nombre, int cantidad, double precio){
+        try{
+            String q = "INSERT INTO Stock (Proveedor, Nombre, Pais, Precio, Stock) VALUES ('"+proveedor+"', '"+nombre+"', "
+                    + "(SELECT Pais FROM Producto WHERE Codigo = "+producto+"), "+precio+", "+cantidad+")";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public String[] getInfoFacturaProveedor(String proveedor){
+        String[] info = new String[5];
+        try{
+            String q = "SELECT NIF, Direccion, Pais, Telefono, Correo FROM Proveedor WHERE Nombre = '"+proveedor+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                info[0] = res.getString("NIF");
+                info[1] = res.getString("Direccion");
+                info[2] = res.getString("Pais");
+                info[3] = res.getString("Telefono");
+                info[4] = res.getString("Correo");
+            }
+            res.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return info;
+    }
+    
+    public int getStockDeProducto(String nombre){
+        int cantidad = 0;
+        try{
+            String q = "SELECT Stock FROM Stock WHERE Nombre = '"+nombre+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            if (res.next()) {
+                cantidad = res.getInt("Stock");
+            }else{
+                cantidad = 0;
+            }
+            res.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return cantidad;
+    }
+    
+    public void actualizarStockDeProducto(String nombre, int cantidad){
+        try{
+            String q = "UPDATE Stock SET Stock = "+cantidad+" WHERE Nombre = '"+nombre+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -248,6 +248,7 @@ public class Interfaz extends javax.swing.JFrame {
         productosFacturaCompra = new javax.swing.JTextArea();
         jLabel54 = new javax.swing.JLabel();
         txtPrecioFacturaCompra = new javax.swing.JLabel();
+        preStock_Menu = new javax.swing.JDialog();
         inicio = new javax.swing.JPanel();
         infoInicio = new javax.swing.JPanel();
         logoInicio = new javax.swing.JLabel();
@@ -2068,6 +2069,17 @@ public class Interfaz extends javax.swing.JFrame {
             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout preStock_MenuLayout = new javax.swing.GroupLayout(preStock_Menu.getContentPane());
+        preStock_Menu.getContentPane().setLayout(preStock_MenuLayout);
+        preStock_MenuLayout.setHorizontalGroup(
+            preStock_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        preStock_MenuLayout.setVerticalGroup(
+            preStock_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -2373,6 +2385,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JPanel panelPedidos1;
     public javax.swing.JPanel panelPerfil;
     public javax.swing.JPanel panelPrincipal;
+    private javax.swing.JDialog preStock_Menu;
     public javax.swing.JFrame principal;
     public javax.swing.JFrame principalAdmin;
     public javax.swing.JTextArea productosFacturaCompra;

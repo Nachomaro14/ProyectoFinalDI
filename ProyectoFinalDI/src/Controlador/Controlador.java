@@ -21,7 +21,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -739,6 +738,9 @@ public class Controlador implements ActionListener, MouseListener {
         vista.tablaTrabajadores.addMouseListener(this);
         vista.tablaTrabajadores.getTableHeader().setReorderingAllowed(false);
         vista.tablaTrabajadores.getTableHeader().setResizingAllowed(false);
+        vista.tablaFechasHistorial.addMouseListener(this);
+        vista.tablaFechasHistorial.getTableHeader().setReorderingAllowed(false);
+        vista.tablaFechasHistorial.getTableHeader().setResizingAllowed(false);
     }
 
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
@@ -977,7 +979,8 @@ public class Controlador implements ActionListener, MouseListener {
                 double precioTotal = Double.parseDouble(vista.txtPrecioTotalPedidoProv.getText());
                 String proveedor = vista.comboProveed.getSelectedItem().toString();
                 String ad = vista.usuarioAdminConectado.getText();
-                modelo.nuevoRegistroCompra(proveedor, precioTotal, ad);
+                double redondeo = (double) Math.round(precioTotal * 100) / 100;
+                modelo.nuevoRegistroCompra(proveedor, redondeo, ad);
                 int c = modelo.obtenerUltimaID();
                 int cc = vista.tablaPedidosCompra.getRowCount();
                 for (int i = 0; i < cc; i++) {
@@ -1026,6 +1029,8 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
 
             case btnHistorialPedido:
+                vista.tablaFechasHistorial.setModel(modelo.tablaPedidos());
+                vista.tablaProductosHistorial.setModel(modelo.tablaProductosDePedidoVacia());
                 vista.historial.pack();
                 vista.historial.setLocationRelativeTo(null);
                 vista.historial.setTitle("Historial de compras");
@@ -1317,23 +1322,38 @@ public class Controlador implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int articulo = vista.tablaTrabajadores.rowAtPoint(e.getPoint());
-        if (articulo > -1) {
-            //if (vista.tablaTrabajadores.getSelectedRow() > -1) {
-            try {
-                // String userTabla = vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString();
-                String userTabla = String.valueOf(vista.tablaTrabajadores.getValueAt(articulo, 0));
-                System.out.println(userTabla);
+        if (vista.tablaTrabajadores.getSelectedRow() > -1) {
+            int articulo = vista.tablaTrabajadores.rowAtPoint(e.getPoint());
+            if (articulo > -1) {
+                try {
+                    // String userTabla = vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString();
+                    String userTabla = String.valueOf(vista.tablaTrabajadores.getValueAt(articulo, 0));
+                    System.out.println(userTabla);
 
-                Object[] datosTraba = modelo.getDatosTrabajador(userTabla);
+                    Object[] datosTraba = modelo.getDatosTrabajador(userTabla);
 
-                vista.labelTiempoTrabajado.setText(this.calculaTiempo((int) datosTraba[0]));
+                    vista.labelTiempoTrabajado.setText(this.calculaTiempo((int) datosTraba[0]));
 
-                vista.labelVentasRealizadas.setText(datosTraba[1].toString());
-                vista.labelValoracion.setText(datosTraba[2].toString());
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al obtener los datos de la tupla de la tabla.\n\n" + ex.getMessage());
-                ex.printStackTrace();
+                    vista.labelVentasRealizadas.setText(datosTraba[1].toString());
+                    vista.labelValoracion.setText(datosTraba[2].toString());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al obtener los datos de la tupla de la tabla.\n\n" + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
+        }
+        
+        if (vista.tablaFechasHistorial.getSelectedRow() > -1) {
+            int pedido = vista.tablaFechasHistorial.rowAtPoint(e.getPoint());
+            if(pedido > -1){
+                try {
+                    int ped = Integer.parseInt(vista.tablaFechasHistorial.getValueAt(pedido, 0).toString());
+
+                    vista.tablaProductosHistorial.setModel(modelo.tablaProductosDePedido(ped));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al obtener los datos de la tupla de la tabla.\n\n" + ex.getMessage());
+                    ex.printStackTrace();
+                }
             }
         }
     }

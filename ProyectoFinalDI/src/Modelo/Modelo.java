@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -1289,6 +1290,100 @@ public class Modelo extends Database {
             JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
             e.printStackTrace();
         }
+
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaPedidos() {
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        try {
+            tablemodel.addColumn("Codigo");
+            tablemodel.addColumn("Fecha");
+            tablemodel.addColumn("Hora");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Proveedor");
+            tablemodel.addColumn("Administrador");
+            
+            String q = "SELECT Codigo, Fecha, Hora, PrecioT, Proveedor, Administrador FROM RegCompras";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            Object[] data = new Object[6];
+
+            while (res.next()) {
+                data[0] = res.getInt("Codigo");
+                data[1] = res.getDate("Fecha");
+                data[2] = res.getTime("Hora");
+                data[3] = res.getDouble("PrecioT");
+                data[4] = res.getString("Proveedor");
+                data[5] = res.getString("Administrador");
+
+                tablemodel.addRow(data);
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaProductosDePedido(int pedido){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        ArrayList<Integer> cantidades = new ArrayList<>();
+        try {
+            
+            String q = "SELECT Cantidad FROM ProdCompras WHERE CodigoC = "+pedido;
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            int i = 0;
+            while (res.next()) {
+                cantidades.add(res.getInt("Cantidad"));
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        try {
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Cantidad");
+            
+            String q = "SELECT Nombre, Precio FROM Producto WHERE Codigo IN (SELECT Producto FROM ProdCompras WHERE CodigoC = "+pedido+")";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            Object[] data = new Object[3];
+
+            int i = 0;
+            while (res.next()) {
+                data[0] = res.getString("Nombre");
+                data[1] = res.getDouble("Precio");
+                data[2] = cantidades.get(i).toString();
+                i++;
+
+                tablemodel.addRow(data);
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaProductosDePedidoVacia(){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        tablemodel.addColumn("Nombre");
+        tablemodel.addColumn("Precio");
+        tablemodel.addColumn("Cantidad");
 
         return tablemodel;
     }

@@ -561,7 +561,7 @@ public class Modelo extends Database {
             tablemodel.addColumn("Correo");
             tablemodel.addColumn("Dirección");
 
-            String q = "SELECT Usuario, DNI, Nombre, Apellidos, Telefono, Correo, Direccion FROM Trabajador";
+            String q = "SELECT Usuario, DNI, Nombre, Apellidos, Telefono, Correo, Direccion FROM Trabajador WHERE Administrador = 0";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
 
@@ -1239,16 +1239,39 @@ public class Modelo extends Database {
         }
     }
 
-    public DefaultTableModel tablaStockVacia() {
+    public DefaultTableModel tablaStockPre() {
+
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
 
-        tablemodel.addColumn("Codigo");
-        tablemodel.addColumn("Proveedor");
-        tablemodel.addColumn("Nombre");
-        tablemodel.addColumn("Pais");
-        tablemodel.addColumn("Precio");
-        tablemodel.addColumn("Stock");
+        try {
+            tablemodel.addColumn("Codigo");
+            tablemodel.addColumn("Proveedor");
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("Pais");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Stock");
 
+            String q = "SELECT * FROM Stock";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            String[] data = new String[6];
+
+            while (res.next()) {
+                data[0] = res.getString("Codigo");
+                data[1] = res.getString("Proveedor");
+                data[2] = res.getString("Nombre");
+                data[3] = res.getString("Pais");
+                data[4] = res.getString("Precio");
+                data[5] = res.getString("Stock");
+
+                tablemodel.addRow(data);
+            }
+            res.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + ex.getMessage());
+            ex.printStackTrace();
+        }
         return tablemodel;
     }
 
@@ -1293,7 +1316,7 @@ public class Modelo extends Database {
 
         return tablemodel;
     }
-    
+
     public DefaultTableModel tablaPedidos() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         try {
@@ -1303,7 +1326,7 @@ public class Modelo extends Database {
             tablemodel.addColumn("Precio");
             tablemodel.addColumn("Proveedor");
             tablemodel.addColumn("Administrador");
-            
+
             String q = "SELECT Codigo, Fecha, Hora, PrecioT, Proveedor, Administrador FROM RegCompras";
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -1328,13 +1351,13 @@ public class Modelo extends Database {
 
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaProductosDePedido(int pedido){
+
+    public DefaultTableModel tablaProductosDePedido(int pedido) {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         ArrayList<Integer> cantidades = new ArrayList<>();
         try {
-            
-            String q = "SELECT Cantidad FROM ProdCompras WHERE CodigoC = "+pedido;
+
+            String q = "SELECT Cantidad FROM ProdCompras WHERE CodigoC = " + pedido;
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
@@ -1349,13 +1372,13 @@ public class Modelo extends Database {
             JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
             e.printStackTrace();
         }
-        
+
         try {
             tablemodel.addColumn("Nombre");
             tablemodel.addColumn("Precio");
             tablemodel.addColumn("Cantidad");
-            
-            String q = "SELECT Nombre, Precio FROM Producto WHERE Codigo IN (SELECT Producto FROM ProdCompras WHERE CodigoC = "+pedido+")";
+
+            String q = "SELECT Nombre, Precio FROM Producto WHERE Codigo IN (SELECT Producto FROM ProdCompras WHERE CodigoC = " + pedido + ")";
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
@@ -1378,8 +1401,8 @@ public class Modelo extends Database {
 
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaProductosDePedidoVacia(){
+
+    public DefaultTableModel tablaProductosDePedidoVacia() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         tablemodel.addColumn("Nombre");
         tablemodel.addColumn("Precio");

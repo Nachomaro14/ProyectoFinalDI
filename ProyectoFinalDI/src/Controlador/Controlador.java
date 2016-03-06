@@ -541,7 +541,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelAdminStock.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    vista.tablaStock.setModel(modelo.tablaStockVacia());
+                    vista.tablaStock.setModel(modelo.tablaStockPre());
                     vista.stock3.pack();
                     vista.stock3.setLocationRelativeTo(null);
                     vista.stock3.setTitle("Stock Tienda");
@@ -1342,10 +1342,10 @@ public class Controlador implements ActionListener, MouseListener {
                 }
             }
         }
-        
+
         if (vista.tablaFechasHistorial.getSelectedRow() > -1) {
             int pedido = vista.tablaFechasHistorial.rowAtPoint(e.getPoint());
-            if(pedido > -1){
+            if (pedido > -1) {
                 try {
                     int ped = Integer.parseInt(vista.tablaFechasHistorial.getValueAt(pedido, 0).toString());
 

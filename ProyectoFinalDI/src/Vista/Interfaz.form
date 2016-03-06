@@ -445,9 +445,6 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="btnBebidas">
                               <Properties>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Imagenes/bebidas-cafeterias.jpg"/>
-                                </Property>
                                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[200, 200]"/>
                                 </Property>
@@ -468,11 +465,6 @@
                               </Constraints>
                             </Component>
                             <Component class="javax.swing.JButton" name="btnPasteleria">
-                              <Properties>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Imagenes/pasteles2.jpg"/>
-                                </Property>
-                              </Properties>
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                               </AuxValues>
@@ -483,11 +475,6 @@
                               </Constraints>
                             </Component>
                             <Component class="javax.swing.JButton" name="btnOfertas">
-                              <Properties>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Imagenes/ofertas.png"/>
-                                </Property>
-                              </Properties>
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                               </AuxValues>
@@ -498,11 +485,6 @@
                               </Constraints>
                             </Component>
                             <Component class="javax.swing.JButton" name="btnMenus">
-                              <Properties>
-                                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                  <Image iconType="3" name="/Imagenes/1001menus.png"/>
-                                </Property>
-                              </Properties>
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                               </AuxValues>

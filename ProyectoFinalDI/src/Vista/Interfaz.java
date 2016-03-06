@@ -416,7 +416,6 @@ public class Interfaz extends javax.swing.JFrame {
         panelArticulos.setBorder(new javax.swing.border.MatteBorder(null));
         panelArticulos.setLayout(new java.awt.GridBagLayout());
 
-        btnBebidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidas-cafeterias.jpg"))); // NOI18N
         btnBebidas.setMaximumSize(new java.awt.Dimension(200, 200));
         btnBebidas.setMinimumSize(new java.awt.Dimension(200, 200));
         btnBebidas.addActionListener(new java.awt.event.ActionListener() {
@@ -429,15 +428,11 @@ public class Interfaz extends javax.swing.JFrame {
         gridBagConstraints.weightx = 60.0;
         gridBagConstraints.weighty = 60.0;
         panelArticulos.add(btnBebidas, gridBagConstraints);
-
-        btnPasteleria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pasteles2.jpg"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 60.0;
         gridBagConstraints.weighty = 60.0;
         panelArticulos.add(btnPasteleria, gridBagConstraints);
-
-        btnOfertas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ofertas.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -445,8 +440,6 @@ public class Interfaz extends javax.swing.JFrame {
         gridBagConstraints.weightx = 60.0;
         gridBagConstraints.weighty = 60.0;
         panelArticulos.add(btnOfertas, gridBagConstraints);
-
-        btnMenus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1001menus.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -465,7 +458,7 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 946, Short.MAX_VALUE)
+                    .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE)
                     .addGap(135, 135, 135)))
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
@@ -479,7 +472,7 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 575, Short.MAX_VALUE)
+                    .addComponent(panelArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()

@@ -22,9 +22,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -231,7 +234,7 @@ public class Controlador implements ActionListener, MouseListener {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if(vista.listaPedidos.getSelectedIndex() != -1){
+                    if (vista.listaPedidos.getSelectedIndex() != -1) {
                         int cod = Integer.parseInt(vista.listaPedidos.getSelectedValue());
                         vista.tablaPedidos.setModel(modelo.tablaProductosHistorial(cod));
                         Object[] info = modelo.infoVenta(cod);
@@ -257,7 +260,7 @@ public class Controlador implements ActionListener, MouseListener {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if(vista.listaPedidos1.getSelectedIndex() != -1){
+                    if (vista.listaPedidos1.getSelectedIndex() != -1) {
                         int cod = Integer.parseInt(vista.listaPedidos1.getSelectedValue());
                         vista.tablaPedidos1.setModel(modelo.tablaProductosHistorial(cod));
                         Object[] info = modelo.infoVenta(cod);
@@ -413,7 +416,7 @@ public class Controlador implements ActionListener, MouseListener {
                                                     int cod = Integer.parseInt(infoProducto[0].toString());
                                                     double precio = Double.parseDouble(infoProducto[1].toString());
                                                     int cantidad = modelo.getCantidadProductoCestaCliente(usuario, pastel);
-                                                    if(cantidad == 0){
+                                                    if (cantidad == 0) {
                                                         cantidad = cantidad + 1;
                                                         modelo.insertarProductoCestaCliente(usuario, cod, pastel, cantidad, precio);
                                                         vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
@@ -423,7 +426,7 @@ public class Controlador implements ActionListener, MouseListener {
                                                         precioBase = (double) Math.round(precioBase * 100) / 100;
                                                         vista.txtPrecioBase.setText(String.valueOf(precioBase));
                                                         vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
-                                                    }else{
+                                                    } else {
                                                         cantidad = cantidad + 1;
                                                         modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
                                                         vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
@@ -740,7 +743,7 @@ public class Controlador implements ActionListener, MouseListener {
                     vista.correoProveedor.setText(info[5]);
                 }
             });
-            
+
             //AÑADIMOS UN FOCUSLISTENER AL TEXTO EN EL QUE INTRODUCIREMOS EL CLIENTE DESDE EL TPV
             vista.txtClienteFacturaCliente.addMouseListener(new MouseListener() {
 
@@ -898,7 +901,7 @@ public class Controlador implements ActionListener, MouseListener {
 
         vista.btnAceptaNewValora.setActionCommand("btnAceptaNewValora");
         vista.btnAceptaNewValora.addActionListener(this);
-        
+
         //VENTA AL CLIENTE
         vista.btnBorrarProductoCestaCliente.setActionCommand("btnBorrarProductoCestaCliente");
         vista.btnBorrarProductoCestaCliente.addActionListener(this);
@@ -1231,74 +1234,85 @@ public class Controlador implements ActionListener, MouseListener {
                 JButton botonProduc;
                 //Creamos un objeto boton por cada articulo recogido de la BD
                 for (int i = 0; i < auxbeb; i++) {
-                    String nameBebida = drinks[i].toString();
-                    botonProduc = new JButton(nameBebida);
-                    //ActionListener de cada boton creado desde codigo
+                    try {
+                        String nameBebida = drinks[i].toString();
 
-                    botonProduc.addMouseListener(new MouseListener() {
+                        ImageIcon imagencita = modelo.cogeImagenBebida(nameBebida);
 
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            if (e.getClickCount() == 2) {
-                                //añadir a la cesta
-                                Object[] infoProducto = modelo.getInfoProducto(nameBebida);
-                                int cod = Integer.parseInt(infoProducto[0].toString());
-                                double precio = Double.parseDouble(infoProducto[1].toString());
-                                int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nameBebida);
-                                if(cantidad == 0){
-                                    cantidad = cantidad + 1;
-                                    modelo.insertarProductoCestaCliente(usuario, cod, nameBebida, cantidad, precio);
-                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
-                                    double precioTotal = precioBase * 1.1;
-                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
-                                    precioBase = (double) Math.round(precioBase * 100) / 100;
-                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
-                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
-                                }else{
-                                    cantidad = cantidad + 1;
-                                    modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
-                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
-                                    double precioTotal = precioBase * 1.1;
-                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
-                                    precioBase = (double) Math.round(precioBase * 100) / 100;
-                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
-                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                        Image pasteleriaImg = imagencita.getImage();
+                        Image pasteleriaNewImg = pasteleriaImg.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+                        imagencita = new ImageIcon(pasteleriaNewImg);
+
+                        botonProduc = new JButton(imagencita);
+
+                        //ActionListener de cada boton creado desde codigo
+                        botonProduc.addMouseListener(new MouseListener() {
+
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                if (e.getClickCount() == 2) {
+                                    //añadir a la cesta
+                                    Object[] infoProducto = modelo.getInfoProducto(nameBebida);
+                                    int cod = Integer.parseInt(infoProducto[0].toString());
+                                    double precio = Double.parseDouble(infoProducto[1].toString());
+                                    int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nameBebida);
+                                    if (cantidad == 0) {
+                                        cantidad = cantidad + 1;
+                                        modelo.insertarProductoCestaCliente(usuario, cod, nameBebida, cantidad, precio);
+                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                        double precioTotal = precioBase * 1.1;
+                                        precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                        vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                    } else {
+                                        cantidad = cantidad + 1;
+                                        modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                        double precioTotal = precioBase * 1.1;
+                                        precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                        vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                    }
+                                    System.out.println("double clicked");
+                                } else if (e.getClickCount() == 1) {
+                                    //meter la descripcion en el panel descripcion
+                                    Object[] infobebida = modelo.getInfoBebida(nameBebida);
+                                    vista.labelNombreArticulo.setText("Nombre: " + infobebida[0].toString());
+                                    vista.labelPrecioArticulo.setText("Precio: " + infobebida[1].toString() + "€");
+                                    vista.txtDescripción.setText(infobebida[2].toString());
+                                    vista.panelDescripcion.setVisible(true);
                                 }
-                                System.out.println("double clicked");
-                            } else if (e.getClickCount() == 1) {
-                                //meter la descripcion en el panel descripcion
-                                Object[] infobebida = modelo.getInfoBebida(nameBebida);
-                                vista.labelNombreArticulo.setText("Nombre: " + infobebida[0].toString());
-                                vista.labelPrecioArticulo.setText("Precio: " + infobebida[1].toString() + "€");
-                                vista.txtDescripción.setText(infobebida[2].toString());
-                                vista.panelDescripcion.setVisible(true);
                             }
-                        }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
+                            @Override
+                            public void mousePressed(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseExited(MouseEvent e) {
+                            @Override
+                            public void mouseExited(MouseEvent e) {
 
-                        }
-                    });
-                    vista.panelArticulosAux.add(botonProduc);
+                            }
+                        });
+                        vista.panelArticulosAux.add(botonProduc);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 vista.panelArticulosAux.setVisible(true);
                 vista.panelArticulos.setVisible(false);
@@ -1336,72 +1350,84 @@ public class Controlador implements ActionListener, MouseListener {
                             JButton botonPasteles;
                             //Creamos un objeto boton por cada articulo recogido de la BD
                             for (int i = 0; i < auxpast; i++) {
-                                String pastel = pasteles[i][1].toString();
-                                botonPasteles = new JButton(pastel);
-                                //ActionListener de cada boton creado desde codigo
-                                botonPasteles.addMouseListener(new MouseListener() {
+                                try {
+                                    String pastel = pasteles[i][1].toString();
 
-                                    @Override
-                                    public void mouseClicked(MouseEvent e) {
-                                        if (e.getClickCount() == 2) {
-                                            //añadir a la cesta
-                                            Object[] infoProducto = modelo.getInfoProducto(pastel);
-                                            int cod = Integer.parseInt(infoProducto[0].toString());
-                                            double precio = Double.parseDouble(infoProducto[1].toString());
-                                            int cantidad = modelo.getCantidadProductoCestaCliente(usuario, pastel);
-                                            if(cantidad == 0){
-                                                cantidad = cantidad + 1;
-                                                modelo.insertarProductoCestaCliente(usuario, cod, pastel, cantidad, precio);
-                                                vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                                vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                                double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
-                                                double precioTotal = precioBase * 1.1;
-                                                precioTotal = (double) Math.round(precioTotal * 100) / 100;
-                                                precioBase = (double) Math.round(precioBase * 100) / 100;
-                                                vista.txtPrecioBase.setText(String.valueOf(precioBase));
-                                                vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
-                                            }else{
-                                                cantidad = cantidad + 1;
-                                                modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
-                                                vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                                double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
-                                                double precioTotal = precioBase * 1.1;
-                                                precioTotal = (double) Math.round(precioTotal * 100) / 100;
-                                                precioBase = (double) Math.round(precioBase * 100) / 100;
-                                                vista.txtPrecioBase.setText(String.valueOf(precioBase));
-                                                vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                    ImageIcon imagencita = modelo.cogeImagenPasteles(pastel);
+                                    //Redimensionamos las imagenes a un tamaño menor que el que esta en la base de datos
+                                    Image pasteleriaImg = imagencita.getImage();
+                                    Image pasteleriaNewImg = pasteleriaImg.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+                                    imagencita = new ImageIcon(pasteleriaNewImg);
+
+                                    //Creamos el nuevo boton con un icono
+                                    botonPasteles = new JButton(imagencita);
+                                    //ActionListener de cada boton creado desde codigo
+                                    botonPasteles.addMouseListener(new MouseListener() {
+
+                                        @Override
+                                        public void mouseClicked(MouseEvent e) {
+                                            if (e.getClickCount() == 2) {
+                                                //añadir a la cesta
+                                                Object[] infoProducto = modelo.getInfoProducto(pastel);
+                                                int cod = Integer.parseInt(infoProducto[0].toString());
+                                                double precio = Double.parseDouble(infoProducto[1].toString());
+                                                int cantidad = modelo.getCantidadProductoCestaCliente(usuario, pastel);
+                                                if (cantidad == 0) {
+                                                    cantidad = cantidad + 1;
+                                                    modelo.insertarProductoCestaCliente(usuario, cod, pastel, cantidad, precio);
+                                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                                    double precioTotal = precioBase * 1.1;
+                                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                                } else {
+                                                    cantidad = cantidad + 1;
+                                                    modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                                    double precioTotal = precioBase * 1.1;
+                                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                                }
+                                                System.out.println("double clicked");
+                                            } else if (e.getClickCount() == 1) {
+                                                Object[] infopastel = modelo.getInfoPastel(pastel);
+                                                vista.labelNombreArticulo.setText("Nombre: " + infopastel[0].toString());
+                                                vista.labelPrecioArticulo.setText("Precio: " + infopastel[1].toString() + "€");
+                                                vista.txtDescripción.setText(infopastel[2].toString());
+                                                vista.panelDescripcion.setVisible(true);
                                             }
-                                            System.out.println("double clicked");
-                                        } else if (e.getClickCount() == 1) {
-                                            Object[] infopastel = modelo.getInfoPastel(pastel);
-                                            vista.labelNombreArticulo.setText("Nombre: " + infopastel[0].toString());
-                                            vista.labelPrecioArticulo.setText("Precio: " + infopastel[1].toString() + "€");
-                                            vista.txtDescripción.setText(infopastel[2].toString());
-                                            vista.panelDescripcion.setVisible(true);
                                         }
-                                    }
 
-                                    @Override
-                                    public void mousePressed(MouseEvent e) {
+                                        @Override
+                                        public void mousePressed(MouseEvent e) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void mouseReleased(MouseEvent e) {
+                                        @Override
+                                        public void mouseReleased(MouseEvent e) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void mouseEntered(MouseEvent e) {
+                                        @Override
+                                        public void mouseEntered(MouseEvent e) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void mouseExited(MouseEvent e) {
+                                        @Override
+                                        public void mouseExited(MouseEvent e) {
 
-                                    }
-                                });
-                                vista.panelArticulosAux.add(botonPasteles);
+                                        }
+                                    });
+                                    vista.panelArticulosAux.add(botonPasteles);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         }
                     });
@@ -1428,73 +1454,85 @@ public class Controlador implements ActionListener, MouseListener {
                 JButton botonMenus;
                 //Creamos un objeto boton por cada articulo recogido de la BD
                 for (int i = 0; i < auxMen; i++) {
-                    String nombreMenu = menus[i][1].toString();
-                    botonMenus = new JButton(nombreMenu);
-                    //ActionListener de cada boton creado desde codigo
-                    botonMenus.addMouseListener(new MouseListener() {
+                    try {
+                        String nombreMenu = menus[i][1].toString();
+                        ImageIcon imagencita = modelo.cogeImagenMenu(nombreMenu);
 
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            if (e.getClickCount() == 2) {
-                                //añadir a la cesta
-                                Object[] infoProducto = modelo.getInfoMenuCC(nombreMenu);
-                                int cod = Integer.parseInt(infoProducto[0].toString());
-                                double precio = Double.parseDouble(infoProducto[1].toString());
-                                int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nombreMenu);
-                                if(cantidad == 0){
-                                    cantidad = cantidad + 1;
-                                    modelo.insertarProductoCestaCliente(usuario, cod, nombreMenu, cantidad, precio);
-                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
-                                    double precioTotal = precioBase * 1.1;
-                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
-                                    precioBase = (double) Math.round(precioBase * 100) / 100;
-                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
-                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
-                                }else{
-                                    cantidad = cantidad + 1;
-                                    modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
-                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
-                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
-                                    double precioTotal = precioBase * 1.1;
-                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
-                                    precioBase = (double) Math.round(precioBase * 100) / 100;
-                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
-                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                        //Redimensionamos las imagenes a un tamaño menor que el que esta en la base de datos
+                        Image pasteleriaImg = imagencita.getImage();
+                        Image pasteleriaNewImg = pasteleriaImg.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+                        imagencita = new ImageIcon(pasteleriaNewImg);
+
+                        //Creamos el nuevo boton con un icono
+                        botonMenus = new JButton(imagencita);
+                        //ActionListener de cada boton creado desde codigo
+                        botonMenus.addMouseListener(new MouseListener() {
+
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                if (e.getClickCount() == 2) {
+                                    //añadir a la cesta
+                                    Object[] infoProducto = modelo.getInfoMenuCC(nombreMenu);
+                                    int cod = Integer.parseInt(infoProducto[0].toString());
+                                    double precio = Double.parseDouble(infoProducto[1].toString());
+                                    int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nombreMenu);
+                                    if (cantidad == 0) {
+                                        cantidad = cantidad + 1;
+                                        modelo.insertarProductoCestaCliente(usuario, cod, nombreMenu, cantidad, precio);
+                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                        double precioTotal = precioBase * 1.1;
+                                        precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                        vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                    } else {
+                                        cantidad = cantidad + 1;
+                                        modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                        double precioTotal = precioBase * 1.1;
+                                        precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                        vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                    }
+                                    System.out.println("double clicked");
+                                } else if (e.getClickCount() == 1) {
+                                    Object[] infoMenus = modelo.getInfoMenu(nombreMenu);
+                                    vista.labelNombreArticulo.setText("Nombre: " + infoMenus[0].toString());
+                                    vista.labelPrecioArticulo.setText("Precio: " + infoMenus[1].toString() + "€");
+                                    vista.txtDescripción.setText(infoMenus[2].toString());
+                                    vista.panelDescripcion.setVisible(true);
                                 }
-                                System.out.println("double clicked");
-                            } else if (e.getClickCount() == 1) {
-                                Object[] infoMenus = modelo.getInfoMenu(nombreMenu);
-                                vista.labelNombreArticulo.setText("Nombre: " + infoMenus[0].toString());
-                                vista.labelPrecioArticulo.setText("Precio: " + infoMenus[1].toString() + "€");
-                                vista.txtDescripción.setText(infoMenus[2].toString());
-                                vista.panelDescripcion.setVisible(true);
                             }
-                        }
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
+                            @Override
+                            public void mousePressed(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
 
-                        }
+                            }
 
-                        @Override
-                        public void mouseExited(MouseEvent e) {
+                            @Override
+                            public void mouseExited(MouseEvent e) {
 
-                        }
-                    });
+                            }
+                        });
 
-                    vista.panelArticulosAux.add(botonMenus);
+                        vista.panelArticulosAux.add(botonMenus);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 vista.panelArticulosAux.setVisible(true);
                 vista.panelArticulos.setVisible(false);
@@ -1531,7 +1569,7 @@ public class Controlador implements ActionListener, MouseListener {
                                 int cod = Integer.parseInt(infoProducto[0].toString());
                                 double precio = Double.parseDouble(infoProducto[1].toString());
                                 int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nombreOferta);
-                                if(cantidad == 0){
+                                if (cantidad == 0) {
                                     cantidad = cantidad + 1;
                                     modelo.insertarProductoCestaCliente(usuario, cod, nombreOferta, cantidad, precio);
                                     vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
@@ -1541,7 +1579,7 @@ public class Controlador implements ActionListener, MouseListener {
                                     precioBase = (double) Math.round(precioBase * 100) / 100;
                                     vista.txtPrecioBase.setText(String.valueOf(precioBase));
                                     vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
-                                }else{
+                                } else {
                                     cantidad = cantidad + 1;
                                     modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
                                     vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
@@ -1598,19 +1636,19 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             case btnAceptaNewValora:
                 modelo.updateTrabajadorValor(
-                vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString(),
-                Integer.parseInt(vista.txtNewValora.getText()));
+                        vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString(),
+                        Integer.parseInt(vista.txtNewValora.getText()));
                 Object[] datosTraba = modelo.getDatosTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
                 vista.labelValoracion.setText(datosTraba[2].toString());
                 vista.txtNewValora.setText("");
                 break;
-                
+
             case btnBorrarProductoCestaCliente:
-                if(vista.tablaCesta.getSelectedRow() != -1){
+                if (vista.tablaCesta.getSelectedRow() != -1) {
                     int cod = Integer.parseInt(vista.tablaCesta.getValueAt(vista.tablaCesta.getSelectedRow(), 0).toString());
                     String nombre = String.valueOf(vista.tablaCesta.getValueAt(vista.tablaCesta.getSelectedRow(), 1));
                     int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nombre);
-                    if(cantidad == 1){
+                    if (cantidad == 1) {
                         modelo.eliminarProductoCestaCliente(usuario, nombre);
                         vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
                         double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
@@ -1619,8 +1657,8 @@ public class Controlador implements ActionListener, MouseListener {
                         precioBase = (double) Math.round(precioBase * 100) / 100;
                         vista.txtPrecioBase.setText(String.valueOf(precioBase));
                         vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
-                        
-                    }else{
+
+                    } else {
                         cantidad = cantidad - 1;
                         modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
                         vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
@@ -1631,7 +1669,7 @@ public class Controlador implements ActionListener, MouseListener {
                         vista.txtPrecioBase.setText(String.valueOf(precioBase));
                         vista.txtPrecioTotal.setText(String.valueOf(precioT));
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Seleccione un producto de la cesta");
                 }
                 break;
@@ -1642,7 +1680,7 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             case btnRealizarPed:
                 //AÑADIMOS UN ITEMLISTENER AL PAGO DEL CLIENTE
-                if(!vista.txtPrecioTotal.getText().equals("") || Double.parseDouble(vista.txtPrecioTotal.getText()) != 0.0){
+                if (!vista.txtPrecioTotal.getText().equals("") || Double.parseDouble(vista.txtPrecioTotal.getText()) != 0.0) {
                     double precioTot = Double.parseDouble(vista.txtPrecioTotal.getText());
                     String trab = usuario;
                     precioTot = (double) Math.round(precioTot * 100) / 100;
@@ -1664,7 +1702,7 @@ public class Controlador implements ActionListener, MouseListener {
                     vista.facturaVenta.setLocationRelativeTo(null);
                     vista.facturaVenta.setVisible(true);
                     vista.principal.setVisible(false);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "El pedido debe contener al menos un producto");
                 }
                 break;
@@ -1679,18 +1717,18 @@ public class Controlador implements ActionListener, MouseListener {
                     int canti = Integer.parseInt(vista.tablaCesta.getValueAt(i, 3).toString());
                     modelo.nuevoProductoVenta(v, codProd, canti);
                 }
-                
+
                 vista.facturaVenta.setVisible(false);
                 modelo.vaciarCestaCliente(usuario);
                 vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
                 vista.principal.setVisible(true);
             case btnObtenerDevolucion:
-                if(!vista.txtDineroPagadoFacturaCliente.getText().equals("")){
+                if (!vista.txtDineroPagadoFacturaCliente.getText().equals("")) {
                     double pt = Double.parseDouble(vista.txtPrecioFacturaVenta.getText());
                     double pp = Double.parseDouble(vista.txtDineroPagadoFacturaCliente.getText());
                     double total = pp - pt;
                     vista.txtDineroADevolver.setText(String.valueOf((double) Math.round(total * 100) / 100));
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Introduzca la cantidad pagada por el cliente");
                 }
                 break;
@@ -1997,10 +2035,10 @@ public class Controlador implements ActionListener, MouseListener {
         vista.labelVolver.setIcon(volverIcon);
 
     }
-    
+
 //    CARGAMOS LAS IMÁGENES DEL MENÚ PEDIDO
-    public void cargarIconosPedido(){
-    
+    public void cargarIconosPedido() {
+
         int btnPasteleriaW = vista.btnPasteleria.getWidth();
         int btnPasteleriaH = vista.btnPasteleria.getHeight();
         ImageIcon pasteleriaIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pasteles2.jpg"));
@@ -2033,6 +2071,7 @@ public class Controlador implements ActionListener, MouseListener {
         menusIcon = new ImageIcon(menusNewImg);
         vista.btnMenus.setIcon(menusIcon);
     }
+
     //DEFINIMOS EL HILO COMPROBACIÓN PARA MANEJAR EL AVISO DE ASISTENCIA DE UN TRABAJADOR A UN ADMINISTRADOR
     public class Comprobacion extends Thread {
 
@@ -2243,7 +2282,7 @@ public class Controlador implements ActionListener, MouseListener {
         t.start();
         vista.setVisible(false);
     }
-    
+
     public class GUI extends JFrame {
 
         private JFrame frame = new JFrame("Typing Tutor");
@@ -2251,8 +2290,8 @@ public class Controlador implements ActionListener, MouseListener {
         private JPanel[] panel;
         private JButton[][] button;
         private final String[][] key = {{"A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P"},
-            {"Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"},
-            {"W", "X", "C", "V", "B", "N"}};
+        {"Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"},
+        {"W", "X", "C", "V", "B", "N"}};
 
         public GUI() {
             super("Teclado");
@@ -2286,7 +2325,7 @@ public class Controlador implements ActionListener, MouseListener {
             }
         }
     }
-    
+
     public class GUINumerico extends JFrame {
 
         private JFrame frame = new JFrame("Typing Tutor");

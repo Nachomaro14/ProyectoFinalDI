@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.awt.Image;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -364,7 +366,7 @@ public class Modelo extends Database {
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement("SELECT COUNT(Fecha) AS total FROM RegVentas GROUP BY Fecha");
             ResultSet res = pstm.executeQuery();
-            if(res.next()){
+            if (res.next()) {
                 registros = res.getInt("total");
                 res.close();
             }
@@ -814,7 +816,7 @@ public class Modelo extends Database {
         }
         Object[][] ofertas = new Object[registros][4];
         try {
-            String q = "SELECT Codigo,Nombre,Precio FROM Oferta";
+            String q = "SELECT Codigo,Nombre,Precio,Descripcion FROM Oferta";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -1402,8 +1404,8 @@ public class Modelo extends Database {
 
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaCestaClienteVacia(){
+
+    public DefaultTableModel tablaCestaClienteVacia() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         tablemodel.addColumn("Codigo");
         tablemodel.addColumn("Nombre");
@@ -1412,16 +1414,16 @@ public class Modelo extends Database {
 
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaCestaCliente(String trabajador){
+
+    public DefaultTableModel tablaCestaCliente(String trabajador) {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
-        try{
+        try {
             tablemodel.addColumn("Codigo");
             tablemodel.addColumn("Nombre");
             tablemodel.addColumn("Precio");
             tablemodel.addColumn("Cantidad");
-        
-            String q = "SELECT CodigoP, Nombre, Precio, Cantidad FROM CestaCliente WHERE Trabajador = '"+trabajador+"'";
+
+            String q = "SELECT CodigoP, Nombre, Precio, Cantidad FROM CestaCliente WHERE Trabajador = '" + trabajador + "'";
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
@@ -1443,10 +1445,10 @@ public class Modelo extends Database {
 
         return tablemodel;
     }
-    
-    public void insertarProductoCestaCliente(String trabajador, int codigo, String nombre, int cantidad, double precio){
-        try{        
-            String q = "INSERT INTO CestaCliente (Trabajador, CodigoP, Nombre, Precio, Cantidad) VALUES ('"+trabajador+"', "+codigo+", '"+nombre+"', "+precio+", "+cantidad+")";
+
+    public void insertarProductoCestaCliente(String trabajador, int codigo, String nombre, int cantidad, double precio) {
+        try {
+            String q = "INSERT INTO CestaCliente (Trabajador, CodigoP, Nombre, Precio, Cantidad) VALUES ('" + trabajador + "', " + codigo + ", '" + nombre + "', " + precio + ", " + cantidad + ")";
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
@@ -1456,10 +1458,10 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
-    
-    public void actualizarProductoCestaCliente(String trabajador, int codigo, int cantidad){
-        try{        
-            String q = "UPDATE CestaCliente SET Cantidad = "+cantidad+" WHERE Trabajador = '"+trabajador+"' AND CodigoP = "+codigo;
+
+    public void actualizarProductoCestaCliente(String trabajador, int codigo, int cantidad) {
+        try {
+            String q = "UPDATE CestaCliente SET Cantidad = " + cantidad + " WHERE Trabajador = '" + trabajador + "' AND CodigoP = " + codigo;
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
@@ -1469,11 +1471,11 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
-    
+
     public int getCantidadProductoCestaCliente(String trabajador, String nombre) {
         int cantidad = 0;
         try {
-            String q = "SELECT Cantidad FROM CestaCliente WHERE Nombre = '" + nombre + "' AND Trabajador = '"+trabajador+"'";
+            String q = "SELECT Cantidad FROM CestaCliente WHERE Nombre = '" + nombre + "' AND Trabajador = '" + trabajador + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
             if (res.next()) {
@@ -1487,7 +1489,7 @@ public class Modelo extends Database {
         }
         return cantidad;
     }
-    
+
     public Object[] getInfoProducto(String nombre) {
 
         Object[] producto = new Object[2];
@@ -1506,10 +1508,10 @@ public class Modelo extends Database {
         }
         return producto;
     }
-    
-    public void vaciarCestaCliente(String trabajador){
-        try{        
-            String q = "DELETE FROM CestaCliente WHERE Trabajador = '"+trabajador+"'";
+
+    public void vaciarCestaCliente(String trabajador) {
+        try {
+            String q = "DELETE FROM CestaCliente WHERE Trabajador = '" + trabajador + "'";
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
@@ -1519,7 +1521,7 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
-    
+
     public Object[] getInfoMenuCC(String nombre) {
 
         Object[] producto = new Object[2];
@@ -1538,7 +1540,7 @@ public class Modelo extends Database {
         }
         return producto;
     }
-    
+
     public Object[] getInfoOfertaCC(String nombre) {
 
         Object[] producto = new Object[2];
@@ -1557,7 +1559,7 @@ public class Modelo extends Database {
         }
         return producto;
     }
-    
+
     public double getPrecioTotalCestaCliente(String trabajador) {
         double precio = 0.0;
         try {
@@ -1577,10 +1579,10 @@ public class Modelo extends Database {
         }
         return precio;
     }
-    
-    public void eliminarProductoCestaCliente(String trabajador, String nombre){
-        try{        
-            String q = "DELETE FROM CestaCliente WHERE Trabajador = '"+trabajador+"' AND Nombre = '"+nombre+"'";
+
+    public void eliminarProductoCestaCliente(String trabajador, String nombre) {
+        try {
+            String q = "DELETE FROM CestaCliente WHERE Trabajador = '" + trabajador + "' AND Nombre = '" + nombre + "'";
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             pstm.execute();
@@ -1590,7 +1592,7 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
-    
+
     public void nuevoRegistroVenta(double precioTotal, String trabajador, String cliente) {
         try {
             String q = "INSERT INTO RegVentas (Fecha, Hora, PrecioT, Trabajador, Cliente) VALUES (CURDATE(), CURTIME(), "
@@ -1602,7 +1604,7 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
-    
+
     public int obtenerUltimaIDVenta() {
         int i = 0;
         try {
@@ -1618,7 +1620,7 @@ public class Modelo extends Database {
         }
         return i;
     }
-    
+
     public void nuevoProductoVenta(int venta, int producto, int cantidad) {
         try {
             String q = "INSERT INTO ProdVentas (CodigoV, CodigoP, Cantidad) VALUES (" + venta + ", " + producto + ", " + cantidad + ")";
@@ -1629,7 +1631,7 @@ public class Modelo extends Database {
             e.printStackTrace();
         }
     }
-    
+
     public DefaultTableModel tablaProductosHistorial(int pedido) {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         ArrayList<Integer> cantidades = new ArrayList<>();
@@ -1679,20 +1681,20 @@ public class Modelo extends Database {
 
         return tablemodel;
     }
-    
-    public DefaultTableModel tablaProductosHistorialVacia(){
+
+    public DefaultTableModel tablaProductosHistorialVacia() {
         DefaultTableModel tablemodel = new ModeloTablaNoEditable();
         tablemodel.addColumn("Nombre");
         tablemodel.addColumn("Precio");
         tablemodel.addColumn("Cantidad");
         return tablemodel;
     }
-    
-    public Object[] infoVenta(int codigo){
+
+    public Object[] infoVenta(int codigo) {
         Object[] info = new Object[5];
         try {
 
-            String q = "SELECT Fecha, Hora, PrecioT, Trabajador, Cliente FROM RegVentas WHERE Codigo = "+codigo;
+            String q = "SELECT Fecha, Hora, PrecioT, Trabajador, Cliente FROM RegVentas WHERE Codigo = " + codigo;
 
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
             ResultSet res = pstm.executeQuery();
@@ -1711,4 +1713,77 @@ public class Modelo extends Database {
         }
         return info;
     }
+
+    public ImageIcon cogeImagenMenu(String Nombre) throws IOException {
+        Image pt = null;
+        Blob imagen = null;
+        try {
+
+            String q = "SELECT Foto FROM Menu WHERE Nombre='" + Nombre + "'";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            while (res.next()) {
+                imagen = res.getBlob("Foto");
+
+                pt = javax.imageio.ImageIO.read(imagen.getBinaryStream());
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        ImageIcon icono = new ImageIcon(pt);
+        return icono;
+    }
+
+    public ImageIcon cogeImagenBebida(String Nombre) throws IOException {
+        Image pt = null;
+        Blob imagen = null;
+        try {
+
+            String q = "SELECT Foto FROM Producto WHERE Nombre='" + Nombre + "' AND Tipo='Bebida'";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            while (res.next()) {
+                imagen = res.getBlob("Foto");
+
+                pt = javax.imageio.ImageIO.read(imagen.getBinaryStream());
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        ImageIcon icono = new ImageIcon(pt);
+        return icono;
+    }
+
+    public ImageIcon cogeImagenPasteles(String Nombre) throws IOException {
+        Image pt = null;
+        Blob imagen = null;
+        try {
+
+            String q = "SELECT Foto FROM Producto WHERE Nombre='" + Nombre + "' AND Tipo='Pastelería'";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            while (res.next()) {
+                imagen = res.getBlob("Foto");
+
+                pt = javax.imageio.ImageIO.read(imagen.getBinaryStream());
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        ImageIcon icono = new ImageIcon(pt);
+        return icono;
+    }
+
 }

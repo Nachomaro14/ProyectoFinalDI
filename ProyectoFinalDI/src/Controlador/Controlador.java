@@ -5,10 +5,13 @@ import UpperEssential.UpperEssentialLookAndFeel;
 import Vista.Interfaz;
 import Clases.TablaRenderizador;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -17,6 +20,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
@@ -27,6 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -84,7 +90,12 @@ public class Controlador implements ActionListener, MouseListener {
         btnBebidas,
         btnPasteleria,
         btnMenus,
-        btnOfertas
+        btnOfertas,
+        btnBorrarProductoCestaCliente,
+        btnCancelarPed,
+        btnRealizarPed,
+        btnAceptarFacturaVenta,
+        btnObtenerDevolucion
     }
 
     //ESTE GRAN MÉTODO INICIARÁ E INICIALIZARÁ TODO LO NECESARIO PARA COMENZAR EL FUNCIONAMIENTO DE LA APLICACIÓN
@@ -123,6 +134,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.contratar.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
             vista.trabajadores4.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
             vista.ventas5.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
+            vista.principalAdmin.setIconImage(t.getImage(getClass().getResource("/Imagenes/logo.png")));
 
             //MODIFICAMOS EL TÍTULO DE LAS VENTANAS DE LA APLICACIÓN
             vista.pack();
@@ -153,6 +165,7 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelNuevoPedido.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
                     vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(true);
                     vista.panelArticulos.setVisible(true);
@@ -183,6 +196,9 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelPedidos.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    modelo.vaciarCestaCliente(usuario);
+                    vista.txtPrecioBase.setText("");
+                    vista.txtPrecioTotal.setText("");
                     vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(true);
@@ -217,6 +233,9 @@ public class Controlador implements ActionListener, MouseListener {
                     vista.panelDescripcion.setVisible(false);
                     //CERRAMOS EL HILO QUE ACUMULA TIEMPO DE TRABAJO DEL TRABAJADOR
                     a.close();
+                    modelo.vaciarCestaCliente(usuario);
+                    vista.txtPrecioBase.setText("");
+                    vista.txtPrecioTotal.setText("");
                     vista.usuarioConectado.setText("");
                     usuario = "";
                     vista.principal.setVisible(false);
@@ -338,6 +357,31 @@ public class Controlador implements ActionListener, MouseListener {
                                             public void mouseClicked(MouseEvent e) {
                                                 if (e.getClickCount() == 2) {
                                                     //añadir a la cesta
+                                                    Object[] infoProducto = modelo.getInfoProducto(pastel);
+                                                    int cod = Integer.parseInt(infoProducto[0].toString());
+                                                    double precio = Double.parseDouble(infoProducto[1].toString());
+                                                    int cantidad = modelo.getCantidadProductoCestaCliente(usuario, pastel);
+                                                    if(cantidad == 0){
+                                                        cantidad = cantidad + 1;
+                                                        modelo.insertarProductoCestaCliente(usuario, cod, pastel, cantidad, precio);
+                                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                                        double precioTotal = precioBase * 1.1;
+                                                        precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                                                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                                        vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                                    }else{
+                                                        cantidad = cantidad + 1;
+                                                        modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                                        double precioTotal = precioBase * 1.1;
+                                                        precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                                                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                                        vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                                    }
                                                     System.out.println("double clicked");
                                                 } else if (e.getClickCount() == 1) {
                                                     Object[] infopastel = modelo.getInfoPastel(pastel);
@@ -392,6 +436,9 @@ public class Controlador implements ActionListener, MouseListener {
             vista.labelPerfil.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    modelo.vaciarCestaCliente(usuario);
+                    vista.txtPrecioBase.setText("");
+                    vista.txtPrecioTotal.setText("");
                     vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(false);
@@ -637,6 +684,71 @@ public class Controlador implements ActionListener, MouseListener {
                     vista.correoProveedor.setText(info[5]);
                 }
             });
+            
+            //AÑADIMOS UN FOCUSLISTENER AL TEXTO EN EL QUE INTRODUCIREMOS EL CLIENTE DESDE EL TPV
+            vista.txtClienteFacturaCliente.addMouseListener(new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JFrame gui = new GUI();
+                    gui.pack();
+                    gui.setLocationRelativeTo(null);
+                    gui.setVisible(true);
+                    vista.productosFacturaVenta.requestFocus();
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+            //LO MISMO PARA EL DINERO PAGADO POR EL CLIENTE
+            vista.txtDineroPagadoFacturaCliente.addMouseListener(new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JFrame guiNum = new GUINumerico();
+                    guiNum.pack();
+                    guiNum.setLocationRelativeTo(null);
+                    guiNum.setVisible(true);
+                    vista.productosFacturaVenta.requestFocus();
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
 
             //ASIGNAMOS A LOS CAMPOS LA RESTRICCION DE ENTRADA
             //restriccion de numeros
@@ -730,6 +842,18 @@ public class Controlador implements ActionListener, MouseListener {
 
         vista.btnAceptaNewValora.setActionCommand("btnAceptaNewValora");
         vista.btnAceptaNewValora.addActionListener(this);
+        
+        //VENTA AL CLIENTE
+        vista.btnBorrarProductoCestaCliente.setActionCommand("btnBorrarProductoCestaCliente");
+        vista.btnBorrarProductoCestaCliente.addActionListener(this);
+        vista.btnCancelarPed.setActionCommand("btnCancelarPed");
+        vista.btnCancelarPed.addActionListener(this);
+        vista.btnRealizarPed.setActionCommand("btnRealizarPed");
+        vista.btnRealizarPed.addActionListener(this);
+        vista.btnAceptarFacturaVenta.setActionCommand("btnAceptarFacturaVenta");
+        vista.btnAceptarFacturaVenta.addActionListener(this);
+        vista.btnObtenerDevolucion.setActionCommand("btnObtenerDevolucion");
+        vista.btnObtenerDevolucion.addActionListener(this);
 
         //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
@@ -741,6 +865,9 @@ public class Controlador implements ActionListener, MouseListener {
         vista.tablaFechasHistorial.addMouseListener(this);
         vista.tablaFechasHistorial.getTableHeader().setReorderingAllowed(false);
         vista.tablaFechasHistorial.getTableHeader().setResizingAllowed(false);
+        vista.tablaCesta.addMouseListener(this);
+        vista.tablaCesta.getTableHeader().setReorderingAllowed(false);
+        vista.tablaCesta.getTableHeader().setResizingAllowed(false);
     }
 
     //DEFINIMOS LAS ACCIONES DE CADA BOTÓN DE LA APLICACIÓN
@@ -981,7 +1108,7 @@ public class Controlador implements ActionListener, MouseListener {
                 String ad = vista.usuarioAdminConectado.getText();
                 double redondeo = (double) Math.round(precioTotal * 100) / 100;
                 modelo.nuevoRegistroCompra(proveedor, redondeo, ad);
-                int c = modelo.obtenerUltimaID();
+                int c = modelo.obtenerUltimaIDCompra();
                 int cc = vista.tablaPedidosCompra.getRowCount();
                 for (int i = 0; i < cc; i++) {
                     int codProd = Integer.parseInt(vista.tablaPedidosCompra.getValueAt(i, 0).toString());
@@ -1001,8 +1128,8 @@ public class Controlador implements ActionListener, MouseListener {
                 String[] info = modelo.getInfoFacturaProveedor(proveedor);
                 vista.txtDireccionFacturaCompra.setText(info[1].toString());
                 Calendar cal = Calendar.getInstance();
-                vista.txtFechaFacturaCompra.setText(Calendar.DAY_OF_MONTH + "/" + (Calendar.MONTH + 1) + "/" + Calendar.YEAR);
-                vista.txtHoraFacturaCompra.setText(Calendar.HOUR + ":" + Calendar.MINUTE);
+                vista.txtFechaFacturaCompra.setText((cal.DAY_OF_MONTH + 1) + "/" + (cal.MONTH + 1) + "/2016");
+                vista.txtHoraFacturaCompra.setText(cal.HOUR_OF_DAY + ":" + cal.MINUTE);
                 vista.txtTelefonoFacturaCompra.setText(info[3].toString());
                 vista.txtProveedorFacturaCompra.setText(proveedor);
                 vista.txtPrecioFacturaCompra.setText(String.valueOf(precioTotal));
@@ -1058,6 +1185,32 @@ public class Controlador implements ActionListener, MouseListener {
                         public void mouseClicked(MouseEvent e) {
                             if (e.getClickCount() == 2) {
                                 //añadir a la cesta
+                                Object[] infoProducto = modelo.getInfoProducto(nameBebida);
+                                int cod = Integer.parseInt(infoProducto[0].toString());
+                                double precio = Double.parseDouble(infoProducto[1].toString());
+                                int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nameBebida);
+                                if(cantidad == 0){
+                                    cantidad = cantidad + 1;
+                                    modelo.insertarProductoCestaCliente(usuario, cod, nameBebida, cantidad, precio);
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                    double precioTotal = precioBase * 1.1;
+                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                }else{
+                                    cantidad = cantidad + 1;
+                                    modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                    double precioTotal = precioBase * 1.1;
+                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                }
                                 System.out.println("double clicked");
                             } else if (e.getClickCount() == 1) {
                                 //meter la descripcion en el panel descripcion
@@ -1136,6 +1289,32 @@ public class Controlador implements ActionListener, MouseListener {
                                     public void mouseClicked(MouseEvent e) {
                                         if (e.getClickCount() == 2) {
                                             //añadir a la cesta
+                                            Object[] infoProducto = modelo.getInfoProducto(pastel);
+                                            int cod = Integer.parseInt(infoProducto[0].toString());
+                                            double precio = Double.parseDouble(infoProducto[1].toString());
+                                            int cantidad = modelo.getCantidadProductoCestaCliente(usuario, pastel);
+                                            if(cantidad == 0){
+                                                cantidad = cantidad + 1;
+                                                modelo.insertarProductoCestaCliente(usuario, cod, pastel, cantidad, precio);
+                                                vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                                double precioTotal = precioBase * 1.1;
+                                                precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                                precioBase = (double) Math.round(precioBase * 100) / 100;
+                                                vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                                vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                            }else{
+                                                cantidad = cantidad + 1;
+                                                modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                                vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                                double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                                double precioTotal = precioBase * 1.1;
+                                                precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                                precioBase = (double) Math.round(precioBase * 100) / 100;
+                                                vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                                vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                            }
                                             System.out.println("double clicked");
                                         } else if (e.getClickCount() == 1) {
                                             Object[] infopastel = modelo.getInfoPastel(pastel);
@@ -1202,6 +1381,32 @@ public class Controlador implements ActionListener, MouseListener {
                         public void mouseClicked(MouseEvent e) {
                             if (e.getClickCount() == 2) {
                                 //añadir a la cesta
+                                Object[] infoProducto = modelo.getInfoMenuCC(nombreMenu);
+                                int cod = Integer.parseInt(infoProducto[0].toString());
+                                double precio = Double.parseDouble(infoProducto[1].toString());
+                                int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nombreMenu);
+                                if(cantidad == 0){
+                                    cantidad = cantidad + 1;
+                                    modelo.insertarProductoCestaCliente(usuario, cod, nombreMenu, cantidad, precio);
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                    double precioTotal = precioBase * 1.1;
+                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                }else{
+                                    cantidad = cantidad + 1;
+                                    modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                    double precioTotal = precioBase * 1.1;
+                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                }
                                 System.out.println("double clicked");
                             } else if (e.getClickCount() == 1) {
                                 Object[] infoMenus = modelo.getInfoMenu(nombreMenu);
@@ -1266,6 +1471,32 @@ public class Controlador implements ActionListener, MouseListener {
                         public void mouseClicked(MouseEvent e) {
                             if (e.getClickCount() == 2) {
                                 //añadir a la cesta
+                                Object[] infoProducto = modelo.getInfoOfertaCC(nombreOferta);
+                                int cod = Integer.parseInt(infoProducto[0].toString());
+                                double precio = Double.parseDouble(infoProducto[1].toString());
+                                int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nombreOferta);
+                                if(cantidad == 0){
+                                    cantidad = cantidad + 1;
+                                    modelo.insertarProductoCestaCliente(usuario, cod, nombreOferta, cantidad, precio);
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                    double precioTotal = precioBase * 1.1;
+                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                }else{
+                                    cantidad = cantidad + 1;
+                                    modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                                    vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                                    double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                                    double precioTotal = precioBase * 1.1;
+                                    precioTotal = (double) Math.round(precioTotal * 100) / 100;
+                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                    precioBase = (double) Math.round(precioBase * 100) / 100;
+                                    vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                                    vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                                }
                                 System.out.println("double clicked");
                             } else if (e.getClickCount() == 1) {
                                 Object[] infoOferta = modelo.getInfoOferta(nombreOferta);
@@ -1311,11 +1542,101 @@ public class Controlador implements ActionListener, MouseListener {
                 break;
             case btnAceptaNewValora:
                 modelo.updateTrabajadorValor(
-                        vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString(),
-                        Integer.parseInt(vista.txtNewValora.getText()));
+                vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString(),
+                Integer.parseInt(vista.txtNewValora.getText()));
                 Object[] datosTraba = modelo.getDatosTrabajador(vista.tablaTrabajadores.getValueAt(vista.tablaTrabajadores.getSelectedRow(), 0).toString());
                 vista.labelValoracion.setText(datosTraba[2].toString());
                 vista.txtNewValora.setText("");
+                break;
+                
+            case btnBorrarProductoCestaCliente:
+                if(vista.tablaCesta.getSelectedRow() != -1){
+                    int cod = Integer.parseInt(vista.tablaCesta.getValueAt(vista.tablaCesta.getSelectedRow(), 0).toString());
+                    String nombre = String.valueOf(vista.tablaCesta.getValueAt(vista.tablaCesta.getSelectedRow(), 1));
+                    int cantidad = modelo.getCantidadProductoCestaCliente(usuario, nombre);
+                    if(cantidad == 1){
+                        modelo.eliminarProductoCestaCliente(usuario, nombre);
+                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                        double precioT = precioBase * 1.1;
+                        precioTotal = (double) Math.round(precioT * 100) / 100;
+                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                        vista.txtPrecioTotal.setText(String.valueOf(precioTotal));
+                        
+                    }else{
+                        cantidad = cantidad - 1;
+                        modelo.actualizarProductoCestaCliente(usuario, cod, cantidad);
+                        vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                        double precioBase = modelo.getPrecioTotalCestaCliente(usuario);
+                        double precioT = precioBase * 1.1;
+                        precioTotal = (double) Math.round(precioT * 100) / 100;
+                        precioBase = (double) Math.round(precioBase * 100) / 100;
+                        vista.txtPrecioBase.setText(String.valueOf(precioBase));
+                        vista.txtPrecioTotal.setText(String.valueOf(precioT));
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Seleccione un producto de la cesta");
+                }
+                break;
+            case btnCancelarPed:
+                vista.txtPrecioBase.setText("");
+                vista.txtPrecioTotal.setText("");
+                vista.tablaCesta.setModel(modelo.tablaCestaClienteVacia());
+                break;
+            case btnRealizarPed:
+                //AÑADIMOS UN ITEMLISTENER AL PAGO DEL CLIENTE
+                if(!vista.txtPrecioTotal.getText().equals("") || Double.parseDouble(vista.txtPrecioTotal.getText()) != 0.0){
+                    double precioTot = Double.parseDouble(vista.txtPrecioTotal.getText());
+                    String trab = usuario;
+                    precioTot = (double) Math.round(precioTot * 100) / 100;
+                    Calendar cale = Calendar.getInstance();
+                    vista.txtFechaFacturaVenta.setText((cale.DAY_OF_MONTH + 1) + "/" + (cale.MONTH + 1) + "/2016");
+                    vista.txtHoraFacturaVenta.setText(cale.HOUR_OF_DAY + ":" + cale.MINUTE);
+                    vista.txtTrabajadorFacturaVenta.setText(trab);
+                    vista.txtPrecioFacturaVenta.setText(String.valueOf(precioTot));
+                    int cv1 = vista.tablaCesta.getRowCount();
+                    String produs = "";
+                    for (int i = 0; i < cv1; i++) {
+                        int canti = Integer.parseInt(vista.tablaCesta.getValueAt(i, 3).toString());
+                        String nomb = vista.tablaCesta.getValueAt(i, 1).toString();
+                        double precio = Double.parseDouble(vista.tablaCesta.getValueAt(i, 2).toString());
+                        produs = produs + canti + "x " + nomb + " (" + precio + "€)\n";
+                    }
+                    vista.productosFacturaVenta.setText(produs);
+                    vista.facturaVenta.pack();
+                    vista.facturaVenta.setLocationRelativeTo(null);
+                    vista.facturaVenta.setVisible(true);
+                    vista.principal.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null, "El pedido debe contener al menos un producto");
+                }
+                break;
+            case btnAceptarFacturaVenta:
+                double p = Double.parseDouble(vista.txtPrecioFacturaVenta.getText());
+                String clie = vista.txtClienteFacturaCliente.getText();
+                modelo.nuevoRegistroVenta(p, usuario, clie);
+                int v = modelo.obtenerUltimaIDVenta();
+                int cv2 = vista.tablaCesta.getRowCount();
+                for (int i = 0; i < cv2; i++) {
+                    int codProd = Integer.parseInt(vista.tablaCesta.getValueAt(i, 0).toString());
+                    int canti = Integer.parseInt(vista.tablaCesta.getValueAt(i, 3).toString());
+                    modelo.nuevoProductoVenta(v, codProd, canti);
+                }
+                
+                vista.facturaVenta.setVisible(false);
+                modelo.vaciarCestaCliente(usuario);
+                vista.tablaCesta.setModel(modelo.tablaCestaCliente(usuario));
+                vista.principal.setVisible(true);
+            case btnObtenerDevolucion:
+                if(!vista.txtDineroPagadoFacturaCliente.getText().equals("")){
+                    double pt = Double.parseDouble(vista.txtPrecioFacturaVenta.getText());
+                    double pp = Double.parseDouble(vista.txtDineroPagadoFacturaCliente.getText());
+                    double total = pp - pt;
+                    vista.txtDineroADevolver.setText(String.valueOf((double) Math.round(total * 100) / 100));
+                }else{
+                    JOptionPane.showMessageDialog(null, "Introduzca la cantidad pagada por el cliente");
+                }
                 break;
         }
     }
@@ -1534,6 +1855,7 @@ public class Controlador implements ActionListener, MouseListener {
 
     //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
     public void inicioDeSesionDeTrabajador() {
+        vista.tablaCesta.setModel(modelo.tablaCestaClienteVacia());
         vista.principal.pack();
         vista.principal.setLocationRelativeTo(null);
         vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -1828,5 +2150,93 @@ public class Controlador implements ActionListener, MouseListener {
         t.run(uni1, uni2);
         t.start();
         vista.setVisible(false);
+    }
+    
+    public class GUI extends JFrame {
+
+        private JFrame frame = new JFrame("Typing Tutor");
+        private JPanel parent = new JPanel(new GridLayout(0, 1));
+        private JPanel[] panel;
+        private JButton[][] button;
+        private final String[][] key = {{"A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P"},
+            {"Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"},
+            {"W", "X", "C", "V", "B", "N"}};
+
+        public GUI() {
+            super("Teclado");
+            panel = new JPanel[6];
+            for (int row = 0; row < key.length; row++) {
+                panel[row] = new JPanel();
+                button = new JButton[20][20];
+                for (int column = 0; column < key[row].length; column++) {
+                    button[row][column] = new JButton(key[row][column]);
+                    button[row][column].putClientProperty("column", column);
+                    button[row][column].putClientProperty("row", row);
+                    button[row][column].putClientProperty("key", key[row][column]);
+                    button[row][column].addActionListener(new MyActionListener());
+                    panel[row].add(button[row][column]);
+                }
+                parent.add(panel[row]);
+            }
+            setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            setResizable(false);
+            add(parent);
+            pack();
+            setVisible(true);
+        }
+
+        public class MyActionListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton btn = (JButton) e.getSource();
+                vista.txtClienteFacturaCliente.setText(vista.txtClienteFacturaCliente.getText() + btn.getClientProperty("key"));
+            }
+        }
+    }
+    
+    public class GUINumerico extends JFrame {
+
+        private JFrame frame = new JFrame("Typing Tutor");
+        private JPanel parent = new JPanel(new GridLayout(0, 1));
+        private JPanel[] panel;
+        private JButton[][] button;
+        private final String[][] key = {
+            {"1", "2", "3"},
+            {"4", "5", "6"},
+            {"7", "8", "9"},
+            {".", "0"}};
+
+        public GUINumerico() {
+            super("Teclado numérico");
+            panel = new JPanel[6];
+            for (int row = 0; row < key.length; row++) {
+                panel[row] = new JPanel();
+                button = new JButton[20][20];
+                for (int column = 0; column < key[row].length; column++) {
+                    button[row][column] = new JButton(key[row][column]);
+                    button[row][column].putClientProperty("column", column);
+                    button[row][column].putClientProperty("row", row);
+                    button[row][column].putClientProperty("key", key[row][column]);
+                    button[row][column].addActionListener(new MyActionListener());
+                    panel[row].add(button[row][column]);
+                }
+                parent.add(panel[row]);
+            }
+            setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            setResizable(false);
+            add(parent);
+            pack();
+            setVisible(true);
+        }
+
+        public class MyActionListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton btn = (JButton) e.getSource();
+                vista.txtDineroPagadoFacturaCliente.setText(vista.txtDineroPagadoFacturaCliente.getText() + btn.getClientProperty("key"));
+            }
+        }
     }
 }

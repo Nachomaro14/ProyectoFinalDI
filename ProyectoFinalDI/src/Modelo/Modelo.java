@@ -1151,7 +1151,7 @@ public class Modelo extends Database {
         }
     }
 
-    public int obtenerUltimaID() {
+    public int obtenerUltimaIDCompra() {
         int i = 0;
         try {
             String q = "SELECT last_insert_id() AS last_id FROM RegCompras";
@@ -1409,5 +1409,232 @@ public class Modelo extends Database {
         tablemodel.addColumn("Cantidad");
 
         return tablemodel;
+    }
+    
+    public DefaultTableModel tablaCestaClienteVacia(){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        tablemodel.addColumn("Codigo");
+        tablemodel.addColumn("Nombre");
+        tablemodel.addColumn("Precio");
+        tablemodel.addColumn("Cantidad");
+
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaCestaCliente(String trabajador){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        try{
+            tablemodel.addColumn("Codigo");
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Cantidad");
+        
+            String q = "SELECT CodigoP, Nombre, Precio, Cantidad FROM CestaCliente WHERE Trabajador = '"+trabajador+"'";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            Object[] data = new Object[6];
+
+            while (res.next()) {
+                data[0] = res.getInt("CodigoP");
+                data[1] = res.getString("Nombre");
+                data[2] = res.getDouble("Precio");
+                data[3] = res.getInt("Cantidad");
+
+                tablemodel.addRow(data);
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return tablemodel;
+    }
+    
+    public void insertarProductoCestaCliente(String trabajador, int codigo, String nombre, int cantidad, double precio){
+        try{        
+            String q = "INSERT INTO CestaCliente (Trabajador, CodigoP, Nombre, Precio, Cantidad) VALUES ('"+trabajador+"', "+codigo+", '"+nombre+"', "+precio+", "+cantidad+")";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void actualizarProductoCestaCliente(String trabajador, int codigo, int cantidad){
+        try{        
+            String q = "UPDATE CestaCliente SET Cantidad = "+cantidad+" WHERE Trabajador = '"+trabajador+"' AND CodigoP = "+codigo;
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public int getCantidadProductoCestaCliente(String trabajador, String nombre) {
+        int cantidad = 0;
+        try {
+            String q = "SELECT Cantidad FROM CestaCliente WHERE Nombre = '" + nombre + "' AND Trabajador = '"+trabajador+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            if (res.next()) {
+                cantidad = res.getInt("Cantidad");
+            } else {
+                cantidad = 0;
+            }
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cantidad;
+    }
+    
+    public Object[] getInfoProducto(String nombre) {
+
+        Object[] producto = new Object[2];
+        try {
+            String q = "SELECT Codigo, Precio FROM Producto WHERE Nombre='" + nombre + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                producto[0] = res.getInt("Codigo");
+                producto[1] = res.getDouble("Precio");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto/bebidas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return producto;
+    }
+    
+    public void vaciarCestaCliente(String trabajador){
+        try{        
+            String q = "DELETE FROM CestaCliente WHERE Trabajador = '"+trabajador+"'";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public Object[] getInfoMenuCC(String nombre) {
+
+        Object[] producto = new Object[2];
+        try {
+            String q = "SELECT Codigo, Precio FROM Menu WHERE Nombre='" + nombre + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                producto[0] = res.getInt("Codigo");
+                producto[1] = res.getDouble("Precio");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto/bebidas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return producto;
+    }
+    
+    public Object[] getInfoOfertaCC(String nombre) {
+
+        Object[] producto = new Object[2];
+        try {
+            String q = "SELECT Codigo, Precio FROM Oferta WHERE Nombre='" + nombre + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                producto[0] = res.getInt("Codigo");
+                producto[1] = res.getDouble("Precio");
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos de producto/bebidas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return producto;
+    }
+    
+    public double getPrecioTotalCestaCliente(String trabajador) {
+        double precio = 0.0;
+        try {
+            String q = "SELECT SUM(Precio * Cantidad) as suma FROM CestaCliente WHERE Trabajador = '" + trabajador + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            if (res.next()) {
+                precio = res.getDouble("suma");
+            } else {
+                precio = 0.0;
+            }
+
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return precio;
+    }
+    
+    public void eliminarProductoCestaCliente(String trabajador, String nombre){
+        try{        
+            String q = "DELETE FROM CestaCliente WHERE Trabajador = '"+trabajador+"' AND Nombre = '"+nombre+"'";
+
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void nuevoRegistroVenta(double precioTotal, String trabajador, String cliente) {
+        try {
+            String q = "INSERT INTO RegVentas (Fecha, Hora, PrecioT, Trabajador, Cliente) VALUES (CURDATE(), CURTIME(), "
+                    + precioTotal + ", '" + trabajador + "', '" + cliente + "')";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public int obtenerUltimaIDVenta() {
+        int i = 0;
+        try {
+            String q = "SELECT last_insert_id() AS last_id FROM RegVentas";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            while (res.next()) {
+                i = res.getInt("last_id");
+            }
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return i;
+    }
+    
+    public void nuevoProductoVenta(int venta, int producto, int cantidad) {
+        try {
+            String q = "INSERT INTO ProdVentas (CodigoV, CodigoP, Cantidad) VALUES (" + venta + ", " + producto + ", " + cantidad + ")";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

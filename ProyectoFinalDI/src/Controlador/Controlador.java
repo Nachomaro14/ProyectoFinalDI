@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -17,6 +19,7 @@ import java.awt.event.MouseListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -70,6 +73,9 @@ public class Controlador implements ActionListener, MouseListener {
         //COMPRAS
         btnNewPedido,
         btnHistorialPedido,
+        btnAgregarAlPedido,
+        btnBorrarDelPedido,
+        btnCancelarPedidoProv,
         //***********BOTONES PEDIDOS*****************
         btnBebidas,
         btnPasteleria,
@@ -665,6 +671,12 @@ public class Controlador implements ActionListener, MouseListener {
         //COMPRAS AL PROVEEDOR
         vista.btnNewPedido.setActionCommand("btnNewPedido");
         vista.btnNewPedido.addActionListener(this);
+        vista.btnAgregarAlPedido.setActionCommand("btnAgregarAlPedido");
+        vista.btnAgregarAlPedido.addActionListener(this);
+        vista.btnBorrarDelPedido.setActionCommand("btnBorrarDelPedido");
+        vista.btnBorrarDelPedido.addActionListener(this);
+        vista.btnCancelarPedidoProv.setActionCommand("btnCancelarPedidoProv");
+        vista.btnCancelarPedidoProv.addActionListener(this);
         //HISTORIAL DE COMPRAS
         vista.btnHistorialPedido.setActionCommand("btnHistorialPedido");
         vista.btnHistorialPedido.addActionListener(this);
@@ -832,12 +844,79 @@ public class Controlador implements ActionListener, MouseListener {
                 }
                 break;
             case btnNewPedido:
+                DefaultComboBoxModel prov = new DefaultComboBoxModel(modelo.getProveedores());
+                vista.comboProveed.setModel(prov);
+                vista.tablaPedidosCompra.setModel(modelo.tablaProductosCestaProveedoresVacia());
+                
+                vista.comboProveed.addItemListener(new ItemListener() {
+
+                    @Override
+                    public void itemStateChanged(ItemEvent e) {
+                        String p = vista.comboProveed.getSelectedItem().toString();
+                        vista.tablaProdProveed.setModel(modelo.tablaProductosProveedoresAdmin(p));
+                    }
+                });
+                
+                String primer = vista.comboProveed.getItemAt(0).toString();
+                vista.tablaProdProveed.setModel(modelo.tablaProductosProveedoresAdmin(primer));
+                    
                 vista.nuevosPedidos.pack();
                 vista.nuevosPedidos.setLocationRelativeTo(null);
                 vista.nuevosPedidos.setTitle("Nuevos Pedidos");
                 vista.nuevosPedidos.setVisible(true);
                 vista.compras2.dispose();
                 break;
+                
+            case btnAgregarAlPedido:
+                if(vista.tablaProdProveed.getSelectedRow() != -1){
+                    String prod = String.valueOf(vista.tablaProdProveed.getValueAt(vista.tablaProdProveed.getSelectedRow(), 0));
+                    String precioS = String.valueOf(vista.tablaProdProveed.getValueAt(vista.tablaProdProveed.getSelectedRow(), 2));
+                    double precio = Double.parseDouble(precioS);
+                    int cantidadActual = modelo.getCantidadProductoEnCesta(prod);
+                    int nuevaCantidad = cantidadActual + 1;
+                    String admin = vista.usuarioAdminConectado.getText();
+                    if(nuevaCantidad == 1){
+                        modelo.anadirNuevoProductoPedidoProveedor(prod, admin, nuevaCantidad, precio);
+                    }else{
+                        modelo.actualizarNuevoProductoPedidoProveedor(prod, admin, nuevaCantidad);
+                    }
+                    vista.comboProveed.disable();
+
+                    vista.tablaPedidosCompra.setModel(modelo.tablaProductosCestaProveedores(admin));
+                    vista.txtPrecioTotalPedidoProv.setText(String.valueOf(modelo.getPrecioTotalCestaProveedor(admin)));
+                }else{
+                    JOptionPane.showMessageDialog(null, "Seleccione un producto a añadir");
+                }
+                
+                break;
+                
+            case btnBorrarDelPedido:
+                if(vista.tablaPedidosCompra.getSelectedRow() != -1){
+                    String prodB = String.valueOf(vista.tablaPedidosCompra.getValueAt(vista.tablaPedidosCompra.getSelectedRow(), 1));
+                    String admin = vista.usuarioAdminConectado.getText();
+                    int cantidadActual = modelo.getCantidadProductoEnCesta(prodB);
+                    int nuevaCantidad = cantidadActual - 1;
+                    if(nuevaCantidad == 0){
+                        modelo.eliminarProductoCestaProveedor(admin, prodB);
+                    }else{
+                        modelo.actualizarNuevoProductoPedidoProveedor(prodB, admin, nuevaCantidad);
+                    }
+
+                    vista.tablaPedidosCompra.setModel(modelo.tablaProductosCestaProveedores(admin));
+                    vista.txtPrecioTotalPedidoProv.setText(String.valueOf(modelo.getPrecioTotalCestaProveedor(admin)));
+                }else{
+                    JOptionPane.showMessageDialog(null, "Seleccione un producto a borrar");
+                }
+                break;
+                
+            case btnCancelarPedidoProv:
+                String admin = vista.usuarioAdminConectado.getText();
+                modelo.vaciarCestaProveedor(admin);
+                vista.comboProveed.enable();
+                vista.nuevosPedidos.setVisible(false);
+                vista.txtPrecioTotalPedidoProv.setText("");
+                break;
+                
             case btnHistorialPedido:
                 vista.historial.pack();
                 vista.historial.setLocationRelativeTo(null);

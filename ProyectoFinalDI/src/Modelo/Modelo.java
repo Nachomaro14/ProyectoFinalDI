@@ -918,4 +918,191 @@ public class Modelo extends Database {
         }
         return oferta;
     }
+    
+    public String[] getProveedores(){
+        int registros = 0;
+        try {
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(NIF) as total FROM Proveedor");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al contar tuplas\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        String[] proveedores = new String[registros];
+        try {
+            String q = "SELECT Nombre FROM Proveedor";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                proveedores[i] = res.getString("Nombre");
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return proveedores;
+    }
+    
+    public DefaultTableModel tablaProductosProveedoresAdmin(String proveedor){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        try {
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("País");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Tipo");
+
+            String q = "SELECT Nombre, Pais, Precio, Tipo FROM Producto WHERE Proveedor = '" + proveedor + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            String[] data = new String[4];
+
+            while (res.next()) {
+                data[0] = res.getString("Nombre");
+                data[1] = res.getString("Pais");
+                data[2] = res.getString("Precio");
+                data[3] = res.getString("Tipo");
+                tablemodel.addRow(data);
+            }
+
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaProductosCestaProveedoresVacia(){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        
+        tablemodel.addColumn("Código");
+        tablemodel.addColumn("Nombre");
+        tablemodel.addColumn("Precio");
+        tablemodel.addColumn("Cantidad");
+        
+        return tablemodel;
+    }
+    
+    public int getCantidadProductoEnCesta(String nombreProducto){
+        int c = 0;
+        try{
+            String q = "SELECT Cantidad FROM CestaProveedor WHERE Nombre = '"+nombreProducto+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            
+            if (res.next()) {
+                c = res.getInt("Cantidad");
+            }else{
+                c = 0;
+            }
+            
+            res.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return c;
+    }
+    
+    public void anadirNuevoProductoPedidoProveedor(String nombreProducto, String admin, int cantidad, double precio){
+        try{
+            String q = "INSERT INTO CestaProveedor(Administrador, CodigoP, Nombre, Precio, Cantidad) VALUES ('"+admin+"', (SELECT Codigo FROM Producto WHERE Nombre = '"+nombreProducto+"'),"
+                    + " '"+nombreProducto+"', "+precio+", "+cantidad+")";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void actualizarNuevoProductoPedidoProveedor(String nombreProducto, String admin, int cantidad){
+        try{
+            String q = "UPDATE CestaProveedor SET Cantidad = "+cantidad+" WHERE Nombre = '"+nombreProducto+"' AND Administrador = '"+admin+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public DefaultTableModel tablaProductosCestaProveedores(String admin){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        
+        try {
+            tablemodel.addColumn("Código");
+            tablemodel.addColumn("Nombre");
+            tablemodel.addColumn("Precio");
+            tablemodel.addColumn("Cantidad");
+
+            String q = "SELECT CodigoP, Nombre, Precio, Cantidad FROM CestaProveedor WHERE Administrador = '" + admin + "'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+
+            String[] data = new String[4];
+
+            while (res.next()) {
+                data[0] = res.getString("CodigoP");
+                data[1] = res.getString("Nombre");
+                data[2] = res.getString("Precio");
+                data[3] = res.getString("Cantidad");
+                tablemodel.addRow(data);
+            }
+
+            res.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return tablemodel;
+    }
+    
+    public double getPrecioTotalCestaProveedor(String admin){
+        double precio = 0.0;
+        try{
+            String q = "SELECT SUM(Precio * Cantidad) as suma FROM CestaProveedor WHERE Administrador = '"+admin+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
+            
+            if (res.next()) {
+                precio = res.getDouble("suma");
+            }else{
+                precio = 0.0;
+            }
+            
+            res.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return precio;
+    }
+    
+    public void vaciarCestaProveedor(String admin){
+        try{
+            String q = "DELETE FROM CestaProveedor WHERE Administrador = '"+admin+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void eliminarProductoCestaProveedor(String admin, String nombreProducto){
+        try{
+            String q = "DELETE FROM CestaProveedor WHERE Nombre = '"+nombreProducto+"' AND Administrador = '"+admin+"'";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

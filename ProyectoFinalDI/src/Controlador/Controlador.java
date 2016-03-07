@@ -10,8 +10,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -20,8 +18,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,7 +25,6 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -99,7 +94,8 @@ public class Controlador implements ActionListener, MouseListener {
         btnCancelarPed,
         btnRealizarPed,
         btnAceptarFacturaVenta,
-        btnObtenerDevolucion
+        btnObtenerDevolucion,
+        btnCancelarFacturaVenta
     }
 
     //ESTE GRAN MÉTODO INICIARÁ E INICIALIZARÁ TODO LO NECESARIO PARA COMENZAR EL FUNCIONAMIENTO DE LA APLICACIÓN
@@ -120,6 +116,9 @@ public class Controlador implements ActionListener, MouseListener {
             SwingUtilities.updateComponentTreeUI(vista.contratar);
             SwingUtilities.updateComponentTreeUI(vista.trabajadores4);
             SwingUtilities.updateComponentTreeUI(vista.ventas5);
+            
+            SwingUtilities.updateComponentTreeUI(vista.facturaCompra);
+            SwingUtilities.updateComponentTreeUI(vista.facturaVenta);
 
             //MODIFICAMOS LAS PROPIEDADES DE LOS PANELES PRINCIPALES
             vista.principal.setResizable(false);
@@ -202,8 +201,8 @@ public class Controlador implements ActionListener, MouseListener {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     modelo.vaciarCestaCliente(usuario);
-                    vista.txtPrecioBase.setText("");
-                    vista.txtPrecioTotal.setText("");
+                    vista.txtPrecioBase.setText("0.0");
+                    vista.txtPrecioTotal.setText("0.0");
                     vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(true);
@@ -289,8 +288,8 @@ public class Controlador implements ActionListener, MouseListener {
                     //CERRAMOS EL HILO QUE ACUMULA TIEMPO DE TRABAJO DEL TRABAJADOR
                     a.close();
                     modelo.vaciarCestaCliente(usuario);
-                    vista.txtPrecioBase.setText("");
-                    vista.txtPrecioTotal.setText("");
+                    vista.txtPrecioBase.setText("0.0");
+                    vista.txtPrecioTotal.setText("0.0");
                     vista.usuarioConectado.setText("");
                     usuario = "";
                     vista.principal.setVisible(false);
@@ -492,8 +491,8 @@ public class Controlador implements ActionListener, MouseListener {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     modelo.vaciarCestaCliente(usuario);
-                    vista.txtPrecioBase.setText("");
-                    vista.txtPrecioTotal.setText("");
+                    vista.txtPrecioBase.setText("0.0");
+                    vista.txtPrecioTotal.setText("0.0");
                     vista.panelDescripcion.setVisible(false);
                     vista.panelCentral.setVisible(false);
                     vista.panelPedidos.setVisible(false);
@@ -746,14 +745,19 @@ public class Controlador implements ActionListener, MouseListener {
 
             //AÑADIMOS UN FOCUSLISTENER AL TEXTO EN EL QUE INTRODUCIREMOS EL CLIENTE DESDE EL TPV
             vista.txtClienteFacturaCliente.addMouseListener(new MouseListener() {
-
+                JFrame gui;
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    JFrame gui = new GUI();
-                    gui.pack();
-                    gui.setLocationRelativeTo(null);
-                    gui.setVisible(true);
-                    vista.productosFacturaVenta.requestFocus();
+                    if(gui == null){
+                        gui = new GUI();
+                        gui.pack();
+                        gui.setLocationRelativeTo(null);
+                        gui.setVisible(true);
+                        vista.productosFacturaVenta.requestFocus();
+                    }else{
+                        gui.setVisible(true);
+                        vista.productosFacturaVenta.requestFocus();
+                    }
                 }
 
                 @Override
@@ -778,14 +782,19 @@ public class Controlador implements ActionListener, MouseListener {
             });
             //LO MISMO PARA EL DINERO PAGADO POR EL CLIENTE
             vista.txtDineroPagadoFacturaCliente.addMouseListener(new MouseListener() {
-
+                JFrame guiNum;
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    JFrame guiNum = new GUINumerico();
-                    guiNum.pack();
-                    guiNum.setLocationRelativeTo(null);
-                    guiNum.setVisible(true);
-                    vista.productosFacturaVenta.requestFocus();
+                    if(guiNum == null){
+                        guiNum = new GUINumerico();
+                        guiNum.pack();
+                        guiNum.setLocationRelativeTo(null);
+                        guiNum.setVisible(true);
+                        vista.productosFacturaVenta.requestFocus();
+                    }else{
+                        guiNum.setVisible(true);
+                        vista.productosFacturaVenta.requestFocus();
+                    }
                 }
 
                 @Override
@@ -913,6 +922,8 @@ public class Controlador implements ActionListener, MouseListener {
         vista.btnAceptarFacturaVenta.addActionListener(this);
         vista.btnObtenerDevolucion.setActionCommand("btnObtenerDevolucion");
         vista.btnObtenerDevolucion.addActionListener(this);
+        vista.btnCancelarFacturaVenta.setActionCommand("btnCancelarFacturaVenta");
+        vista.btnCancelarFacturaVenta.addActionListener(this);
 
         //ASIGNAMOS UN MOUSELISTENER A LAS TABLAS NECESARIAS Y MODIFICAMOS ALGUNAS DE SUS PROPIEDADES
         vista.tablaCesta.addMouseListener(this);
@@ -1674,8 +1685,8 @@ public class Controlador implements ActionListener, MouseListener {
                 }
                 break;
             case btnCancelarPed:
-                vista.txtPrecioBase.setText("");
-                vista.txtPrecioTotal.setText("");
+                vista.txtPrecioBase.setText("0.0");
+                vista.txtPrecioTotal.setText("0.0");
                 vista.tablaCesta.setModel(modelo.tablaCestaClienteVacia());
                 break;
             case btnRealizarPed:
@@ -1731,6 +1742,10 @@ public class Controlador implements ActionListener, MouseListener {
                 } else {
                     JOptionPane.showMessageDialog(null, "Introduzca la cantidad pagada por el cliente");
                 }
+                break;
+            case btnCancelarFacturaVenta:
+                vista.facturaVenta.setVisible(false);
+                vista.principal.setVisible(true);
                 break;
         }
     }
@@ -2039,35 +2054,27 @@ public class Controlador implements ActionListener, MouseListener {
 //    CARGAMOS LAS IMÁGENES DEL MENÚ PEDIDO
     public void cargarIconosPedido() {
 
-        int btnPasteleriaW = vista.btnPasteleria.getWidth();
-        int btnPasteleriaH = vista.btnPasteleria.getHeight();
         ImageIcon pasteleriaIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pasteles2.jpg"));
         Image pasteleriaImg = pasteleriaIcon.getImage();
-        Image pasteleriaNewImg = pasteleriaImg.getScaledInstance(btnPasteleriaW, btnPasteleriaH, java.awt.Image.SCALE_SMOOTH);
+        Image pasteleriaNewImg = pasteleriaImg.getScaledInstance(500, 300, java.awt.Image.SCALE_SMOOTH);
         pasteleriaIcon = new ImageIcon(pasteleriaNewImg);
         vista.btnPasteleria.setIcon(pasteleriaIcon);
 
-        int btnBebidasW = vista.btnBebidas.getWidth();
-        int btnBebidasH = vista.btnBebidas.getHeight();
         ImageIcon bebidasIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidas-cafeterias.jpg"));
         Image bebidasImg = bebidasIcon.getImage();
-        Image bebidasNewImg = bebidasImg.getScaledInstance(btnBebidasW, btnBebidasH, java.awt.Image.SCALE_SMOOTH);
+        Image bebidasNewImg = bebidasImg.getScaledInstance(500, 300, java.awt.Image.SCALE_SMOOTH);
         bebidasIcon = new ImageIcon(bebidasNewImg);
         vista.btnBebidas.setIcon(bebidasIcon);
 
-        int btnOfertasW = vista.btnOfertas.getWidth();
-        int btnOfertasH = vista.btnOfertas.getHeight();
         ImageIcon ofertasIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ofertas.png"));
         Image ofertasImg = ofertasIcon.getImage();
-        Image ofertasNewImg = ofertasImg.getScaledInstance(btnOfertasW, btnOfertasH, java.awt.Image.SCALE_SMOOTH);
+        Image ofertasNewImg = ofertasImg.getScaledInstance(500, 300, java.awt.Image.SCALE_SMOOTH);
         ofertasIcon = new ImageIcon(ofertasNewImg);
         vista.btnOfertas.setIcon(ofertasIcon);
 
-        int btnMenusW = vista.btnMenus.getWidth();
-        int btnMenusH = vista.btnMenus.getHeight();
         ImageIcon menusIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1001menus.png"));
         Image menusImg = menusIcon.getImage();
-        Image menusNewImg = menusImg.getScaledInstance(btnMenusW, btnMenusH, java.awt.Image.SCALE_SMOOTH);
+        Image menusNewImg = menusImg.getScaledInstance(500, 300, java.awt.Image.SCALE_SMOOTH);
         menusIcon = new ImageIcon(menusNewImg);
         vista.btnMenus.setIcon(menusIcon);
     }
@@ -2100,51 +2107,39 @@ public class Controlador implements ActionListener, MouseListener {
 
     //CARGAMOS LAS IMÁGENES DEL PANEL PRINCIPAL AL INICIAR SESIÓN COMO ADMINISTRADOR
     public void cargarImagenesPrincipalAdmin() {
-        int adPW = vista.labelAdminProveedores.getWidth() - 100;
-        int adPH = vista.labelAdminProveedores.getHeight() - 100;
         ImageIcon adPIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminProveedores.png"));
         Image adPImg = adPIcon.getImage();
-        Image adPNewImg = adPImg.getScaledInstance(adPW, adPH, java.awt.Image.SCALE_SMOOTH);
+        Image adPNewImg = adPImg.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
         adPIcon = new ImageIcon(adPNewImg);
         vista.labelAdminProveedores.setIcon(adPIcon);
 
-        int adPeW = vista.labelAdminPedidos.getWidth() - 200;
-        int adPeH = vista.labelAdminPedidos.getHeight() - 100;
         ImageIcon adPeIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminPedidos.png"));
         Image adPeImg = adPeIcon.getImage();
-        Image adPeNewImg = adPeImg.getScaledInstance(adPeW, adPeH, java.awt.Image.SCALE_SMOOTH);
+        Image adPeNewImg = adPeImg.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
         adPeIcon = new ImageIcon(adPeNewImg);
         vista.labelAdminPedidos.setIcon(adPeIcon);
 
-        int adSW = vista.labelAdminStock.getWidth() - 200;
-        int adSH = vista.labelAdminStock.getHeight() - 100;
         ImageIcon adSIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminStock.png"));
         Image adSImg = adSIcon.getImage();
-        Image adSNewImg = adSImg.getScaledInstance(adSW, adSH, java.awt.Image.SCALE_SMOOTH);
+        Image adSNewImg = adSImg.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
         adSIcon = new ImageIcon(adSNewImg);
         vista.labelAdminStock.setIcon(adSIcon);
 
-        int adTW = vista.labelAdminTrabajadores.getWidth() - 200;
-        int adTH = vista.labelAdminTrabajadores.getHeight() - 100;
         ImageIcon adTIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminTrabajadores.png"));
         Image adTImg = adTIcon.getImage();
-        Image adTNewImg = adTImg.getScaledInstance(adTW, adTH, java.awt.Image.SCALE_SMOOTH);
+        Image adTNewImg = adTImg.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
         adTIcon = new ImageIcon(adTNewImg);
         vista.labelAdminTrabajadores.setIcon(adTIcon);
 
-        int adVW = vista.labelAdminVentas.getWidth() - 200;
-        int adVH = vista.labelAdminVentas.getHeight() - 100;
         ImageIcon adVIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/adminVentas.png"));
         Image adVImg = adVIcon.getImage();
-        Image adVNewImg = adVImg.getScaledInstance(adVW, adVH, java.awt.Image.SCALE_SMOOTH);
+        Image adVNewImg = adVImg.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
         adVIcon = new ImageIcon(adVNewImg);
         vista.labelAdminVentas.setIcon(adVIcon);
 
-        int adSalirW = vista.labelAdminSalir.getWidth() - 200;
-        int adSalirH = vista.labelAdminSalir.getHeight() - 100;
         ImageIcon adSalirIcon = new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir2.png"));
         Image adSalirImg = adSalirIcon.getImage();
-        Image adSalirNewImg = adSalirImg.getScaledInstance(adSalirW, adSalirH, java.awt.Image.SCALE_SMOOTH);
+        Image adSalirNewImg = adSalirImg.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
         adSalirIcon = new ImageIcon(adSalirNewImg);
         vista.labelAdminSalir.setIcon(adSalirIcon);
     }

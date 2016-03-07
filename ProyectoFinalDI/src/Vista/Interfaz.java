@@ -251,7 +251,6 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel18 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         jLabel66 = new javax.swing.JLabel();
-        btnAceptarFacturaVenta = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         jLabel67 = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
@@ -262,6 +261,7 @@ public class Interfaz extends javax.swing.JFrame {
         txtTrabajadorFacturaVenta = new javax.swing.JLabel();
         jLabel71 = new javax.swing.JLabel();
         txtClienteFacturaCliente = new javax.swing.JTextField();
+        btnLimpiar = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jScrollPane16 = new javax.swing.JScrollPane();
         productosFacturaVenta = new javax.swing.JTextArea();
@@ -272,6 +272,9 @@ public class Interfaz extends javax.swing.JFrame {
         txtDineroPagadoFacturaCliente = new javax.swing.JTextField();
         txtDineroADevolver = new javax.swing.JLabel();
         btnObtenerDevolucion = new javax.swing.JButton();
+        btnLimpiar1 = new javax.swing.JButton();
+        btnCancelarFacturaVenta = new javax.swing.JButton();
+        btnAceptarFacturaVenta = new javax.swing.JButton();
         inicio = new javax.swing.JPanel();
         infoInicio = new javax.swing.JPanel();
         logoInicio = new javax.swing.JLabel();
@@ -509,6 +512,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         txtPrecioTotal.setEditable(false);
         txtPrecioTotal.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
+        txtPrecioTotal.setText("0.0");
         txtPrecioTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrecioTotalActionPerformed(evt);
@@ -521,6 +525,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         txtPrecioBase.setEditable(false);
         txtPrecioBase.setFont(new java.awt.Font("Malgun Gothic", 1, 11)); // NOI18N
+        txtPrecioBase.setText("0.0");
 
         btnBorrarProductoCestaCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/papelerita.png"))); // NOI18N
         btnBorrarProductoCestaCliente.setPreferredSize(new java.awt.Dimension(5, 5));
@@ -2091,8 +2096,6 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel66.setText("INFORMACIÓN DEL PEDIDO");
 
-        btnAceptarFacturaVenta.setText("ACEPTAR");
-
         jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
         jLabel67.setText("International Cafe Dessernational");
@@ -2104,6 +2107,13 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel70.setText("Trabajador:");
 
         jLabel71.setText("Cliente:");
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -2127,7 +2137,10 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel67)
                             .addComponent(jLabel71))
-                        .addGap(0, 438, Short.MAX_VALUE)))
+                        .addGap(0, 438, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)))
                 .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
@@ -2151,7 +2164,9 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jLabel71)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtClienteFacturaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         productosFacturaVenta.setEditable(false);
@@ -2167,6 +2182,17 @@ public class Interfaz extends javax.swing.JFrame {
 
         btnObtenerDevolucion.setText("Obtener devolución");
 
+        btnLimpiar1.setText("Limpiar");
+        btnLimpiar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiar1ActionPerformed(evt);
+            }
+        });
+
+        btnCancelarFacturaVenta.setText("Cancelar");
+
+        btnAceptarFacturaVenta.setText("ACEPTAR");
+
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
@@ -2179,23 +2205,30 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
+                                .addComponent(jLabel74)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDineroADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
                                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel72)
-                                    .addComponent(jLabel76)
-                                    .addComponent(jLabel74))
+                                    .addComponent(jLabel76))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtPrecioFacturaVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                                    .addComponent(txtDineroPagadoFacturaCliente)
-                                    .addComponent(txtDineroADevolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(btnObtenerDevolucion, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                    .addComponent(txtDineroPagadoFacturaCliente)))
+                            .addComponent(btnObtenerDevolucion, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnLimpiar1, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
+                .addComponent(btnCancelarFacturaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAceptarFacturaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel76)
@@ -2205,11 +2238,17 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jLabel72)
                     .addComponent(txtDineroPagadoFacturaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnObtenerDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel74)
                     .addComponent(txtDineroADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptarFacturaVenta)
+                    .addComponent(btnCancelarFacturaVenta))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -2222,7 +2261,6 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel66, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAceptarFacturaVenta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -2235,8 +2273,6 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAceptarFacturaVenta)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -2254,7 +2290,7 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addGap(156, 156, 156))
         );
 
         javax.swing.GroupLayout facturaVentaLayout = new javax.swing.GroupLayout(facturaVenta.getContentPane());
@@ -2367,6 +2403,14 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBebidasActionPerformed
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtClienteFacturaCliente.setText("");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnLimpiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiar1ActionPerformed
+        txtDineroPagadoFacturaCliente.setText("");
+    }//GEN-LAST:event_btnLimpiar1ActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -2389,11 +2433,14 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnBorrarProductoCestaCliente;
     public javax.swing.JButton btnCancelarConfig;
     public javax.swing.JButton btnCancelarContrato;
+    public javax.swing.JButton btnCancelarFacturaVenta;
     public javax.swing.JButton btnCancelarPed;
     public javax.swing.JButton btnCancelarPedidoProv;
     public javax.swing.JButton btnDespideEmpleado;
     public javax.swing.JButton btnHistorialPedido;
     public javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnLimpiar1;
     public javax.swing.JButton btnMenus;
     public javax.swing.JButton btnModificaEmpleado;
     public javax.swing.JButton btnNewPedido;
